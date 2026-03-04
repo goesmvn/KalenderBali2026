@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   app:
-    build: .
+    build: ./app
     container_name: kalenderbali_app
     restart: unless-stopped
     expose:
