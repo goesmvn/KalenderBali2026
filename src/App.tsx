@@ -1,15 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar } from '@/components/Calendar';
-import { DateDetail } from '@/components/DateDetail';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { SearchPanel } from '@/components/SearchPanel';
-import { InfoSection } from '@/components/InfoSection';
-import { WidgetView } from '@/components/WidgetView';
-import { WidgetEmbedModal } from '@/components/WidgetEmbedModal';
-import { PrivacyPolicy } from '@/components/PrivacyPolicy';
-import { TermsOfService } from '@/components/TermsOfService';
 import { getBaliDate } from '@/utils/bali-calendar';
 import { getNationalHolidays } from '@/utils/holidays';
 import { searchBaliCalendar } from '@/utils/search-utils';
@@ -23,6 +16,15 @@ import {
   X,
   Search
 } from 'lucide-react';
+
+// Lazy-loaded components (loaded on demand, not in initial bundle)
+const DateDetail = lazy(() => import('@/components/DateDetail').then(m => ({ default: m.DateDetail })));
+const SearchPanel = lazy(() => import('@/components/SearchPanel').then(m => ({ default: m.SearchPanel })));
+const InfoSection = lazy(() => import('@/components/InfoSection').then(m => ({ default: m.InfoSection })));
+const WidgetView = lazy(() => import('@/components/WidgetView').then(m => ({ default: m.WidgetView })));
+const WidgetEmbedModal = lazy(() => import('@/components/WidgetEmbedModal').then(m => ({ default: m.WidgetEmbedModal })));
+const PrivacyPolicy = lazy(() => import('@/components/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
+const TermsOfService = lazy(() => import('@/components/TermsOfService').then(m => ({ default: m.TermsOfService })));
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'privacy' | 'terms'>('home');
@@ -460,7 +462,7 @@ function App() {
   // Render: WIDGET MODE (IFRAME EMBEDS)
   // --------------------------------------------------------------------------
   if (isWidgetMode) {
-    return <WidgetView />;
+    return <Suspense fallback={null}><WidgetView /></Suspense>;
   }
 
   // --------------------------------------------------------------------------
@@ -482,7 +484,13 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
-        {renderMainContent()}
+        <Suspense fallback={
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-3 border-stone-200 border-t-[#c1121f] rounded-full animate-spin" />
+          </div>
+        }>
+          {renderMainContent()}
+        </Suspense>
       </main>
 
       {/* Universal Footer */}
