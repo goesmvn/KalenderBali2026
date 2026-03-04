@@ -829,9 +829,10 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             {hariBaikResults.length > 0 ? (
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[400px] overflow-y-auto pr-1">
                                                     {hariBaikResults.map((res, idx) => {
-                                                        const scoreColor = res.scoreResult.score === 100 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                                                            : res.scoreResult.score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
-                                                                : 'bg-orange-100 text-orange-800 border-orange-300';
+                                                        const scoreColor = res.scoreResult.score === 100 ? 'bg-emerald-500 text-white border-emerald-600'
+                                                            : res.scoreResult.score >= 60 ? 'bg-lime-200 text-lime-900 border-lime-400'
+                                                                : res.scoreResult.score >= 40 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                                    : 'bg-orange-100 text-orange-800 border-orange-300';
                                                         return (
                                                             <div
                                                                 key={idx}
@@ -963,12 +964,12 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     {pawiwahanResults.map((res, idx) => {
                                                         const score = res.scoreResult.score;
                                                         const scoreColor = score === 100 ? 'bg-emerald-500 text-white border-emerald-600'
-                                                            : score >= 75 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                                                                : score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                            : score >= 60 ? 'bg-lime-200 text-lime-900 border-lime-400'
+                                                                : score >= 40 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
                                                                     : 'bg-orange-100 text-orange-800 border-orange-300';
                                                         const cardBorder = score === 100 ? 'border-emerald-300'
-                                                            : score >= 75 ? 'border-emerald-200'
-                                                                : score >= 50 ? 'border-yellow-200'
+                                                            : score >= 60 ? 'border-lime-300'
+                                                                : score >= 40 ? 'border-yellow-200'
                                                                     : 'border-orange-200';
                                                         return (
                                                             <div
@@ -1091,12 +1092,12 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     {melahirkanResults.map((res, idx) => {
                                                         const score = res.scoreResult.score;
                                                         const scoreColor = score === 100 ? 'bg-emerald-500 text-white border-emerald-600'
-                                                            : score >= 75 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                                                                : score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                            : score >= 60 ? 'bg-lime-200 text-lime-900 border-lime-400'
+                                                                : score >= 40 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
                                                                     : 'bg-orange-100 text-orange-800 border-orange-300';
                                                         const cardBorder = score === 100 ? 'border-emerald-300'
-                                                            : score >= 75 ? 'border-emerald-200'
-                                                                : score >= 50 ? 'border-yellow-200'
+                                                            : score >= 60 ? 'border-lime-300'
+                                                                : score >= 40 ? 'border-yellow-200'
                                                                     : 'border-orange-200';
                                                         return (
                                                             <div
