@@ -11,6 +11,8 @@ import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
 import type { YadnyaScoreResult } from '@/utils/pawiwahan-score';
 import { calculateKelahiranScore } from '@/utils/kelahiran-score';
 import type { KelahiranScoreResult } from '@/utils/kelahiran-score';
+import { calculateYadnyaScore } from '@/utils/yadnya-score';
+import type { YadnyaScoreResult as HariBaikScoreResult } from '@/utils/yadnya-score';
 import type { BaliDate } from '@/types/bali-calendar';
 import { LOGO_BASE64 } from '@/utils/logo-base64';
 
@@ -58,6 +60,15 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
     // Hari Baik State
     const [selectedCategory, setSelectedCategory] = useState<string>(currentHighlightCategory || 'Dewa Yadnya');
+    const [hariBaikStartDate, setHariBaikStartDate] = useState<string>(() => {
+        const d = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        return formatDateToInput(d);
+    });
+    const [hariBaikEndDate, setHariBaikEndDate] = useState<string>(() => {
+        const d = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        return formatDateToInput(d);
+    });
+    const [hariBaikResults, setHariBaikResults] = useState<Array<{ date: Date, scoreResult: HariBaikScoreResult, baliDate: BaliDate }> | null>(null);
 
     const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
     const [isSearching, setIsSearching] = useState(false);
@@ -208,6 +219,40 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
         }, 300);
     };
 
+    const handleHariBaikSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSearching(true);
+        setSearchResults(null);
+        setPawiwahanResults(null);
+        setMelahirkanResults(null);
+
+        setTimeout(() => {
+            const start = new Date(hariBaikStartDate);
+            const end = new Date(hariBaikEndDate);
+            const results: Array<{ date: Date, scoreResult: HariBaikScoreResult, baliDate: BaliDate }> = [];
+
+            const current = new Date(start);
+            while (current <= end) {
+                const baliDate = getBaliDate(new Date(current));
+                const scoreResult = calculateYadnyaScore(baliDate, selectedCategory);
+
+                if (scoreResult.score > 0) {
+                    results.push({
+                        date: new Date(current),
+                        scoreResult,
+                        baliDate
+                    });
+                }
+                current.setDate(current.getDate() + 1);
+            }
+
+            // Sort by score descending
+            results.sort((a, b) => b.scoreResult.score - a.scoreResult.score);
+            setHariBaikResults(results);
+            setIsSearching(false);
+        }, 300);
+    };
+
     const createBasePDF = (title: string, subtitle: string, extraDetails?: { label: string, value: string }[]) => {
         const doc = new jsPDF();
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -325,29 +370,52 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
     };
 
     const handleExportHariBaikPDF = () => {
-        if (!searchResults || searchResults.length === 0) return;
-        let subtitle = `Kategori Pencarian: ${searchType.toUpperCase()}`;
-        if (searchMode === 'year') subtitle += ` | Tahun: ${featureYear}`;
+        if (!hariBaikResults || hariBaikResults.length === 0) return;
+        const subtitle = `Kategori: ${selectedCategory} | Rentang: ${formatIndonesianDate(new Date(hariBaikStartDate))} - ${formatIndonesianDate(new Date(hariBaikEndDate))}`;
 
-        const { doc, pageWidth, pageHeight, startY } = createBasePDF('Rekomendasi Hari Baik / Fitur', subtitle);
+        const { doc, pageWidth, pageHeight, startY } = createBasePDF('Rekomendasi Hari Baik', subtitle);
 
-        const tableData = searchResults.map(res => [
+        const tableData = hariBaikResults.map(res => [
             formatIndonesianDate(res.date),
-            res.label
+            `${res.baliDate.saptawara.name.split(' ')[0]} ${res.baliDate.pancawara.name}`,
+            `${res.scoreResult.score}%`,
+            res.scoreResult.goodMatches.join(', ') || '-',
+            res.scoreResult.badMatches.length > 0 ? res.scoreResult.badMatches.join(', ') : '-'
         ]);
 
         autoTable(doc, {
             startY: startY,
-            head: [['Tanggal Masehi', 'Informasi']],
+            head: [['Tanggal Masehi', 'Wewaran', 'Skor', 'Hari Baik (Dewasa Ayu)', 'Larangan']],
             body: tableData,
             theme: 'grid',
-            headStyles: { fillColor: [193, 18, 31], textColor: [255, 255, 255] },
+            headStyles: { fillColor: [193, 18, 31], textColor: [255, 255, 255], fontSize: 8 },
+            bodyStyles: { fontSize: 7 },
+            columnStyles: {
+                0: { cellWidth: 35 },
+                1: { cellWidth: 28 },
+                2: { cellWidth: 12, halign: 'center' as const },
+                3: { cellWidth: 'auto' },
+                4: { cellWidth: 35 }
+            },
+            didParseCell: function (data: any) {
+                if (data.section === 'body' && data.column.index === 2) {
+                    const score = parseInt(data.cell.raw);
+                    if (score === 100) {
+                        data.cell.styles.fillColor = [220, 252, 231];
+                        data.cell.styles.textColor = [22, 101, 52];
+                        data.cell.styles.fontStyle = 'bold';
+                    } else if (score >= 50) {
+                        data.cell.styles.fillColor = [254, 249, 195];
+                        data.cell.styles.textColor = [113, 63, 18];
+                    }
+                }
+            },
             didDrawPage: function () {
                 drawFooter(doc, pageWidth, pageHeight);
             }
         });
 
-        doc.save(`hari_baik_${searchType}.pdf`);
+        doc.save(`hari_baik_${selectedCategory.replace(/\s+/g, '_').toLowerCase()}_${hariBaikStartDate}_${hariBaikEndDate}.pdf`);
     };
 
     const handleExportMelahirkanPDF = () => {
@@ -678,10 +746,10 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                 </div>
                             )}
 
-                            {/* Hari Baik Highlight */}
+                            {/* Hari Baik Highlight & Search */}
                             {activeTab === 'hariBaik' && (
-                                <form onSubmit={handleHighlightCategory} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <div className="max-w-md">
+                                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                    <div className="max-w-xl">
                                         <label className="block text-xs text-stone-500 font-medium mb-1.5">Kategori Kegiatan / Yadnya</label>
                                         <select
                                             value={selectedCategory}
@@ -693,14 +761,48 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             ))}
                                         </select>
 
-                                        <p className="text-xs text-stone-500 mb-6 leading-relaxed">
+                                        <p className="text-xs text-stone-500 mb-4 leading-relaxed">
                                             Kalender akan menampilkan <strong className="text-emerald-600">persentase kecocokan hari (warna hijau)</strong> berdasarkan hari baik dan menghindari larangan untuk kategori yang dipilih.
                                         </p>
 
-                                        <div className="flex flex-col sm:flex-row gap-3">
-                                            <button type="submit" className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors">
-                                                Tampilkan di Kalender
-                                            </button>
+                                        {/* Date Range Search */}
+                                        <form onSubmit={handleHariBaikSearch} className="mb-4 pb-4 border-b border-stone-200">
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Cari Rekomendasi berdasarkan Rentang Tanggal</label>
+                                            <div className="flex flex-col sm:flex-row gap-3">
+                                                <div className="flex-1 flex flex-col sm:flex-row gap-2">
+                                                    <div className="flex-1">
+                                                        <label className="block text-[10px] text-stone-400 mb-1">Dari Tanggal</label>
+                                                        <input
+                                                            type="date"
+                                                            value={hariBaikStartDate}
+                                                            onChange={(e) => setHariBaikStartDate(e.target.value)}
+                                                            className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <label className="block text-[10px] text-stone-400 mb-1">Sampai Tanggal</label>
+                                                        <input
+                                                            type="date"
+                                                            value={hariBaikEndDate}
+                                                            onChange={(e) => setHariBaikEndDate(e.target.value)}
+                                                            className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 mt-auto sm:mt-0 self-end sm:self-auto sm:min-w-[140px] whitespace-nowrap">
+                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? 'Mencari...' : 'Cari Hari Baik'}
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                                            <form onSubmit={handleHighlightCategory} className="flex-1">
+                                                <button type="submit" className="w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors">
+                                                    Tampilkan Heatmap Bulan Ini
+                                                </button>
+                                            </form>
 
                                             {currentHighlightCategory && (
                                                 <button type="button" onClick={handleResetHighlight} className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-white border border-stone-200 text-stone-600 hover:bg-stone-50 rounded-xl text-sm font-medium transition-colors">
@@ -709,7 +811,62 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             )}
                                         </div>
                                     </div>
-                                </form>
+
+                                    {/* Hari Baik Results */}
+                                    {hariBaikResults && (
+                                        <div className="mt-6">
+                                            <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-t border-stone-200 pt-4">
+                                                <h3 className="text-sm font-bold text-stone-800">
+                                                    <Star className="inline w-4 h-4 text-emerald-500 mr-1" />
+                                                    {hariBaikResults.length} Hari Baik ditemukan untuk "{selectedCategory}"
+                                                </h3>
+                                                {hariBaikResults.length > 0 && (
+                                                    <button onClick={handleExportHariBaikPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors">
+                                                        <FileText className="w-4 h-4" /> Download PDF
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {hariBaikResults.length > 0 ? (
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[400px] overflow-y-auto pr-1">
+                                                    {hariBaikResults.map((res, idx) => {
+                                                        const scoreColor = res.scoreResult.score === 100 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                                            : res.scoreResult.score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                                : 'bg-orange-100 text-orange-800 border-orange-300';
+                                                        return (
+                                                            <div
+                                                                key={idx}
+                                                                onClick={() => handleResultClick(res.date)}
+                                                                className="bg-white border border-stone-200 rounded-xl p-3 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group"
+                                                            >
+                                                                <div className="flex items-start justify-between mb-2">
+                                                                    <div>
+                                                                        <p className="font-semibold text-stone-800 text-sm group-hover:text-emerald-800">{formatIndonesianDate(res.date)}</p>
+                                                                        <p className="text-xs text-stone-500 mt-0.5">{res.baliDate.saptawara.name.split(' ')[0]} {res.baliDate.pancawara.name} — Wuku {res.baliDate.wuku.name}</p>
+                                                                    </div>
+                                                                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${scoreColor}`}>
+                                                                        {res.scoreResult.score}%
+                                                                    </span>
+                                                                </div>
+                                                                {res.scoreResult.goodMatches.length > 0 && (
+                                                                    <div className="flex flex-wrap gap-1">
+                                                                        {res.scoreResult.goodMatches.slice(0, 3).map((g, i) => (
+                                                                            <span key={i} className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-md border border-emerald-200">{g}</span>
+                                                                        ))}
+                                                                        {res.scoreResult.goodMatches.length > 3 && (
+                                                                            <span className="text-[10px] bg-stone-50 text-stone-500 px-1.5 py-0.5 rounded-md">+{res.scoreResult.goodMatches.length - 3}</span>
+                                                                        )}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            ) : (
+                                                <p className="text-sm text-stone-500 italic">Tidak ditemukan hari baik dalam rentang waktu ini untuk kategori "{selectedCategory}".</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             )}
 
                             {/* Pawiwahan Highlight & Search */}
