@@ -522,9 +522,9 @@ export function DateDetail({ baliDate, nationalHolidays = [], onClose }: DateDet
                           </div>
                         </div>
                         <div className={`px-2.5 py-1 rounded-full text-xs font-bold shadow-sm ${pawiwahanScore.isHariUtama ? 'bg-emerald-500 text-white' :
-                            pawiwahanScore.score >= 80 ? 'bg-emerald-100 text-emerald-800' :
-                              pawiwahanScore.score >= 50 ? 'bg-brand-100 text-brand-900' :
-                                'bg-rose-100 text-rose-800'
+                          pawiwahanScore.score >= 80 ? 'bg-emerald-100 text-emerald-800' :
+                            pawiwahanScore.score >= 50 ? 'bg-brand-100 text-brand-900' :
+                              'bg-rose-100 text-rose-800'
                           }`}>
                           {pawiwahanScore.score}% {pawiwahanScore.isHariUtama ? '(Hari Utama)' : ''}
                         </div>

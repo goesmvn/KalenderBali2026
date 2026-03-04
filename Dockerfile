@@ -1,32 +1,34 @@
-# Menggunakan Node.js Alpine sebagai base image untuk build stage yang lebih ringan
+# ============================================================
+# Stage 1: Build - Compile TypeScript & bundle with Vite
+# ============================================================
 FROM node:20-alpine AS builder
 
-# Set working directory di dalam container
 WORKDIR /app
 
-# Copy package.json dan package-lock.json terlebih dahulu untuk memanfaatkan cache docker layer
+# Copy dependency manifests first (layer caching)
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install
+# Install all dependencies (including devDependencies for build)
+RUN npm ci
 
-# Copy seluruh source code
+# Copy source code
 COPY . .
 
-# Build aplikasi React/Vite
+# Build production bundle
 RUN npm run build
 
-# Menggunakan Nginx Alpine sebagai base image untuk production server
-FROM nginx:alpine
+# ============================================================
+# Stage 2: Serve - Caddy static file server
+# ============================================================
+FROM caddy:2-alpine
 
-# Menyalin konfigurasi Nginx kustom untuk mendukung React Router (opsional tapi disarankan)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy Caddyfile configuration
+COPY Caddyfile /etc/caddy/Caddyfile
 
-# Menyalin hasil build aplikasi dari tahap "builder" ke direktori html Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy built assets from builder stage
+COPY --from=builder /app/dist /srv
 
-# Expose port 80 untuk akses web
+# Expose port 80 (Caddy HTTP)
 EXPOSE 80
 
-# Jalankan Nginx sebagai daemon
-CMD ["nginx", "-g", "daemon off;"]
+# Caddy runs automatically via its default entrypoint

@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+nginx.conf
+check_error.js
+find_was_panganten.js
+parse-ala.ts
+parse-yadnya.ts
+raw-ala-ayuning-dewasa.txt
+replace_colors.cjs
+test-pawiwahan.js
+test-wewaran.ts
+.vscode
+.idea

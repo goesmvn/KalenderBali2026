@@ -1,7 +1,7 @@
 import { getBaliDate } from '@/utils/bali-calendar';
 import type { BaliDate } from '@/types/bali-calendar';
 
-export type SearchType = 'otonan' | 'purnama' | 'tilem' | 'kajengkliwon' | 'ingkel' | 'galungan' | 'kuningan' | 'tumpek' | 'nyepi';
+export type SearchType = 'otonan' | 'purnama' | 'tilem' | 'kajengkliwon' | 'ingkel' | 'galungan' | 'kuningan' | 'tumpek' | 'nyepi' | 'anggarakasih' | 'budacemeng';
 
 export interface SearchResult {
     date: Date;
@@ -55,14 +55,14 @@ export function searchBaliCalendar(params: SearchParams, limit: number = 3): Sea
             case 'purnama':
                 if (baliDate.purnamaTilem?.type === 'Purnama') {
                     isMatch = true;
-                    label = `Purnama ${baliDate.sasih.name.split(' ')[0]}`;
+                    label = `Purnama ${baliDate.sasih.name.split(' ')[1]}`;
                 }
                 break;
 
             case 'tilem':
                 if (baliDate.purnamaTilem?.type === 'Tilem') {
                     isMatch = true;
-                    label = `Tilem ${baliDate.sasih.name.split(' ')[0]}`;
+                    label = `Tilem ${baliDate.sasih.name.split(' ')[1]}`;
                 }
                 break;
 
@@ -111,6 +111,20 @@ export function searchBaliCalendar(params: SearchParams, limit: number = 3): Sea
                 }
                 break;
             }
+
+            case 'anggarakasih':
+                if (baliDate.saptawara.name === 'Anggara' && baliDate.pancawara.name === 'Kliwon') {
+                    isMatch = true;
+                    label = `Anggara Kasih ${baliDate.wuku.name}`;
+                }
+                break;
+
+            case 'budacemeng':
+                if (baliDate.saptawara.name === 'Buda' && baliDate.pancawara.name === 'Wage') {
+                    isMatch = true;
+                    label = `Buda Cemeng ${baliDate.wuku.name}`;
+                }
+                break;
         }
 
         if (isMatch) {

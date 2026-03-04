@@ -8,7 +8,8 @@ import {
   Moon,
   Sun,
   CalendarDays,
-  Info
+  Info,
+  RotateCcw
 } from 'lucide-react';
 import {
   Tooltip,
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/tooltip';
 import { calculateYadnyaScore } from '@/utils/yadnya-score';
 import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
+import { calculateKelahiranScore } from '@/utils/kelahiran-score';
 
 interface CalendarProps {
   onSelectDate: (date: Date, baliDate: BaliDate) => void;
@@ -26,6 +28,7 @@ interface CalendarProps {
   onMonthChange: (date: Date) => void;
   nationalHolidays?: Record<string, string[]>;
   highlightCategory?: string | null;
+  onReset?: () => void;
 }
 
 const DAYS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
@@ -34,7 +37,7 @@ const MONTHS = [
   'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
 ];
 
-export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, highlightCategory }: CalendarProps) {
+export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, highlightCategory, onReset }: CalendarProps) {
   const [today] = useState(new Date());
 
   const calendarDays = useMemo(() => {
@@ -168,6 +171,12 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
           yadnyaScore = scoreResult.score;
           hasBadYadnyaMatch = scoreResult.badMatches.length > 0;
         }
+      } else if (highlightCategory === 'melahirkan') {
+        const scoreResult = calculateKelahiranScore(baliDate, date);
+        if (scoreResult.goodMatches.length > 0 || scoreResult.badMatches.length > 0) {
+          yadnyaScore = scoreResult.score;
+          hasBadYadnyaMatch = scoreResult.badMatches.length > 0;
+        }
       } else if (highlightCategory) {
         const scoreResult = calculateYadnyaScore(baliDate, highlightCategory);
         if (scoreResult.goodMatches.length > 0 || scoreResult.badMatches.length > 0) {
@@ -190,7 +199,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
     }
 
     return days;
-  }, [currentMonth, today, nationalHolidays]);
+  }, [currentMonth, today, nationalHolidays, highlightCategory]);
 
   const goToPreviousMonth = () => {
     onMonthChange(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
@@ -229,6 +238,16 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
             </div>
 
             <div className="flex items-center gap-2">
+              {highlightCategory && onReset && (
+                <button
+                  onClick={onReset}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/80 hover:bg-red-500 rounded-lg text-sm font-medium transition-colors"
+                  title="Reset Pencarian"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span className="hidden sm:inline">Reset</span>
+                </button>
+              )}
               <button
                 onClick={goToToday}
                 className="hidden sm:flex px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
@@ -318,7 +337,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                   className={`
                     relative aspect-square sm:aspect-auto sm:h-20 md:h-24 rounded-lg sm:rounded-xl p-1 sm:p-2
                     flex flex-col items-center justify-start sm:justify-between
-                    transition-all duration-200
+                    transition-all duration-200 overflow-hidden min-w-0
                     ${!hasHighlight && day.isCurrentMonth
                       ? 'bg-white hover:bg-brand-50'
                       : ''
@@ -359,72 +378,78 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                     </span>
                   </div>
 
-                  {/* Yadnya Score Indicator (Optional text) */}
-                  {hasHighlight && (
-                    <div className="absolute top-1 right-1 sm:top-2 sm:right-2 flex flex-col items-end gap-0.5 sm:gap-1">
-                      {day.yadnyaScore! > 0 && (
-                        <span className="text-[9px] sm:text-[10px] font-bold text-emerald-800 bg-white/60 px-1 rounded backdrop-blur-sm shadow-sm border border-emerald-50">
-                          {day.yadnyaScore}%
-                        </span>
+                  {/* Top Right Indicators: Purnama/Tilem & Yadnya Score */}
+                  {(hasHighlight || isPurnama || isTilem) && (
+                    <div className="absolute top-1 right-1 sm:top-2 sm:right-2 flex flex-col items-end gap-1 z-20">
+
+                      {/* Purnama/Tilem Icon goes first (topmost) */}
+                      {(isPurnama || isTilem) && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className={`
+                              w-4 h-4 sm:w-5 sm:h-5 rounded-full 
+                              flex items-center justify-center shadow-sm
+                              ${isPurnama
+                                ? 'bg-yellow-400 text-yellow-900 border border-yellow-500'
+                                : 'bg-slate-700 text-slate-100 border border-slate-800'
+                              }
+                            `}>
+                              {isPurnama ? (
+                                <Sun className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                              ) : (
+                                <Moon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                              )}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{isPurnama ? 'Purnama' : 'Tilem'}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
-                      {highlightCategory === 'dewasa_pawiwahan' && day.hasBadYadnyaMatch && day.yadnyaScore! === 0 && (
-                        <span className="text-[8px] sm:text-[9px] font-bold text-red-700 bg-red-100/90 px-1 rounded backdrop-blur-sm shadow-sm border border-red-200 whitespace-nowrap">
-                          <span className="hidden sm:inline">Hindari</span>
-                          <span className="sm:hidden">!</span>
-                        </span>
-                      )}
-                      {highlightCategory !== 'dewasa_pawiwahan' && day.hasBadYadnyaMatch && day.yadnyaScore! < 50 && (
-                        <span className="text-[8px] sm:text-[9px] font-bold text-red-700 bg-red-100/90 px-1 rounded backdrop-blur-sm shadow-sm border border-red-200 whitespace-nowrap">
-                          <span className="hidden sm:inline">Larangan</span>
-                          <span className="sm:hidden">!</span>
-                        </span>
+
+                      {/* Yadnya Score Indicator */}
+                      {hasHighlight && (
+                        <>
+                          {day.yadnyaScore! > 0 && (
+                            <span className="text-[9px] sm:text-[10px] font-bold text-emerald-800 bg-white/60 px-1 rounded backdrop-blur-sm shadow-sm border border-emerald-50">
+                              {day.yadnyaScore}%
+                            </span>
+                          )}
+                          {highlightCategory === 'dewasa_pawiwahan' && day.hasBadYadnyaMatch && day.yadnyaScore! === 0 && (
+                            <span className="text-[8px] sm:text-[9px] font-bold text-red-700 bg-red-100/90 px-1 rounded backdrop-blur-sm shadow-sm border border-red-200 whitespace-nowrap">
+                              <span className="hidden sm:inline">Hindari</span>
+                              <span className="sm:hidden">!</span>
+                            </span>
+                          )}
+                          {highlightCategory !== 'dewasa_pawiwahan' && day.hasBadYadnyaMatch && day.yadnyaScore! < 50 && (
+                            <span className="text-[8px] sm:text-[9px] font-bold text-red-700 bg-red-100/90 px-1 rounded backdrop-blur-sm shadow-sm border border-red-200 whitespace-nowrap">
+                              <span className="hidden sm:inline">Larangan</span>
+                              <span className="sm:hidden">!</span>
+                            </span>
+                          )}
+                        </>
                       )}
                     </div>
                   )}
 
                   {/* Bali Info - Hidden on very small screens */}
-                  <div className="hidden sm:flex flex-col items-center gap-0.5 mt-1 z-10 mix-blend-multiply">
-                    <span className="text-[10px] text-stone-500 truncate w-full text-center">
+                  <div className="hidden sm:flex flex-col items-center gap-0.5 mt-1 z-10 mix-blend-multiply w-full px-0.5">
+                    <span className="text-[10px] text-stone-500 truncate w-full text-center block">
                       {day.baliDate.pancawara.name.split(' ')[0]}
                     </span>
-                    <span className="text-[9px] text-stone-400 truncate w-full text-center">
+                    <span className="text-[9px] text-stone-400 truncate w-full text-center block">
                       {day.baliDate.wuku.name}
                     </span>
                     {day.holidaysList.length > 0 && (
-                      <span className="text-[9px] font-medium text-red-500 truncate w-full text-center">
-                        {day.holidaysList[0]}
+                      <span className="text-[10px] sm:text-[9px] font-medium text-red-500 truncate w-full text-center block" title={day.holidaysList.join(', ')}>
+                        {day.holidaysList.join(', ')}
                       </span>
                     )}
                   </div>
 
-                  {/* Purnama/Tilem Indicator */}
-                  {(isPurnama || isTilem) && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className={`
-                          absolute bottom-1 right-1 w-5 h-5 sm:w-6 sm:h-6 rounded-full 
-                          flex items-center justify-center
-                          ${isPurnama
-                            ? 'bg-yellow-400 text-yellow-900'
-                            : 'bg-slate-700 text-slate-100'
-                          }
-                        `}>
-                          {isPurnama ? (
-                            <Sun className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                          ) : (
-                            <Moon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                          )}
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{isPurnama ? 'Purnama' : 'Tilem'}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-
                   {/* Today Indicator */}
-                  {day.isToday && !isPurnama && !isTilem && (
-                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-brand-600 rounded-full"></div>
+                  {day.isToday && (
+                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-brand-600 rounded-full shadow-sm z-20"></div>
                   )}
                 </motion.button>
               );
