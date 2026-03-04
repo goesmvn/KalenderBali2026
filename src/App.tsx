@@ -339,66 +339,90 @@ function App() {
               )}
 
               {/* Upcoming Events Section */}
-              {upcomingEvents.length > 0 && (
-                <div className="mt-6 flex-1 flex flex-col min-h-0">
-                  <h3 className="text-sm font-bold text-stone-800 mb-3 flex items-center gap-2 shrink-0">
-                    <CalendarDays className="w-4 h-4 text-brand-600" />
-                    Akan Datang
-                  </h3>
-                  <div className="space-y-2.5 flex-1 pr-2 overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-stone-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-stone-300">
-                    {upcomingEvents.map((evt, idx) => {
-                      let icon = <CalendarDays className="w-4 h-4" />;
-                      let bgClass = "bg-stone-50 border-stone-200 text-stone-600";
-                      if (evt.searchType === 'purnama') {
-                        icon = <Sun className="w-4 h-4" />;
-                        bgClass = "bg-yellow-50 border-yellow-200 text-yellow-700";
-                      } else if (evt.searchType === 'tilem') {
-                        icon = <Moon className="w-4 h-4" />;
-                        bgClass = "bg-slate-700 border-slate-600 text-slate-200";
-                      } else if (evt.searchType === 'kajengkliwon') {
-                        icon = <Flame className="w-4 h-4" />;
-                        bgClass = "bg-red-50 border-red-200 text-red-700";
-                      } else if (evt.searchType === 'holiday') {
-                        icon = <CalendarDays className="w-4 h-4" />;
-                        bgClass = "bg-red-50 border-red-200 text-red-700";
-                      } else if (evt.searchType === 'anggarakasih' || evt.searchType === 'budacemeng') {
-                        icon = <Flower2 className="w-4 h-4" />;
-                        bgClass = "bg-orange-50 border-orange-200 text-orange-700";
-                      } else if (['saraswati', 'pagerwesi', 'siwaratri'].includes(evt.searchType)) {
-                        icon = <Flower2 className="w-4 h-4" />;
-                        bgClass = "bg-purple-50 border-purple-200 text-purple-700";
-                      }
-                      else {
-                        icon = <Flower2 className="w-4 h-4" />;
-                        bgClass = "bg-brand-50 border-brand-200 text-brand-700";
-                      }
+              <div className="mt-6 flex-1 flex flex-col min-h-0">
+                <h3 className="text-sm font-bold text-stone-800 mb-3 flex items-center gap-2 shrink-0">
+                  <CalendarDays className="w-4 h-4 text-brand-600" />
+                  Akan Datang
+                </h3>
+                <div className="space-y-2.5 flex-1 pr-2 overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-stone-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-stone-300">
 
-                      const daysDiff = getDaysDiff(evt.date);
-
-                      return (
-                        <div key={idx} className={`flex items-center justify-between p-2.5 rounded-xl border shadow-sm ${bgClass}`}>
-                          <div className="flex flex-col">
-                            <div className="flex items-center gap-1.5 font-bold text-[11px] uppercase tracking-wide mb-0.5">
-                              {icon}
-                              <span>{
-                                evt.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
-                                  ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(evt.searchType) ? evt.label.toUpperCase() :
-                                    evt.label
-                              }</span>
+                  {/* Skeleton Loader */}
+                  {upcomingEvents.length === 0 && (
+                    <>
+                      {[...Array(5)].map((_, i) => (
+                        <div key={`skel-${i}`} className="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 bg-stone-50 shadow-sm animate-pulse">
+                          <div className="flex flex-col gap-1.5">
+                            <div className="flex items-center gap-1.5">
+                              <div className="w-4 h-4 bg-stone-200 rounded" />
+                              <div className="h-3 bg-stone-200 rounded-full" style={{ width: `${80 + i * 15}px` }} />
                             </div>
-                            <span className="text-xs font-medium opacity-90">
-                              {evt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })}
-                            </span>
+                            <div className="h-3 bg-stone-100 rounded-full w-20" />
                           </div>
-                          <div className="text-xs font-bold px-2 py-1 bg-white/50 rounded-lg whitespace-nowrap">
-                            H-{daysDiff}
-                          </div>
+                          <div className="h-6 w-10 bg-stone-200 rounded-lg" />
                         </div>
-                      );
-                    })}
-                  </div>
+                      ))}
+                    </>
+                  )}
+
+                  {/* Real Data */}
+                  {upcomingEvents.map((evt, idx) => {
+                    let icon = <CalendarDays className="w-4 h-4" />;
+                    let bgClass = "bg-stone-50 border-stone-200 text-stone-600";
+                    if (evt.searchType === 'purnama') {
+                      icon = <Sun className="w-4 h-4" />;
+                      bgClass = "bg-yellow-50 border-yellow-200 text-yellow-700";
+                    } else if (evt.searchType === 'tilem') {
+                      icon = <Moon className="w-4 h-4" />;
+                      bgClass = "bg-slate-700 border-slate-600 text-slate-200";
+                    } else if (evt.searchType === 'kajengkliwon') {
+                      icon = <Flame className="w-4 h-4" />;
+                      bgClass = "bg-red-50 border-red-200 text-red-700";
+                    } else if (evt.searchType === 'holiday') {
+                      icon = <CalendarDays className="w-4 h-4" />;
+                      bgClass = "bg-red-50 border-red-200 text-red-700";
+                    } else if (evt.searchType === 'anggarakasih' || evt.searchType === 'budacemeng') {
+                      icon = <Flower2 className="w-4 h-4" />;
+                      bgClass = "bg-orange-50 border-orange-200 text-orange-700";
+                    } else if (['saraswati', 'pagerwesi', 'siwaratri'].includes(evt.searchType)) {
+                      icon = <Flower2 className="w-4 h-4" />;
+                      bgClass = "bg-purple-50 border-purple-200 text-purple-700";
+                    }
+                    else {
+                      icon = <Flower2 className="w-4 h-4" />;
+                      bgClass = "bg-brand-50 border-brand-200 text-brand-700";
+                    }
+
+                    const daysDiff = getDaysDiff(evt.date);
+
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: idx * 0.05 }}
+                        className={`flex items-center justify-between p-2.5 rounded-xl border shadow-sm ${bgClass}`}
+                      >
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-1.5 font-bold text-[11px] uppercase tracking-wide mb-0.5">
+                            {icon}
+                            <span>{
+                              evt.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
+                                ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(evt.searchType) ? evt.label.toUpperCase() :
+                                  evt.label
+                            }</span>
+                          </div>
+                          <span className="text-xs font-medium opacity-90">
+                            {evt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })}
+                          </span>
+                        </div>
+                        <div className="text-xs font-bold px-2 py-1 bg-white/50 rounded-lg whitespace-nowrap">
+                          H-{daysDiff}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
-              )}
+              </div>
             </div>
           </motion.div>
 
