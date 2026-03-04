@@ -317,11 +317,15 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
               let highlightStyle = {};
               if (hasHighlight) {
                 const score = day.yadnyaScore!;
-                if (score > 0) {
-                  // Hijau based on percentage
-                  highlightStyle = { backgroundColor: `rgba(16, 185, 129, ${Math.max(0.1, score / 100)})`, borderColor: `rgba(16, 185, 129, ${score / 100 + 0.2})` };
+                if (score === 100) {
+                  highlightStyle = { backgroundColor: 'rgba(16, 185, 129, 0.85)', borderColor: 'rgba(5, 150, 105, 0.9)' };
+                } else if (score >= 75) {
+                  highlightStyle = { backgroundColor: 'rgba(16, 185, 129, 0.45)', borderColor: 'rgba(16, 185, 129, 0.6)' };
+                } else if (score >= 50) {
+                  highlightStyle = { backgroundColor: 'rgba(234, 179, 8, 0.3)', borderColor: 'rgba(202, 138, 4, 0.5)' };
+                } else if (score > 0) {
+                  highlightStyle = { backgroundColor: 'rgba(249, 115, 22, 0.2)', borderColor: 'rgba(234, 88, 12, 0.35)' };
                 } else if (day.hasBadYadnyaMatch) {
-                  // Merah pudar jika murni larangan (score 0 tapi punya pantangan)
                   highlightStyle = { backgroundColor: 'rgba(239, 68, 68, 0.1)', borderColor: 'rgba(239, 68, 68, 0.2)' };
                 }
               }
@@ -411,7 +415,11 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                       {hasHighlight && (
                         <>
                           {day.yadnyaScore! > 0 && (
-                            <span className="text-[9px] sm:text-[10px] font-bold text-emerald-800 bg-white/60 px-1 rounded backdrop-blur-sm shadow-sm border border-emerald-50">
+                            <span className={`text-[9px] sm:text-[10px] font-bold px-1 rounded backdrop-blur-sm shadow-sm border ${day.yadnyaScore! === 100 ? 'text-white bg-emerald-600/80 border-emerald-500'
+                                : day.yadnyaScore! >= 75 ? 'text-emerald-800 bg-white/60 border-emerald-200'
+                                  : day.yadnyaScore! >= 50 ? 'text-yellow-800 bg-yellow-100/80 border-yellow-300'
+                                    : 'text-orange-800 bg-orange-100/80 border-orange-300'
+                              }`}>
                               {day.yadnyaScore}%
                             </span>
                           )}
@@ -471,8 +479,12 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                 <span className="text-emerald-900 font-medium">100% {highlightCategory === 'dewasa_pawiwahan' ? '(Hari Utama)' : '(Sangat Baik)'}</span>
               </div>
               <div className="flex items-center gap-1.5 hover:opacity-80 transition-opacity hidden sm:flex">
-                <div className="w-3 h-3 rounded bg-emerald-500/50 border border-emerald-600/50"></div>
-                <span className="text-emerald-800">Campuran</span>
+                <div className="w-3 h-3 rounded bg-emerald-500/45 border border-emerald-600/50"></div>
+                <span className="text-emerald-800">≥75% (Baik)</span>
+              </div>
+              <div className="flex items-center gap-1.5 hover:opacity-80 transition-opacity hidden sm:flex">
+                <div className="w-3 h-3 rounded bg-yellow-400/30 border border-yellow-500/50"></div>
+                <span className="text-yellow-800">≥50% (Cukup)</span>
               </div>
               <div className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
                 <div className="w-3 h-3 rounded bg-red-100 border border-red-200"></div>

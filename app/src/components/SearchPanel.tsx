@@ -960,37 +960,46 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
                                             {pawiwahanResults.length > 0 ? (
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                                    {pawiwahanResults.map((res, idx) => (
-                                                        <div
-                                                            key={idx}
-                                                            onClick={() => handleResultClick(res.date)}
-                                                            className="bg-white border border-emerald-100 rounded-xl p-3 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
-                                                        >
-                                                            <div className="flex justify-between items-start mb-2">
-                                                                <div>
-                                                                    <p className="font-bold text-stone-800 text-sm group-hover:text-emerald-700">{formatIndonesianDate(res.date)}</p>
-                                                                    <p className="text-xs text-stone-500 mt-0.5">
-                                                                        {res.baliDate.saptawara.name} {res.baliDate.pancawara.name.split(' ')[0]} {res.baliDate.wuku.name}
-                                                                    </p>
-                                                                </div>
-                                                                <div className={`px-2 py-1 rounded w-auto flex-shrink-0 flex items-center gap-1 bg-emerald-100 ${res.scoreResult.isHariUtama ? 'bg-emerald-500 text-white' : 'text-emerald-800'}`}>
-                                                                    {res.scoreResult.isHariUtama && <Star className="w-3 h-3 fill-current" />}
-                                                                    <span className="text-[10px] font-bold">
-                                                                        {res.scoreResult.score}%
+                                                    {pawiwahanResults.map((res, idx) => {
+                                                        const score = res.scoreResult.score;
+                                                        const scoreColor = score === 100 ? 'bg-emerald-500 text-white border-emerald-600'
+                                                            : score >= 75 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                                                : score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                                    : 'bg-orange-100 text-orange-800 border-orange-300';
+                                                        const cardBorder = score === 100 ? 'border-emerald-300'
+                                                            : score >= 75 ? 'border-emerald-200'
+                                                                : score >= 50 ? 'border-yellow-200'
+                                                                    : 'border-orange-200';
+                                                        return (
+                                                            <div
+                                                                key={idx}
+                                                                onClick={() => handleResultClick(res.date)}
+                                                                className={`bg-white border ${cardBorder} rounded-xl p-3 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between`}
+                                                            >
+                                                                <div className="flex justify-between items-start mb-2">
+                                                                    <div>
+                                                                        <p className="font-bold text-stone-800 text-sm group-hover:text-emerald-700">{formatIndonesianDate(res.date)}</p>
+                                                                        <p className="text-xs text-stone-500 mt-0.5">
+                                                                            {res.baliDate.saptawara.name} {res.baliDate.pancawara.name.split(' ')[0]} {res.baliDate.wuku.name}
+                                                                        </p>
+                                                                    </div>
+                                                                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${scoreColor}`}>
+                                                                        {res.scoreResult.isHariUtama && <Star className="w-3 h-3 fill-current" />}
+                                                                        {score}%
                                                                     </span>
                                                                 </div>
-                                                            </div>
 
-                                                            <div className="flex items-center justify-between mt-1">
-                                                                <div className="text-[10px] text-emerald-600 line-clamp-1 flex-1">
-                                                                    {res.scoreResult.isHariUtama ? 'Hari Utama Pawiwahan' : 'Tidak ada pantangan berat'}
-                                                                </div>
-                                                                <div className="w-5 h-5 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-emerald-100 transition-colors ml-2">
-                                                                    <ChevronRight className="w-3 h-3 text-stone-400 group-hover:text-emerald-600" />
+                                                                <div className="flex items-center justify-between mt-1">
+                                                                    <div className="text-[10px] text-emerald-600 line-clamp-1 flex-1">
+                                                                        {res.scoreResult.isHariUtama ? 'Hari Utama Pawiwahan' : 'Tidak ada pantangan berat'}
+                                                                    </div>
+                                                                    <div className="w-5 h-5 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-emerald-100 transition-colors ml-2">
+                                                                        <ChevronRight className="w-3 h-3 text-stone-400 group-hover:text-emerald-600" />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    ))}
+                                                        );
+                                                    })}
                                                 </div>
                                             ) : (
                                                 <div className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100">
@@ -1079,39 +1088,50 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
                                             {melahirkanResults.length > 0 ? (
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                    {melahirkanResults.map((res, idx) => (
-                                                        <div
-                                                            key={idx}
-                                                            onClick={() => handleResultClick(res.date)}
-                                                            className="bg-white border border-rose-100 rounded-xl p-3 sm:p-4 hover:border-rose-400 hover:shadow-md transition-all cursor-pointer group"
-                                                        >
-                                                            <div className="flex justify-between items-start mb-2">
-                                                                <div>
-                                                                    <p className="font-bold text-stone-800 text-base group-hover:text-rose-700">{formatIndonesianDate(res.date)}</p>
-                                                                    <p className="text-xs text-stone-500 mt-0.5">
-                                                                        {res.baliDate.saptawara.name} {res.baliDate.pancawara.name.split(' ')[0]} {res.baliDate.wuku.name}
-                                                                    </p>
+                                                    {melahirkanResults.map((res, idx) => {
+                                                        const score = res.scoreResult.score;
+                                                        const scoreColor = score === 100 ? 'bg-emerald-500 text-white border-emerald-600'
+                                                            : score >= 75 ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                                                : score >= 50 ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                                                    : 'bg-orange-100 text-orange-800 border-orange-300';
+                                                        const cardBorder = score === 100 ? 'border-emerald-300'
+                                                            : score >= 75 ? 'border-emerald-200'
+                                                                : score >= 50 ? 'border-yellow-200'
+                                                                    : 'border-orange-200';
+                                                        return (
+                                                            <div
+                                                                key={idx}
+                                                                onClick={() => handleResultClick(res.date)}
+                                                                className={`bg-white border ${cardBorder} rounded-xl p-3 sm:p-4 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group`}
+                                                            >
+                                                                <div className="flex justify-between items-start mb-2">
+                                                                    <div>
+                                                                        <p className="font-bold text-stone-800 text-base group-hover:text-emerald-700">{formatIndonesianDate(res.date)}</p>
+                                                                        <p className="text-xs text-stone-500 mt-0.5">
+                                                                            {res.baliDate.saptawara.name} {res.baliDate.pancawara.name.split(' ')[0]} {res.baliDate.wuku.name}
+                                                                        </p>
+                                                                    </div>
+                                                                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${scoreColor}`}>
+                                                                        {score}%
+                                                                    </span>
                                                                 </div>
-                                                                <div className="px-2 py-1 rounded bg-rose-100 text-rose-800 font-bold text-xs flex items-center gap-1">
-                                                                    {res.scoreResult.score}%
-                                                                </div>
-                                                            </div>
 
-                                                            {/* Badges */}
-                                                            <div className="flex flex-wrap gap-2 mt-3">
-                                                                {res.scoreResult.tanggalCantikLabel && (
-                                                                    <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-1 rounded border border-amber-200 flex items-center gap-1">
-                                                                        <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> {res.scoreResult.tanggalCantikLabel}
-                                                                    </span>
-                                                                )}
-                                                                {res.scoreResult.uripHarmonyLabel && (
-                                                                    <span className={`text-[10px] px-2 py-1 rounded border flex items-center gap-1 ${res.scoreResult.uripHarmonyScore! > 0 ? 'bg-sky-100 text-sky-800 border-sky-200' : 'bg-red-100 text-red-800 border-red-200'}`}>
-                                                                        {res.scoreResult.uripHarmonyScore! > 0 ? '♥' : '⚠'} Urip: {res.scoreResult.uripHarmonyLabel}
-                                                                    </span>
-                                                                )}
+                                                                {/* Badges */}
+                                                                <div className="flex flex-wrap gap-2 mt-3">
+                                                                    {res.scoreResult.tanggalCantikLabel && (
+                                                                        <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-1 rounded border border-amber-200 flex items-center gap-1">
+                                                                            <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> {res.scoreResult.tanggalCantikLabel}
+                                                                        </span>
+                                                                    )}
+                                                                    {res.scoreResult.uripHarmonyLabel && (
+                                                                        <span className={`text-[10px] px-2 py-1 rounded border flex items-center gap-1 ${res.scoreResult.uripHarmonyScore! > 0 ? 'bg-sky-100 text-sky-800 border-sky-200' : 'bg-red-100 text-red-800 border-red-200'}`}>
+                                                                            {res.scoreResult.uripHarmonyScore! > 0 ? '♥' : '⚠'} Urip: {res.scoreResult.uripHarmonyLabel}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    ))}
+                                                        );
+                                                    })}
                                                 </div>
                                             ) : (
                                                 <div className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100">
