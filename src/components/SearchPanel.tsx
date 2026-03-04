@@ -952,8 +952,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1.5 rounded-full font-bold whitespace-nowrap">
                                                         Ditemukan: {pawiwahanResults.length} Hari
                                                     </span>
-                                                    <button onClick={handleExportPawiwahanPDF} className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-medium transition-colors whitespace-nowrap">
-                                                        <FileText className="w-3.5 h-3.5" /> PDF
+                                                    <button onClick={handleExportPawiwahanPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
+                                                        <FileText className="w-4 h-4" /> Download PDF
                                                     </button>
                                                 </div>
                                             </div>
@@ -1071,8 +1071,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     Rekomendasi Hari Terbaik (Skor &gt; 50%)
                                                 </h4>
                                                 {melahirkanResults.length > 0 && (
-                                                    <button onClick={handleExportMelahirkanPDF} className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-medium transition-colors whitespace-nowrap">
-                                                        <FileText className="w-3.5 h-3.5" /> PDF
+                                                    <button onClick={handleExportMelahirkanPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
+                                                        <FileText className="w-4 h-4" /> Download PDF
                                                     </button>
                                                 )}
                                             </div>
