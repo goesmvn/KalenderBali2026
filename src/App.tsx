@@ -74,7 +74,8 @@ function App() {
   };
 
   const currentDayObj = new Date();
-  const todayBaliDate = getBaliDate(currentDayObj);
+  // Memoize the expensive Bali date calculation for today
+  const todayBaliDate = useMemo(() => getBaliDate(currentDayObj), []);
   const todayDateStr = `${currentDayObj.getFullYear()}-${(currentDayObj.getMonth() + 1).toString().padStart(2, '0')}-${currentDayObj.getDate().toString().padStart(2, '0')}`;
   const todayHolidays = holidays[todayDateStr] || [];
 
@@ -86,97 +87,90 @@ function App() {
     return Math.round((target.getTime() - today.getTime()) / (1000 * 3600 * 24));
   };
 
-  const upcomingEvents = useMemo(() => {
-    const types: ('purnama' | 'tilem' | 'kajengkliwon' | 'galungan' | 'kuningan' | 'nyepi' | 'tumpek' | 'anggarakasih' | 'budacemeng')[] =
-      ['purnama', 'tilem', 'kajengkliwon', 'galungan', 'kuningan', 'nyepi', 'tumpek', 'anggarakasih', 'budacemeng'];
+  // Deferred: compute upcoming events AFTER initial render to avoid blocking paint
+  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
 
-    let allResults: any[] = [];
-    // Start search from tomorrow
-    const tomorrow = new Date(currentDayObj);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+  useEffect(() => {
+    // Use requestIdleCallback (or setTimeout fallback) to defer heavy computation
+    const compute = () => {
+      const types: ('purnama' | 'tilem' | 'kajengkliwon' | 'galungan' | 'kuningan' | 'nyepi' | 'tumpek' | 'anggarakasih' | 'budacemeng')[] =
+        ['purnama', 'tilem', 'kajengkliwon', 'galungan', 'kuningan', 'nyepi', 'tumpek', 'anggarakasih', 'budacemeng'];
 
-    types.forEach(type => {
-      const results = searchBaliCalendar({ type, startDate: tomorrow }, 1);
-      if (results.length > 0) {
-        allResults.push({ ...results[0], searchType: type });
-      }
-    });
+      let allResults: any[] = [];
+      const tomorrow = new Date(currentDayObj);
+      tomorrow.setDate(tomorrow.getDate() + 1);
 
-    // Cek libur nasional 40 hari ke depan
-    const checkDate = new Date(tomorrow);
-    for (let i = 0; i < 40; i++) {
-      const ds = `${checkDate.getFullYear()}-${(checkDate.getMonth() + 1).toString().padStart(2, '0')}-${checkDate.getDate().toString().padStart(2, '0')}`;
-      if (holidays[ds] && holidays[ds].length > 0) {
-        holidays[ds].forEach(hol => {
-          allResults.push({
-            date: new Date(checkDate),
-            label: hol,
-            searchType: 'holiday'
-          });
-        });
-      }
-      checkDate.setDate(checkDate.getDate() + 1);
-    }
-
-    const getPriority = (evt: any) => {
-      if (evt.searchType === 'purnama' || evt.searchType === 'tilem') return 1;
-      if (evt.searchType === 'kajengkliwon') return 2;
-      if (evt.searchType === 'tumpek') return 3;
-      if (evt.searchType === 'anggarakasih') return 4;
-      if (evt.searchType === 'budacemeng') return 5;
-      if (['galungan', 'kuningan', 'nyepi'].includes(evt.searchType)) return 6;
-      if (evt.searchType === 'holiday') return 7;
-      return 8;
-    };
-
-    // Sort by date ascending, then priority
-    allResults.sort((a, b) => {
-      const dateDiff = a.date.getTime() - b.date.getTime();
-      if (dateDiff === 0) {
-        return getPriority(a) - getPriority(b);
-      }
-      return dateDiff;
-    });
-
-    // Deduplicate logic
-    const deduplicatedResults: any[] = [];
-    allResults.forEach(evt => {
-      let label = evt.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
-        ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(evt.searchType) ? evt.label.toUpperCase() :
-          evt.label;
-      const normalizedLabel = label.toLowerCase();
-
-      const isNyepi = normalizedLabel.includes('nyepi');
-
-      const isDuplicate = deduplicatedResults.some(existing => {
-        const existingLabel = (existing.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
-          ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(existing.searchType) ? existing.label.toUpperCase() :
-            existing.label).toLowerCase();
-
-        const isSameDate = existing.date.getTime() === evt.date.getTime();
-
-        // If on same date, checking for overlapping keywords between Balinese holiday and National holiday to drop duplicate
-        if (isSameDate) {
-          const overlapKeywords = ['nyepi', 'galungan', 'kuningan', 'saraswati', 'pagerwesi', 'siwaratri'];
-          for (const word of overlapKeywords) {
-            if (normalizedLabel.includes(word) && existingLabel.includes(word)) return true;
-          }
+      types.forEach(type => {
+        const results = searchBaliCalendar({ type, startDate: tomorrow }, 1);
+        if (results.length > 0) {
+          allResults.push({ ...results[0], searchType: type });
         }
-
-        if (isNyepi && existingLabel.includes('nyepi')) return true;
-        // Check for exact match or cuti bersama match
-        if (normalizedLabel === existingLabel) return true;
-
-        return false;
       });
 
-      if (!isDuplicate) {
-        deduplicatedResults.push(evt);
+      // Check national holidays 40 days ahead
+      const checkDate = new Date(tomorrow);
+      for (let i = 0; i < 40; i++) {
+        const ds = `${checkDate.getFullYear()}-${(checkDate.getMonth() + 1).toString().padStart(2, '0')}-${checkDate.getDate().toString().padStart(2, '0')}`;
+        if (holidays[ds] && holidays[ds].length > 0) {
+          holidays[ds].forEach(hol => {
+            allResults.push({ date: new Date(checkDate), label: hol, searchType: 'holiday' });
+          });
+        }
+        checkDate.setDate(checkDate.getDate() + 1);
       }
-    });
 
-    return deduplicatedResults.slice(0, 7);
-  }, [todayDateStr, holidays]);
+      const getPriority = (evt: any) => {
+        if (evt.searchType === 'purnama' || evt.searchType === 'tilem') return 1;
+        if (evt.searchType === 'kajengkliwon') return 2;
+        if (evt.searchType === 'tumpek') return 3;
+        if (evt.searchType === 'anggarakasih') return 4;
+        if (evt.searchType === 'budacemeng') return 5;
+        if (['galungan', 'kuningan', 'nyepi'].includes(evt.searchType)) return 6;
+        if (evt.searchType === 'holiday') return 7;
+        return 8;
+      };
+
+      allResults.sort((a, b) => {
+        const dateDiff = a.date.getTime() - b.date.getTime();
+        return dateDiff === 0 ? getPriority(a) - getPriority(b) : dateDiff;
+      });
+
+      // Deduplicate
+      const deduplicatedResults: any[] = [];
+      allResults.forEach(evt => {
+        const label = evt.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
+          ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(evt.searchType) ? evt.label.toUpperCase() : evt.label;
+        const normalizedLabel = label.toLowerCase();
+        const isNyepi = normalizedLabel.includes('nyepi');
+
+        const isDuplicate = deduplicatedResults.some(existing => {
+          const existingLabel = (existing.searchType === 'kajengkliwon' ? 'KAJENG KLIWON' :
+            ['purnama', 'tilem', 'tumpek', 'anggarakasih', 'budacemeng'].includes(existing.searchType) ? existing.label.toUpperCase() : existing.label).toLowerCase();
+          const isSameDate = existing.date.getTime() === evt.date.getTime();
+          if (isSameDate) {
+            const overlapKeywords = ['nyepi', 'galungan', 'kuningan', 'saraswati', 'pagerwesi', 'siwaratri'];
+            for (const word of overlapKeywords) {
+              if (normalizedLabel.includes(word) && existingLabel.includes(word)) return true;
+            }
+          }
+          if (isNyepi && existingLabel.includes('nyepi')) return true;
+          if (normalizedLabel === existingLabel) return true;
+          return false;
+        });
+
+        if (!isDuplicate) deduplicatedResults.push(evt);
+      });
+
+      setUpcomingEvents(deduplicatedResults.slice(0, 7));
+    };
+
+    // Defer computation to after paint
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(compute);
+    } else {
+      setTimeout(compute, 100);
+    }
+  }, [holidays]);
 
   // Helper to determine special holiday highlight
   const getSpecialHighlight = () => {
