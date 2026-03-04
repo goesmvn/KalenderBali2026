@@ -14,18 +14,17 @@
 	# Serve files
 	file_server
 
-	# Cache static assets aggressively
-	@static path *.js *.css *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot
+	# Cache static assets aggressively (JS/CSS/fonts/images)
+	@static path *.js *.css *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.webp
 	header @static Cache-Control "public, max-age=31536000, immutable"
 
 	# Cache HTML with short TTL for updates
 	@html path *.html
 	header @html Cache-Control "public, max-age=300"
 
-	# Security headers
+	# Security headers (no X-Frame-Options to allow widget iframe embeds)
 	header {
 		X-Content-Type-Options "nosniff"
-		X-Frame-Options "SAMEORIGIN"
 		Referrer-Policy "strict-origin-when-cross-origin"
 		-Server
 	}
