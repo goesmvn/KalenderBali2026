@@ -88,9 +88,23 @@ function App() {
   };
 
   // Deferred: compute upcoming events AFTER initial render to avoid blocking paint
-  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<any[]>(() => {
+    // Try to load from localStorage cache (daily TTL)
+    try {
+      const cached = localStorage.getItem(`kb_upcoming_${todayDateStr}`);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        // Restore Date objects from serialized strings
+        return parsed.map((evt: any) => ({ ...evt, date: new Date(evt.date) }));
+      }
+    } catch (e) { /* fall through */ }
+    return [];
+  });
 
   useEffect(() => {
+    // Skip if already loaded from cache
+    if (upcomingEvents.length > 0) return;
+
     // Use requestIdleCallback (or setTimeout fallback) to defer heavy computation
     const compute = () => {
       const types: ('purnama' | 'tilem' | 'kajengkliwon' | 'galungan' | 'kuningan' | 'nyepi' | 'tumpek' | 'anggarakasih' | 'budacemeng')[] =
@@ -161,7 +175,13 @@ function App() {
         if (!isDuplicate) deduplicatedResults.push(evt);
       });
 
-      setUpcomingEvents(deduplicatedResults.slice(0, 7));
+      const finalEvents = deduplicatedResults.slice(0, 7);
+      setUpcomingEvents(finalEvents);
+
+      // Save to localStorage for next load
+      try {
+        localStorage.setItem(`kb_upcoming_${todayDateStr}`, JSON.stringify(finalEvents));
+      } catch (e) { /* quota or unavailable */ }
     };
 
     // Defer computation to after paint

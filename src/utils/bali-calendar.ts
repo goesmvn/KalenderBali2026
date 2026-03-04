@@ -780,9 +780,20 @@ function calculateRahinan(
 }
 
 /**
+ * In-memory cache for getBaliDate computations.
+ * Avoids recalculating the same date multiple times within a session.
+ */
+const baliDateCache = new Map<string, BaliDate>();
+
+/**
  * Mendapatkan semua data kalender Bali untuk sebuah tanggal
  */
 export function getBaliDate(date: Date): BaliDate {
+  // Check cache first
+  const cacheKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const cached = baliDateCache.get(cacheKey);
+  if (cached) return cached;
+
   // Hitung wuku
   const wukuInfo = calculateWuku(date);
 
@@ -861,6 +872,8 @@ export function getBaliDate(date: Date): BaliDate {
     baseBaliDate.dasawara ? baseBaliDate.dasawara.name : undefined
   );
 
+  // Store in cache
+  baliDateCache.set(cacheKey, baseBaliDate);
   return baseBaliDate;
 }
 

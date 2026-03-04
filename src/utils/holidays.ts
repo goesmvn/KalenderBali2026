@@ -6,14 +6,31 @@ export interface Holiday {
 
 const holidaysCache: Record<number, Record<string, string[]>> = {};
 
+/** Save holidays to both in-memory cache and localStorage */
+function cacheHolidays(year: number, data: Record<string, string[]>) {
+    holidaysCache[year] = data;
+    try { localStorage.setItem(`kb_holidays_${year}`, JSON.stringify(data)); } catch (e) { /* quota or unavailable */ }
+}
+
 /**
  * Fetch Indonesian national holidays from public API
  * Returns a map of YYYY-MM-DD to an array of holiday names
  */
 export async function getNationalHolidays(year: number): Promise<Record<string, string[]>> {
+    // 1. Check in-memory cache
     if (holidaysCache[year]) {
         return holidaysCache[year];
     }
+
+    // 2. Check localStorage cache
+    try {
+        const stored = localStorage.getItem(`kb_holidays_${year}`);
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            holidaysCache[year] = parsed;
+            return parsed;
+        }
+    } catch (e) { /* localStorage unavailable, continue */ }
 
     try {
         const response = await fetch(`https://dayoffapi.vercel.app/api?year=${year}`);
@@ -46,7 +63,7 @@ export async function getNationalHolidays(year: number): Promise<Record<string, 
             }
         });
 
-        holidaysCache[year] = holidayMap;
+        cacheHolidays(year, holidayMap);
         return holidayMap;
     } catch (error) {
         console.error(`Error fetching holidays for ${year}:`, error);
@@ -81,7 +98,7 @@ export async function getNationalHolidays(year: number): Promise<Record<string, 
                 '2024-12-25': ['Hari Raya Natal'],
                 '2024-12-26': ['Cuti Bersama Natal']
             };
-            holidaysCache[year] = fallback2024;
+            cacheHolidays(year, fallback2024);
             return fallback2024;
         }
 
@@ -115,7 +132,7 @@ export async function getNationalHolidays(year: number): Promise<Record<string, 
                 '2025-12-25': ['Hari Raya Natal'],
                 '2025-12-26': ['Cuti Bersama Natal']
             };
-            holidaysCache[year] = fallback2025;
+            cacheHolidays(year, fallback2025);
             return fallback2025;
         }
 
@@ -137,7 +154,7 @@ export async function getNationalHolidays(year: number): Promise<Record<string, 
                 '2026-08-27': ['Maulid Nabi Muhammad SAW'],
                 '2026-12-25': ['Hari Raya Natal']
             };
-            holidaysCache[year] = fallback2026;
+            cacheHolidays(year, fallback2026);
             return fallback2026;
         }
 
