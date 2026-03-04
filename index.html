@@ -18,11 +18,171 @@
   <meta name="twitter:image" content="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg" />
   <title>Kalender Bali</title>
   <link rel="icon" type="image/jpeg" href="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg" />
+
+  <!-- Splash Screen Styles (inline for instant render) -->
+  <style>
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #e7e5e4 100%);
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      margin-bottom: 1.5rem;
+      animation: splash-fade-in 0.6s ease-out;
+    }
+
+    .splash-logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #292524;
+    }
+
+    .splash-logo-dot {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #c1121f;
+    }
+
+    .splash-tagline {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.875rem;
+      color: #78716c;
+      margin-bottom: 2.5rem;
+      animation: splash-fade-in 0.6s ease-out 0.2s both;
+    }
+
+    /* Spinner */
+    .splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #e7e5e4;
+      border-top-color: #c1121f;
+      border-radius: 50%;
+      animation: splash-spin 0.8s linear infinite, splash-fade-in 0.4s ease-out 0.4s both;
+    }
+
+    /* Loading bar (progressive) */
+    .splash-bar-track {
+      width: 200px;
+      height: 3px;
+      background: #e7e5e4;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+      animation: splash-fade-in 0.4s ease-out 0.5s both;
+    }
+
+    .splash-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #c1121f, #ef4444);
+      border-radius: 4px;
+      animation: splash-progress 2.5s ease-in-out infinite;
+    }
+
+    .splash-status {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.75rem;
+      color: #a8a29e;
+      margin-top: 1rem;
+      animation: splash-fade-in 0.4s ease-out 0.6s both;
+    }
+
+    @keyframes splash-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes splash-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes splash-progress {
+      0% {
+        width: 0%;
+      }
+
+      50% {
+        width: 70%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Splash Screen (renders instantly before JS loads) -->
+  <div id="splash-screen">
+    <div class="splash-logo">
+      <span class="splash-logo-text">KalenderBali</span>
+      <span class="splash-logo-dot">.id</span>
+    </div>
+    <p class="splash-tagline">Warisan Budaya Bali dalam Genggaman</p>
+    <div class="splash-spinner"></div>
+    <div class="splash-bar-track">
+      <div class="splash-bar-fill"></div>
+    </div>
+    <p class="splash-status">Memuat kalender...</p>
+  </div>
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Remove splash after React mounts -->
+  <script>
+    // Observer watches for React content appearing in #root
+    const observer = new MutationObserver(() => {
+      const root = document.getElementById('root');
+      if (root && root.children.length > 0) {
+        observer.disconnect();
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.classList.add('fade-out');
+          setTimeout(() => splash.remove(), 500);
+        }
+      }
+    });
+    observer.observe(document.getElementById('root'), { childList: true });
+
+    // Fallback: force remove after 10s even if something fails
+    setTimeout(() => {
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.remove(), 500);
+      }
+    }, 10000);
+  </script>
 </body>
 
 </html>

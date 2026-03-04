@@ -3,10 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: kalenderbali:latest
     container_name: kalenderbali
     restart: unless-stopped
     ports:
       - "3080:80"
-    environment:
-      - TZ=Asia/Makassar
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    external: true
