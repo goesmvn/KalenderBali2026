@@ -1,15 +1,28 @@
+version: "3.8"
+
 services:
-  kalenderbali:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: kalenderbali
+
+  app:
+    build: .
+    container_name: kalenderbali_app
+    restart: unless-stopped
+    expose:
+      - "80"
+
+  caddy:
+    image: caddy:2
+    container_name: KalenderBali
     restart: unless-stopped
     ports:
-      - "3080:80"
-    networks:
-      - caddy_net
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
 
-networks:
-  caddy_net:
-    external: true
+volumes:
+  caddy_data:
+  caddy_config:
