@@ -20,6 +20,7 @@ import {
 import { calculateYadnyaScore } from '@/utils/yadnya-score';
 import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
 import { calculateKelahiranScore } from '@/utils/kelahiran-score';
+import { getPiodalan } from '@/utils/piodalan-data';
 
 interface CalendarProps {
   onSelectDate: (date: Date, baliDate: BaliDate) => void;
@@ -68,6 +69,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
       holidaysList: string[];
       yadnyaScore?: number;
       hasBadYadnyaMatch?: boolean;
+      piodalan: string[];
     }> = [];
 
     // Add previous month days
@@ -107,7 +109,8 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
         isBaliHoliday: isHolidayBali(baliDate.events),
         holidaysList,
         yadnyaScore,
-        hasBadYadnyaMatch
+        hasBadYadnyaMatch,
+        piodalan: getPiodalan(baliDate)
       });
     }
 
@@ -147,7 +150,8 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
         isBaliHoliday: isHolidayBali(baliDate.events),
         holidaysList,
         yadnyaScore,
-        hasBadYadnyaMatch
+        hasBadYadnyaMatch,
+        piodalan: getPiodalan(baliDate)
       });
     }
 
@@ -194,7 +198,8 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
         isBaliHoliday: isHolidayBali(baliDate.events),
         holidaysList,
         yadnyaScore,
-        hasBadYadnyaMatch
+        hasBadYadnyaMatch,
+        piodalan: getPiodalan(baliDate)
       });
     }
 
@@ -416,9 +421,9 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                         <>
                           {day.yadnyaScore! > 0 && (
                             <span className={`text-[9px] sm:text-[10px] font-bold px-1 rounded backdrop-blur-sm shadow-sm border ${day.yadnyaScore! === 100 ? 'text-white bg-emerald-600/80 border-emerald-500'
-                                : day.yadnyaScore! >= 60 ? 'text-lime-900 bg-lime-200/80 border-lime-400'
-                                  : day.yadnyaScore! >= 40 ? 'text-yellow-800 bg-yellow-100/80 border-yellow-300'
-                                    : 'text-orange-800 bg-orange-100/80 border-orange-300'
+                              : day.yadnyaScore! >= 60 ? 'text-lime-900 bg-lime-200/80 border-lime-400'
+                                : day.yadnyaScore! >= 40 ? 'text-yellow-800 bg-yellow-100/80 border-yellow-300'
+                                  : 'text-orange-800 bg-orange-100/80 border-orange-300'
                               }`}>
                               {day.yadnyaScore}%
                             </span>
@@ -452,6 +457,26 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                       <span className="text-[10px] sm:text-[9px] font-medium text-red-500 truncate w-full text-center block" title={day.holidaysList.join(', ')}>
                         {day.holidaysList.join(', ')}
                       </span>
+                    )}
+                    {day.piodalan.length > 0 && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="text-[9px] font-medium text-amber-600 truncate w-full text-center block cursor-help">
+                            🛕 Piodalan
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="max-w-xs">
+                          <p className="font-semibold text-xs mb-1">Piodalan di:</p>
+                          <ul className="text-[11px] space-y-0.5">
+                            {day.piodalan.slice(0, 5).map((p, i) => (
+                              <li key={i}>• {p}</li>
+                            ))}
+                            {day.piodalan.length > 5 && (
+                              <li className="text-stone-400">+{day.piodalan.length - 5} pura lainnya</li>
+                            )}
+                          </ul>
+                        </TooltipContent>
+                      </Tooltip>
                     )}
                   </div>
 

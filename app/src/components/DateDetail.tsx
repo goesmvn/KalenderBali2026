@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
+import { getPiodalan, getPiodalanWewaran } from '@/utils/piodalan-data';
 
 // Format helper
 interface DateDetailProps {
@@ -152,6 +153,8 @@ export function DateDetail({ baliDate, nationalHolidays = [], onClose }: DateDet
 
   const isPurnama = baliDate.purnamaTilem?.type === 'Purnama';
   const isTilem = baliDate.purnamaTilem?.type === 'Tilem';
+  const piodalanList = getPiodalan(baliDate);
+  const piodalanWewaran = getPiodalanWewaran(baliDate);
 
   return (
     <AnimatePresence>
@@ -293,6 +296,32 @@ export function DateDetail({ baliDate, nationalHolidays = [], onClose }: DateDet
                         dotColorClass="bg-brand-600"
                         bgClass="border-brand-100"
                       />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Piodalan Section */}
+              {piodalanList.length > 0 && (
+                <div className="mb-6 p-4 sm:p-5 bg-amber-50 rounded-xl border border-amber-200 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🛕</span>
+                      <h3 className="font-semibold text-amber-900">Piodalan</h3>
+                    </div>
+                    <span className="text-[10px] uppercase font-semibold tracking-wider text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">
+                      {piodalanWewaran}
+                    </span>
+                  </div>
+                  <p className="text-xs text-amber-700 mb-3">
+                    Hari perayaan/odalan di pura dan merajan berikut (berulang setiap 210 hari):
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {piodalanList.map((pura, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-2 bg-white rounded-lg border border-amber-100 shadow-sm">
+                        <MapPin className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-xs text-stone-700 leading-relaxed">{pura}</span>
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -7,6 +7,7 @@ import { getBaliDate } from '@/utils/bali-calendar';
 import { getNationalHolidays } from '@/utils/holidays';
 import { searchBaliCalendar } from '@/utils/search-utils';
 import type { BaliDate } from '@/types/bali-calendar';
+import { getPiodalan } from '@/utils/piodalan-data';
 import {
   CalendarDays,
   Sun,
@@ -349,6 +350,29 @@ function App() {
                     </div>
                   </div>
                 )}
+
+                {/* Piodalan Today */}
+                {(() => {
+                  const todayPiodalan = getPiodalan(todayBaliDate);
+                  if (todayPiodalan.length === 0) return null;
+                  return (
+                    <div className="pt-3 mt-3 border-t border-stone-100">
+                      <span className="text-xs text-stone-500 font-medium block mb-2">🛕 Piodalan Hari Ini</span>
+                      <div className="flex flex-col gap-1">
+                        {todayPiodalan.slice(0, 3).map((pura, i) => (
+                          <div key={`pio-${i}`} className="flex items-start gap-1.5 text-xs">
+                            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1" />
+                            <span className="text-amber-700 font-medium leading-tight">{pura}</span>
+                          </div>
+                        ))}
+                        {todayPiodalan.length > 3 && (
+                          <span className="text-[10px] text-stone-400 ml-3">+{todayPiodalan.length - 3} pura lainnya</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
+
               </div>
 
               {specialHighlight && (
