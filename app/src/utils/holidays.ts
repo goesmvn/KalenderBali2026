@@ -33,16 +33,36 @@ export async function getNationalHolidays(year: number): Promise<Record<string, 
     } catch (e) { /* localStorage unavailable, continue */ }
 
     try {
-        const response = await fetch(`https://dayoffapi.vercel.app/api?year=${year}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch holidays');
+        let data: Holiday[] = [];
+        let apiFailed = false;
+
+        try {
+            // Add a timeout to prevent hanging the app if the Vercel app is sleeping/frozen
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+            const response = await fetch(`https://dayoffapi.vercel.app/api?year=${year}`, {
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                console.warn(`[Holidays HTTP Error] ${response.status}`);
+                apiFailed = true;
+            } else {
+                data = await response.json();
+            }
+        } catch (fetchError) {
+            console.warn(`[Holidays Fetch/CORS Error] Fallback triggered.`, fetchError);
+            apiFailed = true;
         }
 
-        const data: Holiday[] = await response.json();
-
         // If API fails or returns no data for current years, use fallback
-        if ((!data || data.length === 0 || data.hasOwnProperty('error')) && [2024, 2025, 2026].includes(year)) {
-            throw new Error('No data from API, using fallback');
+        if (apiFailed || (!data || data.length === 0 || (data as any).hasOwnProperty('error'))) {
+            throw new Error('API failed or CORS blocked, triggering fallback');
         }
 
         const holidayMap: Record<string, string[]> = {};

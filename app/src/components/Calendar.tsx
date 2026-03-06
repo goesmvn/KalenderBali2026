@@ -28,6 +28,7 @@ interface CalendarProps {
   currentMonth: Date;
   onMonthChange: (date: Date) => void;
   nationalHolidays?: Record<string, string[]>;
+  piodalanLoaded?: boolean;
   highlightCategory?: string | null;
   onReset?: () => void;
 }
@@ -38,7 +39,7 @@ const MONTHS = [
   'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
 ];
 
-export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, highlightCategory, onReset }: CalendarProps) {
+export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, piodalanLoaded = false, highlightCategory, onReset }: CalendarProps) {
   const [today] = useState(new Date());
 
   const calendarDays = useMemo(() => {
@@ -204,7 +205,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
     }
 
     return days;
-  }, [currentMonth, today, nationalHolidays, highlightCategory]);
+  }, [currentMonth, today, nationalHolidays, piodalanLoaded, highlightCategory]);
 
   const goToPreviousMonth = () => {
     onMonthChange(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));

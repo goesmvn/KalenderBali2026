@@ -2,6 +2,7 @@ import type { Wewaran, Wuku, Sasih, PurnamaTilem, BaliDate, PenanggalPangelong }
 import { calculateDewasaAyu } from './dewasa-ayu';
 import { calculateDauhAyu } from './dauh-ayu';
 import { getPewatekan, checkBantenPenebusan } from './pewatekan-penebusan-data';
+import { parseLocalDate } from './date-parser';
 
 // ============ DATA WEWARAN ============
 
@@ -739,7 +740,7 @@ function calculateRahinan(
 
   if (NYEPI_DATES[year]) {
     const nyepiDateStr = NYEPI_DATES[year];
-    const nyepiDate = new Date(nyepiDateStr);
+    const nyepiDate = parseLocalDate(nyepiDateStr);
 
     // Pengerupukan (1 day before)
     const pengerupukanDate = new Date(nyepiDate);

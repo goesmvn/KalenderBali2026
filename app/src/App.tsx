@@ -7,7 +7,7 @@ import { getBaliDate } from '@/utils/bali-calendar';
 import { getNationalHolidays } from '@/utils/holidays';
 import { searchBaliCalendar } from '@/utils/search-utils';
 import type { BaliDate } from '@/types/bali-calendar';
-import { getPiodalan } from '@/utils/piodalan-data';
+import { getPiodalan, loadPiodalanData } from '@/utils/piodalan-data';
 import {
   CalendarDays,
   Sun,
@@ -46,6 +46,13 @@ function App() {
   // Holidays state
   const [holidays, setHolidays] = useState<Record<string, string[]>>({});
 
+  // Piodalan loaded state to force re-renders when data arrives
+  const [piodalanLoaded, setPiodalanLoaded] = useState(false);
+
+  useEffect(() => {
+    loadPiodalanData().then(() => setPiodalanLoaded(true));
+  }, []);
+
   // Fetch holidays whenever the year changes
   useEffect(() => {
     const year = currentMonth.getFullYear();
@@ -61,7 +68,16 @@ function App() {
     setSelectedDate(date);
     if (baliDate) {
       setSelectedBaliDate(baliDate);
-      // setShowDetail(true);
+
+      // Update URL to match selected date for sharing
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const urlDateStr = `${yyyy}-${mm}-${dd}`;
+
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set('date', urlDateStr);
+      window.history.pushState({ path: newUrl.href }, '', newUrl.href);
     } else {
       // If we only have normal Date (e.g. from SearchPanel Masehi M/Y search)
       // we change month but don't show detail pop-up until they click on grid
@@ -70,9 +86,31 @@ function App() {
   };
 
   const handleCloseDetail = () => {
-    // setShowDetail(false);
     setSelectedBaliDate(null);
+
+    // Remove date from URL when closing detail modal
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete('date');
+    window.history.pushState({ path: newUrl.href }, '', newUrl.href);
   };
+
+  // Read URL init state (e.g ?date=2026-03-05)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateQuery = urlParams.get('date');
+    if (dateQuery) {
+      const parts = dateQuery.split('-');
+      if (parts.length === 3) {
+        const initDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        if (!isNaN(initDate.getTime())) {
+          setCurrentMonth(initDate);
+          setSelectedDate(initDate);
+          const initialBaliDate = getBaliDate(initDate);
+          setSelectedBaliDate(initialBaliDate);
+        }
+      }
+    }
+  }, []);
 
   const currentDayObj = new Date();
   // Memoize the expensive Bali date calculation for today
@@ -511,6 +549,7 @@ function App() {
               currentMonth={currentMonth}
               onMonthChange={setCurrentMonth}
               nationalHolidays={holidays}
+              piodalanLoaded={piodalanLoaded}
               highlightCategory={highlightCategory}
               onReset={() => setHighlightCategory(null)}
             />

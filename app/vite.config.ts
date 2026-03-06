@@ -5,7 +5,15 @@ import { defineConfig } from "vite"
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'html-transform',
+      transformIndexHtml(html) {
+        return html.replace(/%CURRENT_YEAR%/g, new Date().getFullYear().toString());
+      },
+    }
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

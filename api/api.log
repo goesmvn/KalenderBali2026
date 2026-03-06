@@ -1,0 +1,6 @@
+
+> kalenderbali-api@1.0.0 dev
+> tsx watch src/index.ts
+
+🛕 KalenderBali API running on port 8080
+   Health: http://localhost:8080/api/health

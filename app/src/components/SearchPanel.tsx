@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { searchBaliCalendar } from '@/utils/search-utils';
 import type { SearchType, SearchResult } from '@/utils/search-utils';
 import { formatIndonesianDate } from '@/utils/bali-calendar';
+import { parseLocalDate } from '@/utils/date-parser';
 import { Search, CalendarDays, SearchIcon, ChevronRight, Star, FileText } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -147,8 +148,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
         // Simulate delay
         setTimeout(() => {
             const results = [];
-            const startDate = new Date(pawiwahanStartDate);
-            const endDate = new Date(pawiwahanEndDate);
+            const startDate = parseLocalDate(pawiwahanStartDate);
+            const endDate = parseLocalDate(pawiwahanEndDate);
 
             if (startDate > endDate) {
                 setIsSearching(false);
@@ -185,8 +186,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
         setTimeout(() => {
             const results = [];
-            const startDate = new Date(melahirkanStartDate);
-            const endDate = new Date(melahirkanEndDate);
+            const startDate = parseLocalDate(melahirkanStartDate);
+            const endDate = parseLocalDate(melahirkanEndDate);
 
             if (startDate > endDate) {
                 setIsSearching(false);
@@ -227,8 +228,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
         setMelahirkanResults(null);
 
         setTimeout(() => {
-            const start = new Date(hariBaikStartDate);
-            const end = new Date(hariBaikEndDate);
+            const start = parseLocalDate(hariBaikStartDate);
+            const end = parseLocalDate(hariBaikEndDate);
             const results: Array<{ date: Date, scoreResult: HariBaikScoreResult, baliDate: BaliDate }> = [];
 
             const current = new Date(start);
@@ -328,7 +329,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
     const handleExportPawiwahanPDF = () => {
         if (!pawiwahanResults || pawiwahanResults.length === 0) return;
-        const subtitle = `Periode: ${formatIndonesianDate(new Date(pawiwahanStartDate))} - ${formatIndonesianDate(new Date(pawiwahanEndDate))}`;
+        const subtitle = `Periode: ${formatIndonesianDate(parseLocalDate(pawiwahanStartDate))} - ${formatIndonesianDate(parseLocalDate(pawiwahanEndDate))}`;
         const { doc, pageWidth, pageHeight, startY } = createBasePDF('Rekomendasi Hari Dewasa Pawiwahan', subtitle);
 
         const tableData = pawiwahanResults.map(res => [
@@ -371,7 +372,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
     const handleExportHariBaikPDF = () => {
         if (!hariBaikResults || hariBaikResults.length === 0) return;
-        const subtitle = `Kategori: ${selectedCategory} | Rentang: ${formatIndonesianDate(new Date(hariBaikStartDate))} - ${formatIndonesianDate(new Date(hariBaikEndDate))}`;
+        const subtitle = `Kategori: ${selectedCategory} | Rentang: ${formatIndonesianDate(parseLocalDate(hariBaikStartDate))} - ${formatIndonesianDate(parseLocalDate(hariBaikEndDate))}`;
 
         const { doc, pageWidth, pageHeight, startY } = createBasePDF('Rekomendasi Hari Baik', subtitle);
 
@@ -420,7 +421,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
     const handleExportMelahirkanPDF = () => {
         if (!melahirkanResults || melahirkanResults.length === 0) return;
-        const subtitle = `HPL: ${formatIndonesianDate(new Date(melahirkanStartDate))} - ${formatIndonesianDate(new Date(melahirkanEndDate))}`;
+        const subtitle = `HPL: ${formatIndonesianDate(parseLocalDate(melahirkanStartDate))} - ${formatIndonesianDate(parseLocalDate(melahirkanEndDate))}`;
 
         const extraDetails: { label: string, value: string }[] = [];
         if (ayahSaptawara && ayahPancawara) {
@@ -946,7 +947,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                         Rekomendasi Terbaik
                                                     </h4>
                                                     <p className="text-xs text-stone-500 mt-0.5">
-                                                        {formatIndonesianDate(new Date(pawiwahanStartDate))} - {formatIndonesianDate(new Date(pawiwahanEndDate))}
+                                                        {formatIndonesianDate(parseLocalDate(pawiwahanStartDate))} - {formatIndonesianDate(parseLocalDate(pawiwahanEndDate))}
                                                     </p>
                                                 </div>
                                                 <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">

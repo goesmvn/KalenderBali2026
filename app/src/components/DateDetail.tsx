@@ -17,7 +17,9 @@ import {
   BookOpen,
   Clock,
   AlertTriangle,
-  Baby
+  Baby,
+  Share2,
+  Check
 } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
@@ -149,6 +151,35 @@ export function DateDetail({ baliDate, nationalHolidays = [], onClose }: DateDet
     return calculatePawiwahanScore(baliDate);
   }, [baliDate]);
 
+  const [hasCopiedUrl, setHasCopiedUrl] = useState(false);
+
+  const handleShare = async () => {
+    if (!baliDate) return;
+    const gregStr = formatIndonesianDate(baliDate.gregorianDate);
+    const shareText = `Informasi Dewasa Ayu & Kalender Bali untuk tanggal ${gregStr}.`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Kalender Bali: ${gregStr}`,
+          text: shareText,
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.error('Error sharing', error);
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        setHasCopiedUrl(true);
+        setTimeout(() => setHasCopiedUrl(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    }
+  };
+
   if (!baliDate) return null;
 
   const isPurnama = baliDate.purnamaTilem?.type === 'Purnama';
@@ -182,12 +213,21 @@ export function DateDetail({ baliDate, nationalHolidays = [], onClose }: DateDet
                 backgroundSize: '30px 30px'
               }}
             />
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors z-20"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
+              <button
+                onClick={handleShare}
+                className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+                title="Bagikan"
+              >
+                {hasCopiedUrl ? <Check className="w-5 h-5 text-emerald-300" /> : <Share2 className="w-5 h-5" />}
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             <div className="flex items-start gap-4 pr-8 relative z-10">
               <div className="p-3 bg-white/20 rounded-xl shrink-0">

@@ -65,10 +65,10 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                             alt="Kalender Bali Logo"
                             className="w-10 h-10 rounded object-cover"
                         />
-                        <div className="text-2xl font-bold tracking-tight">
+                        <h1 className="text-2xl font-bold tracking-tight">
                             <span className="text-stone-800">KalenderBali</span>
                             <span className="text-[#c1121f]">.id</span>
-                        </div>
+                        </h1>
                     </div>
 
                     {/* Desktop Navigation */}
