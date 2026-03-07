@@ -21,7 +21,9 @@
         "calendar_features": "Функции календаря",
         "explore_culture": "Изучение культуры",
         "services": "Сервисы и загрузки",
-        "features_services": "Функции и сервисы"
+        "features_services": "Функции и сервисы",
+        "pura_directory": "Справочник храмов",
+        "trip_planner": "Организатор поездок"
     },
     "search": {
         "placeholder": "Поиск балийских праздников, церемоний...",

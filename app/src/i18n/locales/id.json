@@ -21,7 +21,9 @@
         "calendar_features": "Fitur Kalender",
         "explore_culture": "Eksplorasi Budaya",
         "services": "Layanan & Download",
-        "features_services": "Fitur & Layanan"
+        "features_services": "Fitur & Layanan",
+        "pura_directory": "Direktori Pura",
+        "trip_planner": "Smart Trip Planner"
     },
     "search": {
         "placeholder": "Cari hari raya, piodalan pura, atau wewaran...",

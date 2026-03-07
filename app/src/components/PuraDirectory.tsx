@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, CalendarDays, Clock, Building2, ChevronRight, X } from 'lucide-react';
+import { Search, MapPin, CalendarDays, Clock, Building2, X } from 'lucide-react';
 import { findNextPiodalan, type PuraBase } from '@/utils/next-piodalan';
-import { getBaliDate, getAksaraBaliSaptawara, formatAksaraBaliDate } from '@/utils/bali-calendar';
+
 
 export function PuraDirectory() {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const [puras, setPuras] = useState<PuraBase[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -95,8 +95,8 @@ export function PuraDirectory() {
                             key={cat}
                             onClick={() => setSelectedCategory(cat)}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
-                                    ? 'bg-brand-600 text-white shadow-sm'
-                                    : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                                ? 'bg-brand-600 text-white shadow-sm'
+                                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                                 }`}
                         >
                             {cat === 'all' ? 'Semua Kategori' : formatCategory(cat)}

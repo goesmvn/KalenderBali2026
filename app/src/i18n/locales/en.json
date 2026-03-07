@@ -21,7 +21,9 @@
         "calendar_features": "Calendar Features",
         "explore_culture": "Explore Culture",
         "services": "Services & Download",
-        "features_services": "Features & Services"
+        "features_services": "Features & Services",
+        "pura_directory": "Temple Directory",
+        "trip_planner": "Smart Trip Planner"
     },
     "search": {
         "placeholder": "Search Balinese holidays, temple ceremonies...",

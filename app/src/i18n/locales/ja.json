@@ -21,7 +21,9 @@
         "calendar_features": "カレンダー機能",
         "explore_culture": "文化の探求",
         "services": "サービスとダウンロード",
-        "features_services": "機能とサービス"
+        "features_services": "機能とサービス",
+        "pura_directory": "寺院ディレクトリ",
+        "trip_planner": "旅行プランナー"
     },
     "search": {
         "placeholder": "バリの祝日、寺院の祭典などを検索...",

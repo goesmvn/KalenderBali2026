@@ -31,12 +31,14 @@ const WidgetEmbedModal = lazy(() => import('@/components/WidgetEmbedModal').then
 const OtonanCalculator = lazy(() => import('@/components/OtonanCalculator').then(m => ({ default: m.OtonanCalculator })));
 const ExportCalendarModal = lazy(() => import('@/components/ExportCalendarModal').then(m => ({ default: m.ExportCalendarModal })));
 const NyepiGuide = lazy(() => import('@/components/NyepiGuide').then(m => ({ default: m.NyepiGuide })));
+const PuraDirectory = lazy(() => import('@/components/PuraDirectory').then(m => ({ default: m.PuraDirectory })));
+const TripPlanner = lazy(() => import('@/components/TripPlanner').then(m => ({ default: m.TripPlanner })));
 const PrivacyPolicy = lazy(() => import('@/components/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('@/components/TermsOfService').then(m => ({ default: m.TermsOfService })));
 
 function App() {
   const { t, i18n } = useTranslation();
-  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'privacy' | 'terms'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'pura_directory' | 'trip_planner' | 'privacy' | 'terms'>('home');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedBaliDate, setSelectedBaliDate] = useState<BaliDate | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -318,6 +320,22 @@ function App() {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
           <TermsOfService />
+        </motion.div>
+      );
+    }
+
+    if (currentPage === 'pura_directory') {
+      return (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+          <PuraDirectory />
+        </motion.div>
+      );
+    }
+
+    if (currentPage === 'trip_planner') {
+      return (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+          <TripPlanner />
         </motion.div>
       );
     }

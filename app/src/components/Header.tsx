@@ -18,8 +18,8 @@ interface NavItem {
 }
 
 interface HeaderProps {
-    currentPage: 'home' | 'about' | 'privacy' | 'terms';
-    onNavigate: (page: 'home' | 'about' | 'privacy' | 'terms') => void;
+    currentPage: 'home' | 'about' | 'pura_directory' | 'trip_planner' | 'privacy' | 'terms';
+    onNavigate: (page: 'home' | 'about' | 'pura_directory' | 'trip_planner' | 'privacy' | 'terms') => void;
     onOpenSearch?: () => void;
     onOpenDownload?: (tab: 'hariBaik' | 'pawiwahan' | 'melahirkan') => void;
     onOpenWidget?: () => void;
@@ -48,6 +48,8 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
             label: t('nav.features_services'),
             hasDropdown: true,
             items: [
+                { label: t('nav.trip_planner'), action: () => onNavigate('trip_planner') },
+                { label: t('nav.pura_directory'), action: () => onNavigate('pura_directory') },
                 { label: t('nav.otonan'), action: () => onOpenOtonan && onOpenOtonan() },
                 { label: t('nav.nyepi'), action: () => onOpenNyepiGuide && onOpenNyepiGuide() },
                 { label: t('nav.pdf_good_days'), action: () => onOpenDownload && onOpenDownload('hariBaik') },
