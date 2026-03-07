@@ -1,24 +1,43 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Copy, Check, Code } from 'lucide-react';
+import { X, Copy, Check, Code, CalendarDays, Info } from 'lucide-react';
 import { WidgetView } from './WidgetView';
+import { TodayWidget } from './TodayWidget';
 
 interface WidgetEmbedModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
+type WidgetType = 'calendar' | 'today';
+
 export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    const [widgetType, setWidgetType] = useState<WidgetType>('calendar');
     const [copied, setCopied] = useState(false);
 
+    const widgetConfig = {
+        calendar: {
+            src: `https://kalenderbali.id/?widget=true&theme=${theme}`,
+            height: 600,
+            maxWidth: 500,
+        },
+        today: {
+            src: `https://kalenderbali.id/?widget=today&theme=${theme}`,
+            height: 380,
+            maxWidth: 360,
+        }
+    };
+
+    const config = widgetConfig[widgetType];
+
     const embedCode = `<iframe 
-    src="https://kalenderbali.id/?widget=true&theme=${theme}" 
+    src="${config.src}" 
     width="100%" 
-    height="600" 
+    height="${config.height}" 
     frameborder="0" 
     scrolling="no" 
-    style="border: 1px solid #e5e7eb; border-radius: 12px; max-width: 500px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"
+    style="border: 1px solid #e5e7eb; border-radius: 12px; max-width: ${config.maxWidth}px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"
     title="Kalender Bali Widget"
 ></iframe>`;
 
@@ -74,9 +93,38 @@ export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
                     <div className="p-6 overflow-y-auto">
                         <div className="space-y-6">
 
-                            {/* Theme Selector (Cosmetic feature for future, triggers param change) */}
+                            {/* Widget Type Selector */}
                             <div>
-                                <h3 className="text-sm font-semibold text-stone-700 mb-3">1. Pilih Tema Widget</h3>
+                                <h3 className="text-sm font-semibold text-stone-700 mb-3">1. Pilih Jenis Widget</h3>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        onClick={() => setWidgetType('calendar')}
+                                        className={`py-3 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 text-center
+                                            ${widgetType === 'calendar' ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-stone-200 hover:border-brand-200 text-stone-600'}`}
+                                    >
+                                        <CalendarDays className={`w-6 h-6 ${widgetType === 'calendar' ? 'text-brand-600' : 'text-stone-400'}`} />
+                                        <div>
+                                            <span className="text-sm font-medium block">Kalender Lengkap</span>
+                                            <span className="text-[10px] text-stone-400 mt-0.5 block">Kalender bulanan interaktif</span>
+                                        </div>
+                                    </button>
+                                    <button
+                                        onClick={() => setWidgetType('today')}
+                                        className={`py-3 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 text-center
+                                            ${widgetType === 'today' ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-stone-200 hover:border-brand-200 text-stone-600'}`}
+                                    >
+                                        <Info className={`w-6 h-6 ${widgetType === 'today' ? 'text-brand-600' : 'text-stone-400'}`} />
+                                        <div>
+                                            <span className="text-sm font-medium block">Info Hari Ini</span>
+                                            <span className="text-[10px] text-stone-400 mt-0.5 block">Detail hari ini & hari raya</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Theme Selector */}
+                            <div>
+                                <h3 className="text-sm font-semibold text-stone-700 mb-3">2. Pilih Tema Widget</h3>
                                 <div className="flex gap-3">
                                     <button
                                         onClick={() => setTheme('light')}
@@ -100,7 +148,7 @@ export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
                             {/* Embed Code Section */}
                             <div>
                                 <div className="flex items-center justify-between mb-2">
-                                    <h3 className="text-sm font-semibold text-stone-700">2. Salin Kode Embed (HTML)</h3>
+                                    <h3 className="text-sm font-semibold text-stone-700">3. Salin Kode Embed (HTML)</h3>
                                     <button
                                         onClick={handleCopy}
                                         className="flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors"
@@ -122,13 +170,17 @@ export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
 
                             {/* Preview Section */}
                             <div>
-                                <h3 className="text-sm font-semibold text-stone-700 mb-3">3. Pratinjau (Live Preview)</h3>
+                                <h3 className="text-sm font-semibold text-stone-700 mb-3">4. Pratinjau (Live Preview)</h3>
                                 <div className="p-4 bg-stone-100/50 border border-stone-200 rounded-2xl flex justify-center w-full">
                                     <div
-                                        className={`w-full max-w-[500px] h-[600px] bg-white rounded-xl shadow-lg border border-stone-200 overflow-y-auto relative ${theme === 'dark' ? 'invert hue-rotate-180' : ''}`}
+                                        className={`w-full bg-white rounded-xl shadow-lg border border-stone-200 overflow-y-auto relative ${theme === 'dark' ? 'invert hue-rotate-180' : ''}`}
+                                        style={{ maxWidth: config.maxWidth, height: config.height }}
                                     >
-                                        {/* Menggunakan mount komponen langsung bukan iframe agar 10x lebih ringan & cepat */}
-                                        <WidgetView isPreview={true} />
+                                        {widgetType === 'calendar' ? (
+                                            <WidgetView isPreview={true} />
+                                        ) : (
+                                            <TodayWidget />
+                                        )}
                                     </div>
                                 </div>
                             </div>

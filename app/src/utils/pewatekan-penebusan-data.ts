@@ -24,6 +24,14 @@ export interface BantenPenebusan {
     isWajib: boolean;
 }
 
+export interface BantenPenebusanAPI extends BantenPenebusan {
+    conditionWuku?: string | null;
+    conditionAstawara?: string | null;
+    conditionDasawara?: string | null;
+}
+
+export let dynamicBantenPenebusan: BantenPenebusanAPI[] | null = null;
+
 export const PEWATEKAN_DATA = {
     ekawara: {
         Luang: "Sulit ditebak, terkesan peragu atau bimbang karena terlalu banyak pertimbangan, namun mudah menyerap hal-hal baru."
@@ -166,7 +174,30 @@ export function getPewatekan(
 export function checkBantenPenebusan(wukuName?: string, astawara?: string, dasawara?: string): BantenPenebusan[] {
     const penebusan: BantenPenebusan[] = [];
 
-    // Penebusan Watek Standar (selalu ada untuk setiap hari kelahiran)
+    if (dynamicBantenPenebusan && dynamicBantenPenebusan.length > 0) {
+        dynamicBantenPenebusan.forEach(rule => {
+            let match = false;
+            // Jika semua condition kosong, berarti berlaku umum (standar otonan)
+            if (!rule.conditionWuku && !rule.conditionAstawara && !rule.conditionDasawara) {
+                match = true;
+            } else {
+                if (rule.conditionWuku && wukuName === rule.conditionWuku) match = true;
+                if (rule.conditionAstawara && astawara === rule.conditionAstawara) match = true;
+                if (rule.conditionDasawara && dasawara === rule.conditionDasawara) match = true;
+            }
+            if (match) {
+                penebusan.push({
+                    title: rule.title,
+                    description: rule.description,
+                    bantenList: rule.bantenList,
+                    isWajib: rule.isWajib
+                });
+            }
+        });
+        return penebusan;
+    }
+
+    // Fallback to local hardcoded logic
     penebusan.push(BANTEN_PENEBUSAN_DATA.otonanStandar);
 
     if (wukuName === 'Wayang') {
@@ -178,4 +209,55 @@ export function checkBantenPenebusan(wukuName?: string, astawara?: string, dasaw
     }
 
     return penebusan;
+}
+
+export async function loadPewatekanData() {
+    try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+        const res = await fetch(`${API_URL}/master/pewatekan`);
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                // Clear the object properties safely for the fallbacks
+                for (const key in PEWATEKAN_DATA) {
+                    (PEWATEKAN_DATA as any)[key] = {};
+                }
+                
+                data.forEach((item: any) => {
+                    const ti = item.wewaranTipe as keyof typeof PEWATEKAN_DATA;
+                    // Because the object structure initialized dynamically above
+                    if (PEWATEKAN_DATA[ti] !== undefined) {
+                        (PEWATEKAN_DATA[ti] as any)[item.category] = item.watak;
+                    }
+                });
+                console.log(`[KalenderBali] Loaded ${data.length} Pewatekan rules from API`);
+            }
+        }
+    } catch (err) {
+        console.warn('[KalenderBali] Failed to fetch Pewatekan, using fallback data', err);
+    }
+}
+
+export async function loadBantenPenebusanData() {
+    try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+        const res = await fetch(`${API_URL}/master/banten`);
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                dynamicBantenPenebusan = data.map((item: any) => ({
+                    title: item.title,
+                    description: item.description,
+                    conditionWuku: item.conditionWuku,
+                    conditionAstawara: item.conditionAstawara,
+                    conditionDasawara: item.conditionDasawara,
+                    bantenList: typeof item.bantenList === 'string' ? JSON.parse(item.bantenList) : item.bantenList,
+                    isWajib: Boolean(item.isWajib)
+                }));
+                console.log(`[KalenderBali] Loaded ${dynamicBantenPenebusan.length} Banten Penebusan rules from API`);
+            }
+        }
+    } catch (err) {
+        console.warn('[KalenderBali] Failed to fetch Banten Penebusan, using fallback data', err);
+    }
 }

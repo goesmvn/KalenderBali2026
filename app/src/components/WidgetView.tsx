@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar } from './Calendar';
 import { DateDetail } from './DateDetail';
 import type { BaliDate } from '@/types/bali-calendar';
+import { getBaliDate, getAksaraBaliSaptawara } from '@/utils/bali-calendar';
 
 interface WidgetViewProps {
     isPreview?: boolean;
@@ -63,7 +64,7 @@ export function WidgetView({ isPreview = false }: WidgetViewProps) {
         <div className="min-h-screen bg-transparent flex flex-col font-sans relative">
 
             {/* Widget Header Identity */}
-            <a href="https://kalenderbali.id" target="_blank" rel="noopener noreferrer" className="w-full bg-white border-b border-stone-200 py-3 px-4 flex justify-center items-center gap-2 shadow-sm hover:bg-stone-50 transition-colors block text-center">
+            <a href="https://kalenderbali.id" target="_blank" rel="noopener noreferrer" className="w-full bg-white border-b border-stone-200 py-3 px-4 flex flex-col items-center shadow-sm hover:bg-stone-50 transition-colors block text-center">
                 <div className="flex items-center justify-center gap-2">
                     <img
                         src="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg"
@@ -75,6 +76,15 @@ export function WidgetView({ isPreview = false }: WidgetViewProps) {
                         <span className="text-[#c1121f]">.id</span>
                     </div>
                 </div>
+                {(() => {
+                    const todayBali = getBaliDate(new Date());
+                    const aksara = getAksaraBaliSaptawara(todayBali.saptawara.name);
+                    return aksara ? (
+                        <span className="text-sm text-brand-600 mt-1" style={{ fontFamily: 'Noto Sans Balinese, sans-serif' }}>
+                            {aksara}
+                        </span>
+                    ) : null;
+                })()}
             </a>
 
             {/* Widget Mode typically desires a clean view: Only Calendar */}
@@ -95,8 +105,8 @@ export function WidgetView({ isPreview = false }: WidgetViewProps) {
                 />
             )}
 
-            <div className="text-center py-3 bg-stone-100 mt-auto border-t border-stone-200 flex flex-col items-center justify-center pointer-events-auto">
-                <span className="text-[11px] text-stone-500 font-medium mb-0.5">Layanan Digital dari</span>
+            <div className="text-center py-3 bg-stone-100 mt-auto border-t border-stone-200 flex flex-col items-center justify-center pointer-events-auto gap-1">
+                <span className="text-[11px] text-stone-500 font-medium">Layanan Digital dari</span>
                 <a href="https://nusaheritage.id" target="_blank" rel="noopener noreferrer" className="text-sm font-black text-brand-700 hover:text-brand-800 hover:underline transition-colors flex items-center justify-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm border border-stone-200">
                     <img src="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg" className="w-4 h-4 rounded-full" alt="NH Logo" />
                     NusaHeritage.id

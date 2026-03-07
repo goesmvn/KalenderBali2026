@@ -101,17 +101,17 @@ const wukuData: Wuku[] = [
   { name: 'Tolu', urip: 5, dewata: 'Dewa Bayu', letak: 'Timur' },
   { name: 'Gumbreg', urip: 8, dewata: 'Dewa Candra', letak: 'Tenggara' },
   { name: 'Wariga', urip: 9, dewata: 'Dewa Asmara', letak: 'Selatan' },
-  { name: 'Warigadean', urip: 3, dewata: 'Dewa Maharsi', letak: 'Barat daya' },
+  { name: 'Warigadian', urip: 3, dewata: 'Dewa Maharsi', letak: 'Barat daya' },
   { name: 'Julungwangi', urip: 7, dewata: 'Dewa Sambu', letak: 'Barat' },
   { name: 'Sungsang', urip: 1, dewata: 'Dewa Gana', letak: 'Barat laut' },
   { name: 'Dungulan', urip: 4, dewata: 'Dewa Kumara', letak: 'Utara' },
   { name: 'Kuningan', urip: 6, dewata: 'Dewa Indra', letak: 'Timur laut' },
   { name: 'Langkir', urip: 5, dewata: 'Dewa Kala', letak: 'Timur' },
   { name: 'Medangsia', urip: 8, dewata: 'Dewa Brahma', letak: 'Tenggara' },
-  { name: 'Pujud', urip: 9, dewata: 'Dewa Guritna', letak: 'Selatan' },
+  { name: 'Pujut', urip: 9, dewata: 'Dewa Guritna', letak: 'Selatan' },
   { name: 'Pahang', urip: 3, dewata: 'Dewa Tantra', letak: 'Barat daya' },
   { name: 'Krulut', urip: 7, dewata: 'Dewa Surenggana', letak: 'Barat' },
-  { name: 'Mrakih', urip: 1, dewata: 'Dewa Wisnu', letak: 'Barat laut' },
+  { name: 'Merakih', urip: 1, dewata: 'Dewa Wisnu', letak: 'Barat laut' },
   { name: 'Tambir', urip: 4, dewata: 'Dewa Siwa', letak: 'Utara' },
   { name: 'Medangkungan', urip: 6, dewata: 'Dewa Basuki', letak: 'Timur laut' },
   { name: 'Matal', urip: 5, dewata: 'Dewa Sakri', letak: 'Timur' },
@@ -121,7 +121,7 @@ const wukuData: Wuku[] = [
   { name: 'Bala', urip: 7, dewata: 'Dewa Durgha', letak: 'Barat' },
   { name: 'Ugu', urip: 1, dewata: 'Dewa Singajanma', letak: 'Barat laut' },
   { name: 'Wayang', urip: 4, dewata: 'Dewa Sri', letak: 'Utara' },
-  { name: 'Klawu', urip: 6, dewata: 'Dewa Sedana', letak: 'Timur laut' },
+  { name: 'Kulawu', urip: 6, dewata: 'Dewa Sedana', letak: 'Timur laut' },
   { name: 'Dukut', urip: 5, dewata: 'Dewa Baruna', letak: 'Timur' },
   { name: 'Watugunung', urip: 8, dewata: 'Dewa Anantaboga', letak: 'Tenggara' }
 ];
@@ -239,8 +239,13 @@ const PAWUKON_OFFSET = 141; // Posisi hari 1 Jan 1945 dalam siklus 210 hari Pawu
  * Menghitung selisih hari antara dua tanggal
  */
 function getDaysDifference(date1: Date, date2: Date): number {
+  // Normalize both dates to midnight to avoid time-of-day rounding issues
+  // Without this, calling getBaliDate(new Date()) after noon would round up
+  // and compute the NEXT day's Wuku/calendar data
+  const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+  const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
   const oneDay = 24 * 60 * 60 * 1000;
-  return Math.round((date1.getTime() - date2.getTime()) / oneDay);
+  return Math.round((d1.getTime() - d2.getTime()) / oneDay);
 }
 
 /**
@@ -786,6 +791,10 @@ function calculateRahinan(
  */
 const baliDateCache = new Map<string, BaliDate>();
 
+export function clearBaliDateCache() {
+  baliDateCache.clear();
+}
+
 /**
  * Mendapatkan semua data kalender Bali untuk sebuah tanggal
  */
@@ -912,4 +921,123 @@ export function getBaliDayName(saptawara: string): string {
     'Saniscara (Sabtu)': 'Saniscara'
   };
   return baliNames[saptawara] || saptawara;
+}
+
+/**
+ * Mendapatkan aksara Bali (Unicode) untuk Saptawara
+ */
+export function getAksaraBaliSaptawara(saptawara: string): string {
+  const aksaraBali: Record<string, string> = {
+    'Redite (Minggu)': 'ᬭᬾᬤᬶᬢᬾ',
+    'Soma (Senin)': 'ᬲᭀᬫ',
+    'Anggara (Selasa)': 'ᬅᬂᬕᬭ',
+    'Buda (Rabu)': 'ᬩᬸᬤ',
+    'Wraspati (Kamis)': 'ᬯᬺᬳᬲ᭄ᬧᬢᬶ',
+    'Sukra (Jumat)': 'ᬰᬸᬓᬺ',
+    'Saniscara (Sabtu)': 'ᬰᬦᬶᬰ᭄ᬘᬭ'
+  };
+  return aksaraBali[saptawara] || '';
+}
+
+/**
+ * Mengkonversi angka ke digit aksara Bali
+ */
+export function toBalineseDigits(num: number): string {
+  const digits: Record<string, string> = {
+    '0': '᭐', '1': '᭑', '2': '᭒', '3': '᭓', '4': '᭔',
+    '5': '᭕', '6': '᭖', '7': '᭗', '8': '᭘', '9': '᭙'
+  };
+  return String(num).split('').map(d => digits[d] || d).join('');
+}
+
+/**
+ * Mendapatkan aksara Bali untuk nama Wuku
+ */
+export function getAksaraBaliWuku(wukuName: string): string {
+  const aksaraWuku: Record<string, string> = {
+    'Sinta': 'ᬲᬶᬦ᭄ᬢ',
+    'Landep': 'ᬮᬦ᭄ᬤᬾᬧ᭄',
+    'Ukir': 'ᬉᬓᬶᬭ᭄',
+    'Kulantir': 'ᬓᬸᬮᬦ᭄ᬢᬶᬭ᭄',
+    'Tolu': 'ᬢᭀᬮᬸ',
+    'Gumbreg': 'ᬕᬸᬫ᭄ᬩ᭄ᬭᬾᬕ᭄',
+    'Wariga': 'ᬯᬭᬶᬕ',
+    'Warigadian': 'ᬯᬭᬶᬕᬤᬶᬬᬦ᭄',
+    'Julungwangi': 'ᬚᬸᬮᬸᬂᬯᬂᬶ',
+    'Sungsang': 'ᬲᬸᬂᬲᬂ',
+    'Dungulan': 'ᬤᬸᬂᬕᬸᬮᬦ᭄',
+    'Kuningan': 'ᬓᬸᬦᬶᬂᬕᬦ᭄',
+    'Langkir': 'ᬮᬂᬓᬶᬭ᭄',
+    'Medangsia': 'ᬫᬾᬤᬂᬲᬶᬬ',
+    'Pujut': 'ᬧᬸᬚᬸᬢ᭄',
+    'Pahang': 'ᬧᬳᬂ',
+    'Krulut': 'ᬓ᭄ᬭᬸᬮᬸᬢ᭄',
+    'Merakih': 'ᬫᬾᬭᬓᬶᬳ᭄',
+    'Tambir': 'ᬢᬫ᭄ᬩᬶᬭ᭄',
+    'Medangkungan': 'ᬫᬾᬤᬂᬓᬸᬂᬕᬦ᭄',
+    'Matal': 'ᬫᬢᬮ᭄',
+    'Uye': 'ᬉᬬᬾ',
+    'Menail': 'ᬫᬾᬦᬳᬶᬮ᭄',
+    'Prangbakat': 'ᬧ᭄ᬭᬂᬩᬓᬢ᭄',
+    'Bala': 'ᬩᬮ',
+    'Ugu': 'ᬉᬕᬸ',
+    'Wayang': 'ᬯᬬᬂ',
+    'Kulawu': 'ᬓᬸᬮᬯᬸ',
+    'Dukut': 'ᬤᬸᬓᬸᬢ᭄',
+    'Watugunung': 'ᬯᬢᬸᬕᬸᬦᬸᬂ'
+  };
+  return aksaraWuku[wukuName] || '';
+}
+
+/**
+ * Mendapatkan aksara Bali untuk nama bulan
+ */
+export function getAksaraBaliMonth(monthIndex: number): string {
+  const monthAksara: string[] = [
+    'ᬚᬦᬸᬯᬭᬶ',       // Januari
+    'ᬧᬾᬩ᭄ᬭᬸᬯᬭᬶ',     // Februari
+    'ᬫᬭᬾᬢ᭄',         // Maret
+    'ᬅᬧ᭄ᬭᬶᬮ᭄',       // April
+    'ᬫᬾᬇ',           // Mei
+    'ᬚᬸᬦᬶ',         // Juni
+    'ᬚᬸᬮᬶ',         // Juli
+    'ᬅᬕᬸᬲ᭄ᬢᬸᬲ᭄',     // Agustus
+    'ᬲᬾᬧ᭄ᬢᬾᬫ᭄ᬩᬾᬭ᭄',   // September
+    'ᬑᬓ᭄ᬢᭀᬩᬾᬭ᭄',     // Oktober
+    'ᬦᭀᬯᬾᬫ᭄ᬩᬾᬭ᭄',     // November
+    'ᬤᬾᬲᬾᬫ᭄ᬩᬾᬭ᭄'      // Desember
+  ];
+  return monthAksara[monthIndex] || '';
+}
+
+/**
+ * Format tanggal lengkap dalam aksara Bali
+ * Contoh: ᬰᬦᬶᬰ᭄ᬘᬭ, ᭗ ᬫᬭᬾᬢ᭄ ᭒᭐᭒᭖ • ᬢᬳᬸᬦ᭄ ᬲᬓ ᭑᭙᭔᭘
+ */
+export function formatAksaraBaliDate(date: Date, sakaYear: number): string {
+  const baliDate = getBaliDate(date);
+  const saptawaraAksara = getAksaraBaliSaptawara(baliDate.saptawara.name);
+  const day = toBalineseDigits(date.getDate());
+  const year = toBalineseDigits(date.getFullYear());
+  const saka = toBalineseDigits(sakaYear);
+
+  // Nama bulan dalam aksara Bali
+  const monthAksara: string[] = [
+    'ᬚᬦᬸᬯᬭᬶ',     // Januari
+    'ᬧᬾᬩ᭄ᬭᬸᬯᬭᬶ',   // Februari
+    'ᬫᬭᬾᬢ᭄',       // Maret
+    'ᬅᬧ᭄ᬭᬶᬮ᭄',     // April
+    'ᬫᬾᬇ',         // Mei
+    'ᬚᬸᬦᬶ',       // Juni
+    'ᬚᬸᬮᬶ',       // Juli
+    'ᬅᬕᬸᬲ᭄ᬢᬸᬲ᭄',   // Agustus
+    'ᬲᬾᬧ᭄ᬢᬾᬫ᭄ᬩᬾᬭ᭄', // September
+    'ᬑᬓ᭄ᬢᭀᬩᬾᬭ᭄',   // Oktober
+    'ᬦᭀᬯᬾᬫ᭄ᬩᬾᬭ᭄',   // November
+    'ᬤᬾᬲᬾᬫ᭄ᬩᬾᬭ᭄'    // Desember
+  ];
+
+  const month = monthAksara[date.getMonth()];
+  // ᬢᬳᬸᬦ᭄ ᬲᬓ = Tahun Saka
+  return `${saptawaraAksara}᭞ ${day} ${month} ${year} ᭟ ᬢᬳᬸᬦ᭄ ᬲᬓ ${saka}`;
 }

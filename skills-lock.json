@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-developer-skill": {
+      "source": "404kidwiz/claude-supercode-skills",
+      "sourceType": "github",
+      "computedHash": "634f7798d91fb9d350fccd4b91ae6138acfebf7dd2902ee4512582c6a40119a9"
+    },
+    "nodejs-backend": {
+      "source": "alinaqi/claude-bootstrap",
+      "sourceType": "github",
+      "computedHash": "6a2a162f32d7dcc2ddc6e37c0a7da8713fe030f4b9d2145367795254ae630dd2"
+    },
+    "nodejs-backend-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "4c6bf8fbd9a13d61e326ddeb210af5854fea3b253922a7981bd7718f3b765c08"
+    }
+  }
+}

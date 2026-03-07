@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { getBaliDate, formatIndonesianDate, isHolidayBali } from '@/utils/bali-calendar';
+import { getBaliDate, formatIndonesianDate, isHolidayBali, formatAksaraBaliDate, getAksaraBaliMonth, toBalineseDigits } from '@/utils/bali-calendar';
 import type { BaliDate } from '@/types/bali-calendar';
 import {
   ChevronLeft,
@@ -11,16 +11,12 @@ import {
   Info,
   RotateCcw
 } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { calculateYadnyaScore } from '@/utils/yadnya-score';
 import { calculatePawiwahanScore } from '@/utils/pawiwahan-score';
 import { calculateKelahiranScore } from '@/utils/kelahiran-score';
 import { getPiodalan } from '@/utils/piodalan-data';
+import { useTranslation } from 'react-i18next';
 
 interface CalendarProps {
   onSelectDate: (date: Date, baliDate: BaliDate) => void;
@@ -28,19 +24,17 @@ interface CalendarProps {
   currentMonth: Date;
   onMonthChange: (date: Date) => void;
   nationalHolidays?: Record<string, string[]>;
-  piodalanLoaded?: boolean;
+  masterDataLoaded?: boolean;
   highlightCategory?: string | null;
   onReset?: () => void;
 }
 
-const DAYS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-const MONTHS = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-];
-
-export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, piodalanLoaded = false, highlightCategory, onReset }: CalendarProps) {
+export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChange, nationalHolidays = {}, masterDataLoaded = false, highlightCategory, onReset }: CalendarProps) {
   const [today] = useState(new Date());
+  const { t } = useTranslation();
+
+  const DAYS = t('calendar.days_short', { returnObjects: true }) as string[];
+  const MONTHS = t('calendar.months', { returnObjects: true }) as string[];
 
   const calendarDays = useMemo(() => {
     const year = currentMonth.getFullYear();
@@ -205,7 +199,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
     }
 
     return days;
-  }, [currentMonth, today, nationalHolidays, piodalanLoaded, highlightCategory]);
+  }, [currentMonth, today, nationalHolidays, masterDataLoaded, highlightCategory]);
 
   const goToPreviousMonth = () => {
     onMonthChange(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
@@ -237,8 +231,8 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                 <h2 className="text-xl sm:text-2xl font-bold">
                   {MONTHS[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                 </h2>
-                <p className="text-white/80 text-sm">
-                  Kalender Bali
+                <p className="text-white/80 text-sm" style={{ fontFamily: 'Noto Sans Balinese, sans-serif' }}>
+                  {getAksaraBaliMonth(currentMonth.getMonth())} {toBalineseDigits(currentMonth.getFullYear())}
                 </p>
               </div>
             </div>
@@ -258,7 +252,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                 onClick={goToToday}
                 className="hidden sm:flex px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
               >
-                Hari Ini
+                {t('calendar.today')}
               </button>
               <button
                 onClick={goToPreviousMonth}
@@ -281,19 +275,19 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
           <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-              <span className="text-stone-600">Purnama</span>
+              <span className="text-stone-600">{t('calendar.purnama')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-slate-700"></div>
-              <span className="text-stone-600">Tilem</span>
+              <span className="text-stone-600">{t('calendar.tilem')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-brand-600"></div>
-              <span className="text-stone-600">Hari Ini</span>
+              <span className="text-stone-600">{t('calendar.today')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Info className="w-3 h-3 text-stone-400" />
-              <span className="text-stone-500 italic">Klik tanggal untuk detail</span>
+              <span className="text-stone-500 italic">{t('calendar.click_for_detail')}</span>
             </div>
           </div>
         </div>
@@ -378,7 +372,7 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
                   {/* Date Number with Red Circle for Bali Holiday */}
                   <div className={`mt-0.5 sm:mt-1 flex items-center justify-center ${day.isBaliHoliday ? 'w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-red-500' : ''}`}>
                     <span className={`
-                      text-sm sm:text-base font-medium z-10
+                      text-base sm:text-lg font-semibold z-10
                       ${day.isCurrentMonth ? (hasHighlight && day.yadnyaScore! > 60 ? 'text-emerald-950 font-bold' : 'text-stone-700') : 'text-stone-400'}
                       ${day.isToday ? 'text-brand-700 font-bold' : ''}
                       ${isSelected ? 'text-brand-900' : ''}
@@ -525,6 +519,15 @@ export function Calendar({ onSelectDate, selectedDate, currentMonth, onMonthChan
           <p className="text-xs text-stone-500 text-center">
             {formatIndonesianDate(new Date())} • Tahun Saka {getBaliDate(new Date()).sakaYear}
           </p>
+          {(() => {
+            const todayBali = getBaliDate(new Date());
+            const aksaraFull = formatAksaraBaliDate(new Date(), todayBali.sakaYear);
+            return aksaraFull ? (
+              <p className="text-sm text-brand-600 text-center mt-1 leading-none" style={{ fontFamily: 'Noto Sans Balinese, sans-serif' }}>
+                {aksaraFull}
+              </p>
+            ) : null;
+          })()}
         </div>
       </div>
     </TooltipProvider>

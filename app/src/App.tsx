@@ -1,13 +1,16 @@
 import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar } from '@/components/Calendar';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { getBaliDate } from '@/utils/bali-calendar';
+import { getBaliDate, clearBaliDateCache, getAksaraBaliSaptawara } from '@/utils/bali-calendar';
 import { getNationalHolidays } from '@/utils/holidays';
 import { searchBaliCalendar } from '@/utils/search-utils';
 import type { BaliDate } from '@/types/bali-calendar';
 import { getPiodalan, loadPiodalanData } from '@/utils/piodalan-data';
+import { loadDewasaAyuData } from '@/utils/dewasa-ayu-data';
+import { loadPewatekanData, loadBantenPenebusanData } from '@/utils/pewatekan-penebusan-data';
 import {
   CalendarDays,
   Sun,
@@ -23,34 +26,54 @@ const DateDetail = lazy(() => import('@/components/DateDetail').then(m => ({ def
 const SearchPanel = lazy(() => import('@/components/SearchPanel').then(m => ({ default: m.SearchPanel })));
 const InfoSection = lazy(() => import('@/components/InfoSection').then(m => ({ default: m.InfoSection })));
 const WidgetView = lazy(() => import('@/components/WidgetView').then(m => ({ default: m.WidgetView })));
+const TodayWidget = lazy(() => import('@/components/TodayWidget').then(m => ({ default: m.TodayWidget })));
 const WidgetEmbedModal = lazy(() => import('@/components/WidgetEmbedModal').then(m => ({ default: m.WidgetEmbedModal })));
+const OtonanCalculator = lazy(() => import('@/components/OtonanCalculator').then(m => ({ default: m.OtonanCalculator })));
+const ExportCalendarModal = lazy(() => import('@/components/ExportCalendarModal').then(m => ({ default: m.ExportCalendarModal })));
+const NyepiGuide = lazy(() => import('@/components/NyepiGuide').then(m => ({ default: m.NyepiGuide })));
 const PrivacyPolicy = lazy(() => import('@/components/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('@/components/TermsOfService').then(m => ({ default: m.TermsOfService })));
 
 function App() {
+  const { t, i18n } = useTranslation();
   const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'privacy' | 'terms'>('home');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedBaliDate, setSelectedBaliDate] = useState<BaliDate | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [highlightCategory, setHighlightCategory] = useState<string | null>(null);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(true);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [widgetModalOpen, setWidgetModalOpen] = useState(false);
   const [downloadModalTab, setDownloadModalTab] = useState<'hariBaik' | 'pawiwahan' | 'melahirkan' | null>(null);
+  const [otonanModalOpen, setOtonanModalOpen] = useState(false);
+  const [exportCalendarOpen, setExportCalendarOpen] = useState(false);
+  const [nyepiGuideOpen, setNyepiGuideOpen] = useState(false);
 
   // Widget State Detection
-  const isWidgetMode = useMemo(() => {
-    return new URLSearchParams(window.location.search).get('widget') === 'true';
+  const widgetMode = useMemo(() => {
+    const param = new URLSearchParams(window.location.search).get('widget');
+    if (param === 'today') return 'today';
+    if (param === 'true') return 'calendar';
+    return null;
   }, []);
 
   // Holidays state
   const [holidays, setHolidays] = useState<Record<string, string[]>>({});
 
-  // Piodalan loaded state to force re-renders when data arrives
-  const [piodalanLoaded, setPiodalanLoaded] = useState(false);
+  // Content loaded state to force re-renders when data arrives
+  const [masterDataLoaded, setMasterDataLoaded] = useState(false);
 
   useEffect(() => {
-    loadPiodalanData().then(() => setPiodalanLoaded(true));
+    Promise.all([
+      loadPiodalanData(),
+      loadDewasaAyuData(),
+      loadPewatekanData(),
+      loadBantenPenebusanData()
+    ]).then(() => {
+      // Clear cache so that the already rendered dates recalculate with new definitions
+      clearBaliDateCache();
+      setMasterDataLoaded(true);
+    });
   }, []);
 
   // Fetch holidays whenever the year changes
@@ -114,7 +137,7 @@ function App() {
 
   const currentDayObj = new Date();
   // Memoize the expensive Bali date calculation for today
-  const todayBaliDate = useMemo(() => getBaliDate(currentDayObj), []);
+  const todayBaliDate = useMemo(() => getBaliDate(currentDayObj), [masterDataLoaded]);
   const todayDateStr = `${currentDayObj.getFullYear()}-${(currentDayObj.getMonth() + 1).toString().padStart(2, '0')}-${currentDayObj.getDate().toString().padStart(2, '0')}`;
   const todayHolidays = holidays[todayDateStr] || [];
 
@@ -316,8 +339,8 @@ function App() {
             <div className="bg-white rounded-2xl shadow-lg border border-stone-200 p-5 relative overflow-hidden group h-full flex flex-col min-h-0">
 
               <div className="flex flex-wrap justify-between items-start mb-4 gap-2 relative z-10">
-                <span className="bg-stone-800 text-white text-xs px-3 py-1 rounded-full font-medium">Hari Ini</span>
-                <span className="bg-brand-600 text-white text-xs px-3 py-1 rounded-full font-medium whitespace-nowrap">Saka {todayBaliDate.sakaYear}</span>
+                <span className="bg-stone-800 text-white text-xs px-3 py-1 rounded-full font-medium">{t('calendar.today')}</span>
+                <span className="bg-brand-600 text-white text-xs px-3 py-1 rounded-full font-medium whitespace-nowrap">{t('date_detail.saka_year')} {todayBaliDate.sakaYear}</span>
               </div>
 
               <div className="flex items-center gap-4 mb-6 relative z-10">
@@ -325,12 +348,17 @@ function App() {
                   <CalendarDays className="w-7 h-7 text-brand-700" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-xl text-stone-900 leading-tight">
-                    {new Date().toLocaleDateString('id-ID', { weekday: 'long' })}
+                  <h2 className="font-bold text-2xl text-stone-900 leading-tight">
+                    {new Date().toLocaleDateString(i18n.language === 'id' ? 'id-ID' : (i18n.language === 'ja' ? 'ja-JP' : (i18n.language === 'ru' ? 'ru-RU' : 'en-US')), { weekday: 'long' })}
                   </h2>
-                  <p className="text-stone-500 text-sm mt-0.5">
-                    {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  <p className="text-stone-500 text-base mt-0.5">
+                    {new Date().toLocaleDateString(i18n.language === 'id' ? 'id-ID' : (i18n.language === 'ja' ? 'ja-JP' : (i18n.language === 'ru' ? 'ru-RU' : 'en-US')), { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
+                  {getAksaraBaliSaptawara(todayBaliDate.saptawara.name) && (
+                    <p className="text-brand-700 text-2xl mt-1 leading-tight" style={{ fontFamily: 'Noto Sans Balinese, sans-serif' }}>
+                      {getAksaraBaliSaptawara(todayBaliDate.saptawara.name)}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -371,7 +399,7 @@ function App() {
 
                 {(todayBaliDate.events.length > 0 || todayHolidays.length > 0) && (
                   <div className="pt-3 mt-3 border-t border-stone-100">
-                    <span className="text-xs text-stone-500 font-medium block mb-2">Hari Penting & Libur</span>
+                    <span className="text-xs text-stone-500 font-medium block mb-2">{t('today_widget.holidays')}</span>
                     <div className="flex flex-col gap-1.5">
                       {todayHolidays.map((holiday, i) => (
                         <div key={`hol-${i}`} className="flex items-center gap-1.5 text-xs">
@@ -395,7 +423,7 @@ function App() {
                   if (todayPiodalan.length === 0) return null;
                   return (
                     <div className="pt-3 mt-3 border-t border-stone-100">
-                      <span className="text-xs text-stone-500 font-medium block mb-2">🛕 Piodalan Hari Ini</span>
+                      <span className="text-xs text-stone-500 font-medium block mb-2">🛕 {t('date_detail.piodalan')} {t('calendar.today')}</span>
                       <div className="flex flex-col gap-1">
                         {todayPiodalan.slice(0, 3).map((pura, i) => (
                           <div key={`pio-${i}`} className="flex items-start gap-1.5 text-xs">
@@ -404,7 +432,7 @@ function App() {
                           </div>
                         ))}
                         {todayPiodalan.length > 3 && (
-                          <span className="text-[10px] text-stone-400 ml-3">+{todayPiodalan.length - 3} pura lainnya</span>
+                          <span className="text-[10px] text-stone-400 ml-3">{t('today_widget.more_piodalan', { count: todayPiodalan.length - 3 })}</span>
                         )}
                       </div>
                     </div>
@@ -416,7 +444,9 @@ function App() {
               {specialHighlight && (
                 <div className={`mt-5 flex items-center gap-2 justify-center py-2 px-3 rounded-lg border ${specialHighlight.bgClass}`}>
                   {specialHighlight.icon}
-                  <span className="text-sm font-bold tracking-wide">{specialHighlight.type} HARI INI</span>
+                  <span className="text-sm font-bold tracking-wide">
+                    {specialHighlight.type.toUpperCase()} {t('calendar.today').toUpperCase()}
+                  </span>
                 </div>
               )}
 
@@ -424,7 +454,7 @@ function App() {
               <div className="mt-6 flex-1 flex flex-col min-h-0">
                 <h3 className="text-sm font-bold text-stone-800 mb-3 flex items-center gap-2 shrink-0">
                   <CalendarDays className="w-4 h-4 text-brand-600" />
-                  Akan Datang
+                  {t('sidebar.upcoming')}
                 </h3>
                 <div className="space-y-2.5 flex-1 pr-2 overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-stone-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-stone-300">
 
@@ -494,11 +524,11 @@ function App() {
                             }</span>
                           </div>
                           <span className="text-xs font-medium opacity-90">
-                            {evt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })}
+                            {evt.date.toLocaleDateString(i18n.language === 'id' ? 'id-ID' : (i18n.language === 'ja' ? 'ja-JP' : (i18n.language === 'ru' ? 'ru-RU' : 'en-US')), { day: 'numeric', month: 'long' })}
                           </span>
                         </div>
                         <div className="text-xs font-bold px-2 py-1 bg-white/50 rounded-lg whitespace-nowrap">
-                          H-{daysDiff}
+                          {t('sidebar.days_left', { days: daysDiff })}
                         </div>
                       </motion.div>
                     );
@@ -549,7 +579,7 @@ function App() {
               currentMonth={currentMonth}
               onMonthChange={setCurrentMonth}
               nationalHolidays={holidays}
-              piodalanLoaded={piodalanLoaded}
+              masterDataLoaded={masterDataLoaded}
               highlightCategory={highlightCategory}
               onReset={() => setHighlightCategory(null)}
             />
@@ -562,8 +592,11 @@ function App() {
   // --------------------------------------------------------------------------
   // Render: WIDGET MODE (IFRAME EMBEDS)
   // --------------------------------------------------------------------------
-  if (isWidgetMode) {
+  if (widgetMode === 'calendar') {
     return <Suspense fallback={null}><WidgetView /></Suspense>;
+  }
+  if (widgetMode === 'today') {
+    return <Suspense fallback={null}><TodayWidget /></Suspense>;
   }
 
   // --------------------------------------------------------------------------
@@ -581,6 +614,9 @@ function App() {
           setDownloadModalOpen(true);
         }}
         onOpenWidget={() => setWidgetModalOpen(true)}
+        onOpenOtonan={() => setOtonanModalOpen(true)}
+        onOpenExportCalendar={() => setExportCalendarOpen(true)}
+        onOpenNyepiGuide={() => setNyepiGuideOpen(true)}
       />
 
       {/* Main Content */}
@@ -666,6 +702,27 @@ function App() {
         isOpen={widgetModalOpen}
         onClose={() => setWidgetModalOpen(false)}
       />
+
+      <Suspense fallback={null}>
+        <OtonanCalculator
+          isOpen={otonanModalOpen}
+          onClose={() => setOtonanModalOpen(false)}
+        />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <ExportCalendarModal
+          isOpen={exportCalendarOpen}
+          onClose={() => setExportCalendarOpen(false)}
+        />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <NyepiGuide
+          isOpen={nyepiGuideOpen}
+          onClose={() => setNyepiGuideOpen(false)}
+        />
+      </Suspense>
 
     </div >
   );

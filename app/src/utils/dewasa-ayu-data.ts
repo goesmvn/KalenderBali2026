@@ -3291,3 +3291,30 @@ export const alaAyuningData: AlaAyuningDewasa[] = [
     ]
   }
 ];
+
+export async function loadDewasaAyuData() {
+  try {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+    const res = await fetch(`${API_URL}/master/dewasa-ayu`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        // Clear hardcoded fallback data
+        alaAyuningData.length = 0;
+        
+        // Push fetched data
+        data.forEach((item: any) => {
+          alaAyuningData.push({
+            name: item.nama,
+            description: item.deskripsi,
+            conditions: typeof item.conditions === 'string' ? JSON.parse(item.conditions) : item.conditions,
+            tags: typeof item.tags === 'string' ? JSON.parse(item.tags) : item.tags
+          });
+        });
+        console.log(`[KalenderBali] Loaded ${alaAyuningData.length} Dewasa Ayu rules from API`);
+      }
+    }
+  } catch (err) {
+    console.warn('[KalenderBali] Failed to fetch Dewasa Ayu, using fallback data', err);
+  }
+}

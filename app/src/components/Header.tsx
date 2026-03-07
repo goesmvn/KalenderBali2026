@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface SubItem {
     label: string;
@@ -21,34 +23,40 @@ interface HeaderProps {
     onOpenSearch?: () => void;
     onOpenDownload?: (tab: 'hariBaik' | 'pawiwahan' | 'melahirkan') => void;
     onOpenWidget?: () => void;
+    onOpenOtonan?: () => void;
+    onOpenExportCalendar?: () => void;
+    onOpenNyepiGuide?: () => void;
 }
 
-export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, onOpenWidget }: HeaderProps) {
+export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, onOpenWidget, onOpenOtonan, onOpenExportCalendar, onOpenNyepiGuide }: HeaderProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { t } = useTranslation();
 
     const navItems: NavItem[] = [
-        { label: 'Tentang', hasDropdown: false },
+        { label: t('nav.about'), hasDropdown: false },
         {
-            label: 'Warisan Budaya',
+            label: t('nav.explore_culture'),
             hasDropdown: true,
             items: [
-                { label: 'Warisan Budaya Benda', href: 'https://nusaheritage.id/warisan-budaya-berwujud' },
-                { label: 'Warisan Budaya Tak Benda', href: 'https://nusaheritage.id/warisan-budaya-tak-berwujud' }
+                { label: t('nav.heritage_tangible'), href: 'https://nusaheritage.id/warisan-budaya-berwujud' },
+                { label: t('nav.heritage_intangible'), href: 'https://nusaheritage.id/warisan-budaya-tak-berwujud' },
+                { label: t('nav.vr_tours'), href: 'https://nusaheritage.id/virtualtour' },
+                { label: t('nav.forecast'), href: 'https://metemu.nusaheritage.id' }
             ]
         },
-        { label: 'VR Tours', hasDropdown: false, href: 'https://nusaheritage.id/virtualtour' },
-        { label: 'Ramalan', hasDropdown: false, href: 'https://metemu.nusaheritage.id' },
         {
-            label: 'Download',
+            label: t('nav.features_services'),
             hasDropdown: true,
             items: [
-                { label: 'PDF Hari Baik', action: () => onOpenDownload && onOpenDownload('hariBaik') },
-                { label: 'PDF Lahir Sesar', action: () => onOpenDownload && onOpenDownload('melahirkan') },
-                { label: 'PDF Pawiwahan', action: () => onOpenDownload && onOpenDownload('pawiwahan') },
-                { label: 'Pasang Widget', action: () => onOpenWidget && onOpenWidget() }
+                { label: t('nav.otonan'), action: () => onOpenOtonan && onOpenOtonan() },
+                { label: t('nav.nyepi'), action: () => onOpenNyepiGuide && onOpenNyepiGuide() },
+                { label: t('nav.pdf_good_days'), action: () => onOpenDownload && onOpenDownload('hariBaik') },
+                { label: t('nav.pdf_cesarean'), action: () => onOpenDownload && onOpenDownload('melahirkan') },
+                { label: t('nav.pdf_wedding'), action: () => onOpenDownload && onOpenDownload('pawiwahan') },
+                { label: t('nav.export_ics'), action: () => onOpenExportCalendar && onOpenExportCalendar() },
+                { label: t('nav.widget'), action: () => onOpenWidget && onOpenWidget() }
             ]
-        },
-        { label: 'Cari Tanggal & Fitur', hasDropdown: false }
+        }
     ];
 
     return (
@@ -89,9 +97,18 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                                     onNavigate('about');
                                                 } else if (item.label === 'Cari Tanggal & Fitur' && onOpenSearch) {
                                                     onOpenSearch();
+                                                } else if (item.label === 'Pasang Widget' && onOpenWidget) {
+                                                    onOpenWidget();
+                                                } else if (item.label === 'Kalkulator Otonan' && onOpenOtonan) {
+                                                    onOpenOtonan();
+                                                } else if (item.label === 'Nyepi Guide' && onOpenNyepiGuide) {
+                                                    onOpenNyepiGuide();
                                                 }
                                             }}
-                                            className={`flex items-center gap-1.5 text-[15px] font-medium transition-colors py-2 ${isActive ? 'text-[#c1121f]' : 'text-stone-600 hover:text-red-700'}`}
+                                            className={`flex items-center gap-1.5 text-[15px] transition-colors py-2 ${item.label === 'Nyepi Guide'
+                                                ? 'font-bold text-indigo-600 hover:text-indigo-800'
+                                                : isActive ? 'font-medium text-[#c1121f]' : 'font-medium text-stone-600 hover:text-red-700'
+                                                }`}
                                         >
                                             {item.label}
                                             {item.hasDropdown && <ChevronDown className={`w-4 h-4 transition-transform group-hover:rotate-180 ${isActive ? 'text-[#c1121f]' : 'text-stone-400'}`} />}
@@ -132,6 +149,7 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
 
                     {/* Right Section / Auth */}
                     <div className="hidden lg:flex items-center gap-6">
+                        <LanguageSwitcher />
                         <a href="https://nusaheritage.id/register" target="_blank" rel="noopener noreferrer" className="text-[15px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
                             Register
                         </a>
@@ -174,15 +192,28 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                         ) : (
                                             <button
                                                 onClick={() => {
-                                                    if (item.label === 'Tentang') {
+                                                    if (item.label === t('nav.about')) {
                                                         onNavigate('about');
                                                         setIsMobileMenuOpen(false);
-                                                    } else if (item.label === 'Cari Tanggal & Fitur' && onOpenSearch) {
+                                                    } else if (item.label === t('search.button') && onOpenSearch) {
                                                         onOpenSearch();
+                                                        setIsMobileMenuOpen(false);
+                                                    } else if (item.label === t('nav.widget') && onOpenWidget) {
+                                                        onOpenWidget();
+                                                        setIsMobileMenuOpen(false);
+                                                    } else if (item.label === t('nav.otonan') && onOpenOtonan) {
+                                                        onOpenOtonan();
+                                                        setIsMobileMenuOpen(false);
+                                                    } else if (item.label === t('nav.nyepi') && onOpenNyepiGuide) {
+                                                        onOpenNyepiGuide();
                                                         setIsMobileMenuOpen(false);
                                                     }
                                                 }}
-                                                className={`w-full flex items-center justify-between py-3 px-2 text-base font-medium rounded-lg transition-colors ${isActive ? 'bg-red-50 text-[#c1121f]' : 'text-stone-600 hover:bg-stone-50 hover:text-red-700'
+                                                className={`w-full flex items-center justify-between py-3 px-2 text-base transition-colors rounded-lg ${item.label === t('nav.nyepi')
+                                                    ? 'font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:text-indigo-800'
+                                                    : isActive
+                                                        ? 'font-medium bg-red-50 text-[#c1121f]'
+                                                        : 'font-medium text-stone-600 hover:bg-stone-50 hover:text-red-700'
                                                     }`}
                                             >
                                                 {item.label}
@@ -222,13 +253,18 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                 );
                             })}
 
-                            <div className="mt-6 pt-6 border-t border-stone-100 grid grid-cols-2 gap-4">
-                                <a href="https://nusaheritage.id/register" target="_blank" rel="noopener noreferrer" className="w-full py-2.5 text-center text-stone-600 font-medium border border-stone-200 rounded-lg hover:bg-stone-50 transition-colors block">
-                                    Register
-                                </a>
-                                <a href="https://nusaheritage.id/login" target="_blank" rel="noopener noreferrer" className="w-full py-2.5 text-center text-white font-medium bg-[#c1121f] hover:bg-[#a00f1a] rounded-lg transition-colors block">
-                                    Log in
-                                </a>
+                            <div className="mt-6 pt-6 border-t border-stone-100 flex flex-col gap-4">
+                                <div className="flex justify-center mb-2">
+                                    <LanguageSwitcher />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <a href="https://nusaheritage.id/register" target="_blank" rel="noopener noreferrer" className="w-full py-2.5 text-center text-stone-600 font-medium border border-stone-200 rounded-lg hover:bg-stone-50 transition-colors block">
+                                        Register
+                                    </a>
+                                    <a href="https://nusaheritage.id/login" target="_blank" rel="noopener noreferrer" className="w-full py-2.5 text-center text-white font-medium bg-[#c1121f] hover:bg-[#a00f1a] rounded-lg transition-colors block">
+                                        Log in
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
