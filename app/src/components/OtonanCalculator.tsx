@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CalendarDays, Gift, ChevronRight, Share2, ExternalLink } from 'lucide-react';
 import { getBaliDate, getAksaraBaliSaptawara, getAksaraBaliWuku, toBalineseDigits, formatAksaraBaliDate } from '@/utils/bali-calendar';
 import type { BaliDate } from '@/types/bali-calendar';
+import { useTranslation } from 'react-i18next';
 
 interface OtonanCalculatorProps {
     isOpen: boolean;
@@ -48,6 +49,7 @@ function calculateOtonanDates(birthDate: Date, count: number = 10): OtonanDate[]
 }
 
 export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
+    const { t } = useTranslation();
     const [birthDateStr, setBirthDateStr] = useState('');
     const [showResults, setShowResults] = useState(false);
 
@@ -122,8 +124,8 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                     <Gift className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">Kalkulator Otonan</h2>
-                                    <p className="text-white/80 text-sm">Hitung Ulang Tahun Bali Anda</p>
+                                    <h2 className="text-xl font-bold">{t('otonan.title')}</h2>
+                                    <p className="text-white/80 text-sm">{t('otonan.subtitle')}</p>
                                 </div>
                             </div>
                             <button onClick={onClose} className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors">
@@ -131,7 +133,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                             </button>
                         </div>
                         <p className="text-white/70 text-xs mt-2">
-                            Otonan adalah ulang tahun menurut kalender Bali yang jatuh setiap 210 hari (1 siklus Pawukon).
+                            {t('otonan.desc')}
                         </p>
                     </div>
 
@@ -141,7 +143,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                         {/* Date Input */}
                         <div className="mb-6">
                             <label className="block text-sm font-semibold text-stone-700 mb-2">
-                                Tanggal Lahir (Masehi)
+                                {t('otonan.input_label')}
                             </label>
                             <div className="flex gap-3">
                                 <input
@@ -156,7 +158,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                     disabled={!birthDate}
                                     className="px-6 py-3 bg-amber-600 hover:bg-amber-700 disabled:bg-stone-300 text-white font-semibold rounded-xl transition-colors"
                                 >
-                                    Hitung
+                                    {t('otonan.btn_calculate')}
                                 </button>
                             </div>
                         </div>
@@ -204,7 +206,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                         <div className="bg-white/70 rounded-lg p-3 border border-amber-100">
                                             <div className="flex items-center justify-between">
                                                 <div>
-                                                    <span className="text-[10px] text-amber-500 uppercase tracking-wider block">Wuku</span>
+                                                    <span className="text-[10px] text-amber-500 uppercase tracking-wider block">{t('otonan.wuku')}</span>
                                                     <p className="text-sm font-bold text-stone-800">{birthBaliDate.wuku.name}</p>
                                                 </div>
                                                 {getAksaraBaliWuku(birthBaliDate.wuku.name) && (
@@ -213,7 +215,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                                     </span>
                                                 )}
                                             </div>
-                                            <p className="text-xs text-stone-500 mt-1">Dewata: {birthBaliDate.wuku.dewata} • Urip: {birthBaliDate.wuku.urip}</p>
+                                            <p className="text-xs text-stone-500 mt-1">{t('otonan.god')}: {birthBaliDate.wuku.dewata} • {t('otonan.urip')}: {birthBaliDate.wuku.urip}</p>
                                         </div>
 
                                         {/* Aksara Bali Full Date */}
@@ -229,14 +231,14 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                         <div className="bg-gradient-to-r from-brand-600 to-brand-700 rounded-xl p-5 text-white">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <CalendarDays className="w-5 h-5 text-white/80" />
-                                                <span className="text-sm font-medium text-white/80">Otonan Berikutnya</span>
+                                                <span className="text-sm font-medium text-white/80">{t('otonan.next_otonan')}</span>
                                             </div>
                                             <p className="text-xl font-bold">
-                                                {nextOtonan.date.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                                                {nextOtonan.date.toLocaleDateString(t('common.locale', { defaultValue: 'id-ID' }), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                                             </p>
                                             <div className="flex items-center justify-between mt-3">
                                                 <span className="text-sm text-white/80">
-                                                    {nextOtonan.daysUntil === 0 ? '🎉 Hari ini!' : `${nextOtonan.daysUntil} hari lagi`}
+                                                    {nextOtonan.daysUntil === 0 ? '🎉 ' + t('calendar.today') : t('otonan.days_left', { count: nextOtonan.daysUntil })}
                                                 </span>
                                                 <a
                                                     href={handleGoogleCalendarLink(nextOtonan)}
@@ -253,7 +255,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
 
                                     {/* Otonan List */}
                                     <div>
-                                        <h3 className="text-sm font-semibold text-stone-700 mb-3">Jadwal Otonan</h3>
+                                        <h3 className="text-sm font-semibold text-stone-700 mb-3">{t('otonan.schedule')}</h3>
                                         <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
                                             {otonanDates.map((otonan, idx) => {
                                                 const isPast = otonan.daysUntil < 0;
@@ -264,16 +266,16 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                                     <div
                                                         key={idx}
                                                         className={`flex items-center justify-between p-3 rounded-xl border transition-colors ${isToday ? 'bg-amber-50 border-amber-300' :
-                                                                isNext ? 'bg-brand-50 border-brand-200' :
-                                                                    isPast ? 'bg-stone-50 border-stone-100 opacity-60' :
-                                                                        'bg-white border-stone-200 hover:border-stone-300'
+                                                            isNext ? 'bg-brand-50 border-brand-200' :
+                                                                isPast ? 'bg-stone-50 border-stone-100 opacity-60' :
+                                                                    'bg-white border-stone-200 hover:border-stone-300'
                                                             }`}
                                                     >
                                                         <div className="flex items-center gap-3">
                                                             <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${isToday ? 'bg-amber-500 text-white' :
-                                                                    isNext ? 'bg-brand-600 text-white' :
-                                                                        isPast ? 'bg-stone-200 text-stone-500' :
-                                                                            'bg-stone-100 text-stone-600'
+                                                                isNext ? 'bg-brand-600 text-white' :
+                                                                    isPast ? 'bg-stone-200 text-stone-500' :
+                                                                        'bg-stone-100 text-stone-600'
                                                                 }`}>
                                                                 <span style={{ fontFamily: 'Noto Sans Balinese, sans-serif', fontSize: '14px' }}>
                                                                     {toBalineseDigits(otonan.date.getDate())}
@@ -281,21 +283,21 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                                                             </div>
                                                             <div>
                                                                 <p className={`text-sm font-medium ${isPast ? 'text-stone-500' : 'text-stone-800'}`}>
-                                                                    {otonan.date.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                                                                    {otonan.date.toLocaleDateString(t('common.locale', { defaultValue: 'id-ID' }), { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
                                                                 </p>
                                                                 <p className="text-[11px] text-stone-400">
-                                                                    {otonan.baliDate.saptawara.name.split(' (')[0]}, {otonan.baliDate.pancawara.name}, Wuku {otonan.baliDate.wuku.name}
+                                                                    {otonan.baliDate.saptawara.name.split(' (')[0]}, {otonan.baliDate.pancawara.name}, {t('otonan.wuku')} {otonan.baliDate.wuku.name}
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <span className={`text-xs font-medium ${isToday ? 'text-amber-600' :
-                                                                    isPast ? 'text-stone-400' :
-                                                                        'text-stone-500'
+                                                                isPast ? 'text-stone-400' :
+                                                                    'text-stone-500'
                                                                 }`}>
-                                                                {isToday ? '🎉 Hari ini!' :
-                                                                    isPast ? `${Math.abs(otonan.daysUntil)} hari lalu` :
-                                                                        `${otonan.daysUntil} hari`}
+                                                                {isToday ? '🎉 ' + t('calendar.today') :
+                                                                    isPast ? t('otonan.days_ago', { count: Math.abs(otonan.daysUntil) }) :
+                                                                        t('otonan.days_left', { count: otonan.daysUntil })}
                                                             </span>
                                                             {!isPast && (
                                                                 <a
@@ -322,8 +324,8 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                         {!showResults && (
                             <div className="text-center py-8 text-stone-400">
                                 <Gift className="w-12 h-12 mx-auto mb-3 text-stone-300" />
-                                <p className="text-sm">Masukkan tanggal lahir untuk menghitung Otonan</p>
-                                <p className="text-xs mt-1">Otonan jatuh setiap 210 hari (1 siklus Pawukon)</p>
+                                <p className="text-sm">{t('otonan.subtitle')}</p>
+                                <p className="text-xs mt-1">{t('otonan.desc')}</p>
                             </div>
                         )}
                     </div>
@@ -334,7 +336,7 @@ export function OtonanCalculator({ isOpen, onClose }: OtonanCalculatorProps) {
                             onClick={onClose}
                             className="px-6 py-2.5 bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 text-sm font-medium rounded-xl transition-colors"
                         >
-                            Tutup
+                            {t('otonan.close')}
                         </button>
                     </div>
                 </motion.div>

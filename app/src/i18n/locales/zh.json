@@ -62,18 +62,24 @@
     },
     "otonan": {
         "title": "Otonan 计算器",
-        "subtitle": "计算您的巴厘岛生日",
-        "desc": "Otonan 是巴厘岛的生日，每 210 天（1 个 Pawukon 周期）发生一次。",
+        "subtitle": "巴厘岛生日（每210天）",
+        "desc": "Otonan 是根据 wewaran 和 Wuku 日历庆祝的生日。一个 oton/wuku 是 210 天。",
         "input_label": "出生日期 (公历)",
         "btn_calculate": "计算",
-        "next_otonan": "下一次 Otonan",
+        "next_otonan": "接下来的五个 Otonan",
         "days_left": "剩余 {{count}} 天",
         "schedule": "Otonan 日程表",
         "days_ago": "{{count}} 天前",
         "close": "关闭",
         "wuku": "Wuku",
         "god": "神明",
-        "urip": "Urip"
+        "urip": "Urip",
+        "birth_date": "出生日期（公历）",
+        "calculate": "计算 Otonan",
+        "result": "计算结果",
+        "wuku_birth": "出生 Wuku",
+        "urip_total": "总 Urip",
+        "add_calendar": "打开日历"
     },
     "export": {
         "title": "导出日历",
@@ -127,8 +133,8 @@
         "days_left": "倒数 {{days}} 天"
     },
     "nyepi": {
-        "title": "安宁日指南",
-        "subtitle": "巴厘岛安宁日期间的假期生存指南",
+        "title": "安息日 (Nyepi) 生存指南",
+        "subtitle": "巴厘岛寂静日假期和生存指南",
         "countdown_title": "{{year}} 年安宁日倒计时",
         "days": "天",
         "hours": "小时",
@@ -175,7 +181,31 @@
         "contact_fire": "消防队",
         "contact_sar": "搜救 (Search & Rescue)",
         "contact_callcenter": "巴厘岛紧急中心",
-        "emergency_warning": "在安宁日期间，只有紧急车辆（救护车和消防车）允许上街。如果发生紧急情况（患重病/分娩），您必须首先向您的酒店员工或当地 Pecalang（传统保安）报告，以便他们护送您去医院。"
+        "emergency_warning": "在安宁日期间，只有紧急车辆（救护车和消防车）允许上街。如果发生紧急情况（患重病/分娩），您必须首先向您的酒店员工或当地 Pecalang（传统保安）报告，以便他们护送您去医院。",
+        "countdown": "距离 Nyepi 倒计时 (Saka 1948)",
+        "what_is_nyepi": "什么是 Nyepi？",
+        "nyepi_desc": "Nyepi 是基于 Saka 日历的巴厘岛印度教新年。与通常的新年庆祝活动不同，Nyepi 在沉默中庆祝，进行为期 24 小时的活动限制，以进行自我反思、冥想并恢复自然和谐。",
+        "catur_brata": "Catur Brata Penyepian",
+        "catur_brata_desc": "在 Nyepi 当天早上 6 点到第二天早上 6 点必须遵守的四项主要禁令。",
+        "amati_geni": "Amati Geni",
+        "amati_geni_desc": "没有火、灯或电。",
+        "amati_karya": "Amati Karya",
+        "amati_karya_desc": "没有工作或体力活动。",
+        "amati_lelungan": "Amati Lelungan",
+        "amati_lelungan_desc": "没有旅行，待在你的家/酒店里。",
+        "amati_lelanguan": "Amati Lelanguan",
+        "amati_lelanguan_desc": "没有娱乐、嘈杂的音乐或派对。",
+        "dos": "可以做（推荐）",
+        "do_1": "待在您的酒店/别墅区域内。",
+        "do_2": "享受宁静和繁星点点的巴厘岛夜空。",
+        "do_3": "如果出现紧急情况（生病、怀孕等），请向酒店员工报告。",
+        "donts": "不要做（严格禁止）",
+        "dont_1": "离开住宿物业（传统保安/警察将采取严厉措施）。",
+        "dont_2": "晚上开明亮的灯，请确保窗帘拉紧。",
+        "dont_3": "制造噪音或播放嘈杂的音乐。",
+        "dont_4": "操作无人机（禁止在巴厘岛领空飞行）。",
+        "emergency": "主要紧急服务",
+        "emergency_note": "只有在村庄 Pecalang 陪同下的救护车和消防车才允许在街上行驶。"
     },
     "common": {
         "close": "关闭",
@@ -201,14 +231,260 @@
         "sec1_title": "1. 简介",
         "sec2_title": "2. 我们收集的数据",
         "sec3_title": "3. 使用与 Cookie",
-        "sec4_title": "4. 信息安全与第三方"
+        "sec4_title": "4. 信息安全与第三方",
+        "sec1_desc1": "欢迎使用 KalenderBali.id（NusaHeritage 倡议的一部分）。本隐私政策解释了当您直接或通过第三方小工具访问我们的服务时，我们如何收集、使用、披露和保护信息。",
+        "sec1_desc2": "使用本服务表明您已阅读、理解并同意本页所述的数据处理做法，符合印尼适用法律（包括 2022 年第 27 号个人数据保护法）。",
+        "sec2_desc1": "为了维护不需要用户注册（登录）的最佳服务，我们不会收集用户的具体个人身份信息，如全名、身份证号码、电子邮件地址或电话号码。",
+        "sec2_sub": "可能记录且匿名的技术数据包括：",
+        "sec2_list1": "日志信息 (遥测)：屏蔽的 IP 地址、浏览器类型、访问时间以及为了内部分析目的而查看的日历页面/功能的历史记录。",
+        "sec2_list2": "来源数据 (Referrer)：如果您与嵌入在第三方网站上的 KalenderBali.id 服务（嵌入式小组件）进行交互，我们的系统将接收加载小组件的引用域名信息，以便进行流量聚合。",
+        "sec2_list3": "搜索参数：在客户端本地执行的公历日期或功能（如结婚、吉日和 Otonan）。输入数据（例如 PDF 功能中父亲/母亲的 Otonan 名字）仅在用户的浏览器端（客户端）处理，并且绝对不会发送或永久存储在 NusaHeritage 服务器中。",
+        "sec3_desc1": "我们的系统可能会使用极少的本地存储和 Cookies 技术来优化用户体验 (例如：记住最后一次查看的日历月份或年份，以使搜索感觉更快)。",
+        "sec3_desc2": "您完全有权通过所用浏览器禁用 cookies 功能，尽管这可能会影响若干应用程序功能的响应性能。",
+        "sec4_desc1": "我们根据行业标准采用合理的措施进行数据保护。我们绝对不会出于商业目的将访客数据出售、出租或分发给任何第三方。",
+        "sec4_desc2": "KalenderBali.id 包含导向 NusaHeritage.id 主要服务或关联方的外部推荐链接。如果您点击了这些链接，其数据处理受第三方平台的隐私政策约束。",
+        "updated": "最后更新：2026 年 3 月",
+        "contact": "如有与数据相关的问题或疑虑，请与我们联系 info@kalenderbali.id"
     },
     "terms": {
         "title": "服务条款",
         "subtitle": "用户协议、材料版权和网站功能责任限制。",
         "sec1_title": "1. 背景协议",
         "sec2_title": "2. 占卜准确性免责声明",
-        "sec3_title": "3. 知识产权 (IPR)",
-        "sec4_title": "4. 系统可用性与更新"
+        "sec3_title": "3. 知识产权保护",
+        "sec4_title": "4. 系统的可用性与更新",
+        "sec1_desc": "访问、浏览以及从 KalenderBali.id 网站（及在第三方的嵌入小工具）下载信息完全受下列条款及条件的约束，这些条款与电子信息及交易法（UU ITE）一致。如您根本上无法同意下列各项条款，请停止使用本软件。",
+        "sec2_list1": "KalenderBali.id 参照了 Lontar Wariga 文本（如 Sri Rsi Ananda Kusuma 的 Wariga Dewasa，I.B. Suparta Ardhana 的 Pokok-pokok Wariga 等）采用巴厘岛的天文计算而开发。虽然我们竭力达到高科学精度，但 Otonan、吉日 (Dewasa Ayu)、结婚 (Pawiwahan) 的计算结果，或剖腹产功能中的匹配得分（Urip），绝不代表命运具有绝对确定性。",
+        "sec2_list2": "该应用仅可作为文化与精神活动的辅助建议参数，绝不能完全替代传统的领袖、祭司/Sulinggih或妇产科专业医师提供的基于官方/宗教的指导。",
+        "sec2_list3": "对由于根据（或无视）KalenderBali.id 的 PDF 结果行事而在实质上、现实上、生理上，或是非生理上所导致的任何后果，用户不能向身为软件开发者的 NusaHeritage 基金会追讨任何赔偿诉讼。",
+        "sec3_desc1": "整个界面（UI/UX）、布局（layout）、图形图表、所有带所有权的沙卡历算算法以及输出的打印文档（PDF导出文件），全数属于 NusaHeritage 的知识产权，受印尼知识产权宪法的保护。",
+        "sec3_desc2": "我们授予用户免费的非独占和免版税个人用途以及针对普通大众的基础教育所用的 PDF 下载许可。未经书面同意，任意修改平台代码进行反向工程，将导出的 PDF 文件（KalenderBali 工具的运算结果）商业化出售，或者遮挡小工具嵌入栏位显示的标记（水印/底部标注）等行为，构成计算机软件盗版侵权。",
+        "sec4_desc": "我们致力于把正常运行时间保持在 ~99% 水平。然而由于所有当前服务内容仅依现状（“As Is”）方式提供。因要进行服务器的维保作业、应用的漏洞抢修，或要根据印度教长者大会 (Pesamuan Agung) 的最终决议从源头上校正日历公式配置调整，所以我们的服务可能出现短暂中断。基于修订内容极其合理性的前提下，我们保留通过每季度修改此服务条款的权利而不须以邮件向所有用户发出个性化的分发。",
+        "updated": "我们有权根据法律动态的诠释编辑本使用条款。发布日期：2026年3月。"
+    },
+    "pura_directory": {
+        "title": "巴厘岛寺庙目录",
+        "subtitle": "查找寺庙信息、位置和即将举行的仪式。",
+        "search_placeholder": "搜索寺庙名称、别名或县...",
+        "all_categories": "所有类别",
+        "nearest_piodalan": "下一次仪式",
+        "today": "今天！",
+        "no_results": "没有符合您搜索条件的寺庙。",
+        "location": "寺庙位置",
+        "schedule": "仪式时间表",
+        "type": "类型",
+        "next": "下一次",
+        "description": "描述与历史"
+    },
+    "info": {
+        "title": "KalenderBali 功能与知识指南",
+        "subtitle": "巴厘岛历法系统融合了太阳周期、月亮周期和 wewaran 周期的复杂计算。以下是历法阅读指南及此应用程序中的功能说明。",
+        "items": [
+            {
+                "title": "1. 颜色和数字的含义",
+                "content": "中间的大数字代表**公历日期**。\n\n在此应用程序中，我们为每个事件提供颜色指示：\n- **红圈：** 国家法定假日\n- **红色指示：** 主要祭典（满月、新月等）\n- **金色/黄色：** 寺庙仪式（Piodalan）\n\n右上角的小数字（1-15）是农历日期。"
+            },
+            {
+                "title": "2. 满月和新月 (Purnama & Tilem)",
+                "content": "- **Purnama (满月):** 以 🌝 标记。\n- **Tilem (新月):** 以 🌚 标记。"
+            },
+            {
+                "title": "3. Wuku 和 Wewaran",
+                "content": "巴厘岛日历中的每一天都有独特的名字，这是由 210 天的周期循环决定的。"
+            },
+            {
+                "title": "4. 吉日 (Dewasa Ayu)",
+                "content": "我们提供适合进行结婚、搬家/建筑、剖腹产的吉日推荐得分。"
+            },
+            {
+                "title": "5. 寺庙仪式 (Piodalan)",
+                "content": "寺庙的周年纪念仪式，可能每 210 天重复一次，也可能每年按农历重复一次。"
+            },
+            {
+                "title": "6. 首页小组件",
+                "content": "主页提供每天的实时节日和仪式概览。"
+            },
+            {
+                "title": "7. Otonan 计算器",
+                "content": "Otonan 是巴厘岛的生日（每 210 天一次）。输入您的公历生日以计算下一个 Otonan 日期。"
+            },
+            {
+                "title": "8. 导出日历 (.ics)",
+                "content": "下载 .ics 文件将巴厘岛节日同步到您的手机/电脑。"
+            },
+            {
+                "title": "9. 智能假期规划",
+                "content": "帮助您规划连假，提供请假建议以获得更长的连续假期。"
+            }
+        ]
+    },
+    "info_section": {
+        "title": "KalenderBali 功能与指南",
+        "subtitle": "一般信息与指南",
+        "intro_1": "巴厘岛的日历系统具有丰富的哲学和精神内涵。",
+        "intro_2": "KalenderBali.id 是这一保护计划的一部分",
+        "quote": "“了解 wewaran, urip, dewata, uku, sasih 是祖先遗产的一部分，并被用于巴厘岛社区生活的各个方面。”",
+        "reference_title": "参考来源",
+        "expert_title": "专家支持",
+        "expert_desc": "吉日的算法依据专家Ida Bagus Ngurah Semara的技术制定。",
+        "standard_title": "标准系统",
+        "standard_desc": "参照传统标准巴厘Saka日历系统。",
+        "biblio_title": "参考文献",
+        "items": {
+            "guide-melahirkan": {
+                "title": "指南：剖腹产选吉日",
+                "content": "自动推荐适合孩子出生的最佳良辰吉日。\n\n<strong>分析方法：</strong>\n结合“Manusa Yadnya”指导原则进行吉凶排查、数字吉祥规律匹配及附加测试父母出生的命理协调。"
+            },
+            "guide-pawiwahan": {
+                "title": "指南：挑选结婚吉日 (Pawiwahan)",
+                "content": "专为婚礼的吉日选择提供智能分析评分。规避不吉利的时间段并找出最重要的日期。\n可下载查询结果PDF和Excel表格。"
+            },
+            "guide-search": {
+                "title": "指南：日期搜索与过滤",
+                "content": "按颜色代码查看适宜各类仪式及普通事宜（建房、农用等）的日子。搜索循环节日和月亮周期等。"
+            },
+            "purnama-tilem": {
+                "title": "信息：满月 & 新月 (Purnama & Tilem)",
+                "content": "巴厘日历月神周期的重要标志。满月适宜庆典、新月适合自我反思与净化。"
+            },
+            "wuku": {
+                "title": "Wuku (30周周期)",
+                "content": "30个星期周期的命名及对应的主神、数值、方位。"
+            },
+            "sasih": {
+                "title": "Sasih (12 个月)",
+                "content": "基于巴厘岛Saka历法体系的12个阴历月份。"
+            },
+            "wewaran": {
+                "title": "Wewaran (天数周期)",
+                "content": "每天1天到10天不同周期的叠加历法。"
+            },
+            "urip": {
+                "title": "Urip (生命数字)",
+                "content": "日历元素中使用的数值系统，用于相亲配对以及读取属相等。"
+            },
+            "dewata": {
+                "title": "诸神与方位",
+                "content": "每个日子及数字相对应的神明守护及其庇佑方位。"
+            }
+        }
+    },
+    "trip_planner": {
+        "title": "智能旅行 & 请假计划工具",
+        "desc": "在全国节假日和巴厘岛神圣节假日附近战略性地请假，以最大化您的假期。",
+        "filter_ceremony": "有巴厘岛仪式",
+        "holiday": "假期",
+        "days": "天",
+        "need_leave": "需要请假 {{count}} 天",
+        "no_leave": "无需请假",
+        "leave_on": "请假在:",
+        "sacred_moment": "巴厘岛神圣时刻",
+        "no_results": "没有符合此条件的行程推荐。"
+    },
+    "search_panel": {
+        "title": "搜索日期和日历功能",
+        "tab_tanggal": "日期",
+        "tab_fitur": "特色功能",
+        "tab_hari_baik": "吉日",
+        "tab_pawiwahan": "婚礼吉日",
+        "tab_melahirkan": "剖腹产吉日",
+        "month_label": "月份",
+        "year_label": "年份",
+        "go_to_date": "转到日期",
+        "search_type_label": "搜索类型",
+        "search_oto": "Otonan / 巴厘岛生日",
+        "search_purnama": "满月 (Purnama)",
+        "search_tilem": "新月 (Tilem)",
+        "search_kajengkliwon": "Kajeng Kliwon",
+        "search_galungan": "Galungan",
+        "search_kuningan": "Kuningan",
+        "search_nyepi": "Nyepi (安息日)",
+        "search_tumpek": "Tumpek",
+        "search_ingkel": "Ingkel",
+        "saptawara_label": "Saptawara (7天)",
+        "saptawara_all": "全部",
+        "pancawara_label": "Pancawara (5天)",
+        "pancawara_all": "全部",
+        "wuku_label": "Wuku",
+        "wuku_all": "所有 Wuku",
+        "ingkel_label": "Ingkel类型",
+        "search_method_label": "搜索方法",
+        "method_forward": "接下来的3次",
+        "method_year": "在特定年份",
+        "btn_searching": "搜索中...",
+        "btn_search_year": "搜索年份",
+        "btn_search_next": "搜索下个日期",
+        "search_result_title": "搜索结果",
+        "search_result_params_year": "{{year}} 年",
+        "search_result_params_next": "（接下来的 3 次）",
+        "btn_pdf": "PDF",
+        "no_recent_match": "在不久的将来没有找到匹配项。",
+        "category_label": "活动分类",
+        "hari_baik_desc": "日历将根据选定类别的吉日和避免禁忌显示 <strong className=\"text-emerald-600\">日期匹配百分比（绿色）</strong>。",
+        "search_range_label": "按日期范围搜索推荐",
+        "from_date": "起始日期",
+        "to_date": "结束日期",
+        "btn_search_haribaik": "寻找吉日",
+        "btn_show_heatmap": "显示本月热图",
+        "btn_reset": "重启",
+        "hari_baik_found": "为“{{category}}”找到 {{count}} 个吉日",
+        "hari_baik_not_found": "在该日期范围内未找到“{{category}}”的吉日。",
+        "btn_download_pdf": "下载 PDF",
+        "pawiwahan_title": "婚礼吉日 (Dewasa Pawiwahan)",
+        "pawiwahan_desc": "此特殊功能结合 Lontar Wariga 公式和当地智慧（始于 1972 年的实地观察）计算婚礼吉日。",
+        "pawiwahan_rules_1": "最佳日期:",
+        "pawiwahan_rules_1_val": "Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha",
+        "pawiwahan_rules_2": "绝对禁止:",
+        "pawiwahan_rules_2_val": "Pangelong (残月)",
+        "pawiwahan_rules_3": "禁止的 Wuku:",
+        "pawiwahan_rules_3_val": "Rangda Tiga, Tanpa Guru, Was Panganten",
+        "btn_search": "搜索",
+        "btn_reset_calendar": "重置日历",
+        "pawiwahan_found": "找到天数: {{count}}",
+        "best_recommendation": "最佳建议",
+        "hari_utama": "最佳婚礼吉日",
+        "no_pantangan": "没有重大禁忌",
+        "pawiwahan_not_found": "在此范围内未找到得分至少为 50% 的日子。",
+        "melahirkan_title": "剖腹产的吉祥日",
+        "melahirkan_desc": "此功能有助于寻找剖腹产的吉祥日子。涉及 Dewasa Ayu (Manusa Yadnya) 计算、<strong>美丽日期</strong>奖励，以及与父母 Otonan 的 <strong>Urip</strong> 和谐度。",
+        "father_otonan_label": "父亲的 Otonan（可选，用于计算 Urip）",
+        "mother_otonan_label": "母亲的 Otonan（可选，用于计算 Urip）",
+        "select_saptawara": "选择 Saptawara",
+        "select_pancawara": "选择 Pancawara",
+        "hpl_label": "日期范围 (预产期)",
+        "melahirkan_recommendation": "最推荐日期（得分 > 50%）",
+        "hari_utama_flag": "(最佳吉日)"
+    },
+    "export_calendar": {
+        "title": "导出日历",
+        "subtitle": "下载适用于 Google/Apple 日历的 .ics 文件",
+        "select_year": "选择年份",
+        "select_event_type": "选择事件类型",
+        "hari_raya": "巴厘岛公共假日",
+        "purnama_tilem": "满月与新月",
+        "national": "国家法定假日",
+        "preview": "事件预览",
+        "total_event": "总事件",
+        "min_one": "请至少选择一种事件类型",
+        "more_events": "还有 {{count}} 个事件",
+        "footer_info": ".ics 文件兼容 Google、Apple 和 Outlook 日历",
+        "downloading": "生成中...",
+        "downloaded": "已下载！",
+        "download_btn": "下载 .ics"
+    },
+    "widget_embed": {
+        "title": "嵌入日历小工具",
+        "subtitle": "在您的网站上免费嵌入 KalenderBali.id。",
+        "step1_title": "1. 选择小工具类型",
+        "full_cal": "完整日历",
+        "full_cal_desc": "显示带有假期的完整月份",
+        "today_only": "仅限今日",
+        "today_only_desc": "今日紧凑视图",
+        "step2_title": "2. 选择主题",
+        "theme_light": "浅色",
+        "theme_dark": "深色",
+        "step3_title": "3. 复制嵌入代码",
+        "copy_btn": "复制代码",
+        "copied": "已复制！"
     }
 }

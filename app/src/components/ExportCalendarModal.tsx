@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download, Check, Calendar, Sun, Sparkles, Flag } from 'lucide-react';
 import { collectBaliEvents, collectNationalHolidays, generateICS, downloadICS } from '@/utils/ics-generator';
 import type { } from '@/utils/ics-generator';
+import { useTranslation } from 'react-i18next';
 
 interface ExportCalendarModalProps {
     isOpen: boolean;
@@ -10,6 +11,8 @@ interface ExportCalendarModalProps {
 }
 
 export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProps) {
+    const { t } = useTranslation();
+
     const currentYear = new Date().getFullYear();
     const [year, setYear] = useState(currentYear);
     const [includeBali, setIncludeBali] = useState(true);
@@ -88,8 +91,8 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                                     <Calendar className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">Export Kalender</h2>
-                                    <p className="text-white/80 text-sm">Download file .ics untuk Google/Apple Calendar</p>
+                                    <h2 className="text-xl font-bold">{t('export_calendar.title')}</h2>
+                                    <p className="text-white/80 text-sm">{t('export_calendar.subtitle')}</p>
                                 </div>
                             </div>
                             <button onClick={onClose} className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors">
@@ -104,7 +107,7 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
 
                             {/* Year Selector */}
                             <div>
-                                <label className="block text-sm font-semibold text-stone-700 mb-2">Pilih Tahun</label>
+                                <label className="block text-sm font-semibold text-stone-700 mb-2">{t('export_calendar.select_year')}</label>
                                 <div className="flex gap-2">
                                     {[currentYear - 1, currentYear, currentYear + 1].map(y => (
                                         <button
@@ -123,7 +126,7 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
 
                             {/* Event Type Filters */}
                             <div>
-                                <label className="block text-sm font-semibold text-stone-700 mb-3">Pilih Jenis Event</label>
+                                <label className="block text-sm font-semibold text-stone-700 mb-3">{t('export_calendar.select_event_type')}</label>
                                 <div className="space-y-2">
                                     <label className="flex items-center gap-3 p-3 bg-stone-50 rounded-xl border border-stone-100 cursor-pointer hover:bg-stone-100 transition-colors">
                                         <input
@@ -134,8 +137,8 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                                         />
                                         <Sparkles className="w-4 h-4 text-brand-600" />
                                         <div className="flex-1">
-                                            <span className="text-sm font-medium text-stone-800">Hari Raya Bali</span>
-                                            <span className="text-xs text-stone-400 ml-2">({stats.bali} event)</span>
+                                            <span className="text-sm font-medium text-stone-800">{t('export_calendar.hari_raya')}</span>
+                                            <span className="text-xs text-stone-400 ml-2">({stats.bali} {t('export_calendar.total_event').split(' ')[1] || 'event'})</span>
                                         </div>
                                     </label>
 
@@ -148,8 +151,8 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                                         />
                                         <Sun className="w-4 h-4 text-amber-500" />
                                         <div className="flex-1">
-                                            <span className="text-sm font-medium text-stone-800">Purnama & Tilem</span>
-                                            <span className="text-xs text-stone-400 ml-2">({stats.purnama + stats.tilem} event)</span>
+                                            <span className="text-sm font-medium text-stone-800">{t('export_calendar.purnama_tilem')}</span>
+                                            <span className="text-xs text-stone-400 ml-2">({stats.purnama + stats.tilem} {t('export_calendar.total_event').split(' ')[1] || 'event'})</span>
                                         </div>
                                     </label>
 
@@ -162,8 +165,8 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                                         />
                                         <Flag className="w-4 h-4 text-red-500" />
                                         <div className="flex-1">
-                                            <span className="text-sm font-medium text-stone-800">Libur Nasional</span>
-                                            <span className="text-xs text-stone-400 ml-2">({stats.national} event)</span>
+                                            <span className="text-sm font-medium text-stone-800">{t('export_calendar.national')}</span>
+                                            <span className="text-xs text-stone-400 ml-2">({stats.national} {t('export_calendar.total_event').split(' ')[1] || 'event'})</span>
                                         </div>
                                     </label>
                                 </div>
@@ -172,12 +175,12 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                             {/* Preview */}
                             <div>
                                 <div className="flex items-center justify-between mb-2">
-                                    <span className="text-sm font-semibold text-stone-700">Preview Event</span>
-                                    <span className="text-xs text-stone-400">{filteredEvents.length} event total</span>
+                                    <span className="text-sm font-semibold text-stone-700">{t('export_calendar.preview')}</span>
+                                    <span className="text-xs text-stone-400">{filteredEvents.length} {t('export_calendar.total_event')}</span>
                                 </div>
                                 <div className="max-h-[200px] overflow-y-auto border border-stone-200 rounded-xl divide-y divide-stone-100">
                                     {filteredEvents.length === 0 ? (
-                                        <div className="p-4 text-center text-sm text-stone-400">Pilih minimal satu jenis event</div>
+                                        <div className="p-4 text-center text-sm text-stone-400">{t('export_calendar.min_one')}</div>
                                     ) : (
                                         filteredEvents.slice(0, 50).map((evt, i) => (
                                             <div key={i} className="flex items-center gap-3 px-3 py-2">
@@ -195,7 +198,7 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                                     )}
                                     {filteredEvents.length > 50 && (
                                         <div className="p-2 text-center text-[10px] text-stone-400">
-                                            +{filteredEvents.length - 50} event lainnya
+                                            {t('export_calendar.more_events', { count: filteredEvents.length - 50 })}
                                         </div>
                                     )}
                                 </div>
@@ -206,7 +209,7 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                     {/* Footer */}
                     <div className="p-4 border-t border-stone-100 bg-stone-50 flex items-center justify-between gap-3">
                         <p className="text-xs text-stone-400">
-                            File .ics kompatibel dengan Google, Apple & Outlook Calendar
+                            {t('export_calendar.footer_info')}
                         </p>
                         <button
                             onClick={handleDownload}
@@ -219,14 +222,14 @@ export function ExportCalendarModal({ isOpen, onClose }: ExportCalendarModalProp
                             {downloaded ? (
                                 <>
                                     <Check className="w-4 h-4" />
-                                    Terunduh!
+                                    {t('export_calendar.downloaded')}
                                 </>
                             ) : isGenerating ? (
-                                'Generating...'
+                                t('export_calendar.downloading')
                             ) : (
                                 <>
                                     <Download className="w-4 h-4" />
-                                    Download .ics
+                                    {t('export_calendar.download_btn')}
                                 </>
                             )}
                         </button>

@@ -16,6 +16,7 @@ import { calculateYadnyaScore } from '@/utils/yadnya-score';
 import type { YadnyaScoreResult as HariBaikScoreResult } from '@/utils/yadnya-score';
 import type { BaliDate } from '@/types/bali-calendar';
 import { LOGO_BASE64 } from '@/utils/logo-base64';
+import { useTranslation } from 'react-i18next';
 
 interface SearchPanelProps {
     onSelectResult: (date: Date) => void;
@@ -43,6 +44,7 @@ const formatDateToInput = (d: Date) => {
 };
 
 export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, currentHighlightCategory, initialTab }: SearchPanelProps) {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState<'masehi' | 'fitur' | 'hariBaik' | 'pawiwahan' | 'melahirkan'>(initialTab || 'masehi');
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -518,7 +520,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                     <div className="p-2 bg-brand-100 rounded-lg text-brand-800">
                         <Search className="w-5 h-5" />
                     </div>
-                    <span className="font-semibold text-sm sm:text-base text-stone-800">Cari Tanggal & Fitur Kalender</span>
+                    <span className="font-semibold text-sm sm:text-base text-stone-800">{t('search_panel.title')}</span>
                 </div>
                 <ChevronRight className={`w-5 h-5 text-stone-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
             </div>
@@ -540,35 +542,35 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                     className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'masehi' ? 'bg-white text-stone-800 shadow-sm' : 'text-stone-500 hover:text-stone-700'
                                         }`}
                                 >
-                                    Tanggal
+                                    {t('search_panel.tab_tanggal')}
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('fitur')}
                                     className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'fitur' ? 'bg-white text-stone-800 shadow-sm' : 'text-stone-500 hover:text-stone-700'
                                         }`}
                                 >
-                                    Fitur
+                                    {t('search_panel.tab_fitur')}
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('hariBaik')}
                                     className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'hariBaik' ? 'bg-white text-stone-800 shadow-sm' : 'text-stone-500 hover:text-stone-700'
                                         }`}
                                 >
-                                    Hari Baik
+                                    {t('search_panel.tab_hari_baik')}
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('pawiwahan')}
                                     className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'pawiwahan' ? 'bg-white text-stone-800 shadow-sm' : 'text-stone-500 hover:text-stone-700'
                                         }`}
                                 >
-                                    Pawiwahan
+                                    {t('search_panel.tab_pawiwahan')}
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('melahirkan')}
                                     className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'melahirkan' ? 'bg-white text-stone-800 shadow-sm' : 'text-stone-500 hover:text-stone-700'
                                         }`}
                                 >
-                                    Lahir Sesar
+                                    {t('search_panel.tab_melahirkan')}
                                 </button>
                             </div>
 
@@ -577,7 +579,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                 <form onSubmit={handleMasehiSearch} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <div className="grid grid-cols-2 gap-4 max-w-md">
                                         <div>
-                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Bulan</label>
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.month_label')}</label>
                                             <select
                                                 value={targetMonth}
                                                 onChange={(e) => setTargetMonth(e.target.value)}
@@ -589,7 +591,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             </select>
                                         </div>
                                         <div>
-                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Tahun</label>
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.year_label')}</label>
                                             <input
                                                 type="number"
                                                 value={targetYear}
@@ -599,7 +601,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                         </div>
                                     </div>
                                     <button type="submit" className="mt-4 flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-sm font-medium transition-colors">
-                                        <CalendarDays className="w-4 h-4" /> Go ke Tanggal
+                                        <CalendarDays className="w-4 h-4" /> {t('search_panel.go_to_date')}
                                     </button>
                                 </form>
                             )}
@@ -610,7 +612,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                     <form onSubmit={handleFeatureSearch} className="space-y-4 max-w-2xl">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div className="sm:col-span-2">
-                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">Tipe Pencarian</label>
+                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.search_type_label')}</label>
                                                 <select
                                                     value={searchType}
                                                     onChange={(e) => {
@@ -619,39 +621,39 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     }}
                                                     className="w-full sm:w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-brand-600/50 focus:border-brand-600"
                                                 >
-                                                    <option value="otonan">Otonan / Hari Lahir Bali</option>
-                                                    <option value="purnama">Purnama (Bulan Penuh)</option>
-                                                    <option value="tilem">Tilem (Bulan Mati)</option>
-                                                    <option value="kajengkliwon">Kajeng Kliwon</option>
-                                                    <option value="galungan">Hari Raya Galungan</option>
-                                                    <option value="kuningan">Hari Raya Kuningan</option>
-                                                    <option value="nyepi">Hari Raya Nyepi</option>
-                                                    <option value="tumpek">Tumpek</option>
-                                                    <option value="ingkel">Ingkel</option>
+                                                    <option value="otonan">{t('search_panel.search_oto')}</option>
+                                                    <option value="purnama">{t('search_panel.search_purnama')}</option>
+                                                    <option value="tilem">{t('search_panel.search_tilem')}</option>
+                                                    <option value="kajengkliwon">{t('search_panel.search_kajengkliwon')}</option>
+                                                    <option value="galungan">{t('search_panel.search_galungan')}</option>
+                                                    <option value="kuningan">{t('search_panel.search_kuningan')}</option>
+                                                    <option value="nyepi">{t('search_panel.search_nyepi')}</option>
+                                                    <option value="tumpek">{t('search_panel.search_tumpek')}</option>
+                                                    <option value="ingkel">{t('search_panel.search_ingkel')}</option>
                                                 </select>
                                             </div>
 
                                             {searchType === 'otonan' && (
                                                 <>
                                                     <div>
-                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">Saptawara (7 Hari)</label>
+                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.saptawara_label')}</label>
                                                         <select value={saptawara} onChange={(e) => setSaptawara(e.target.value)} className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                            <option value="">Semua Hari</option>
+                                                            <option value="">{t('search_panel.saptawara_all')}</option>
                                                             {SAPTAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                         </select>
                                                     </div>
                                                     <div>
-                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">Pancawara (5 Hari)</label>
+                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.pancawara_label')}</label>
                                                         <select value={pancawara} onChange={(e) => setPancawara(e.target.value)} className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                            <option value="">Semua</option>
+                                                            <option value="">{t('search_panel.pancawara_all')}</option>
                                                             {PANCAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                         </select>
                                                     </div>
                                                     <div className="sm:col-span-2">
-                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">Wuku</label>
+                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.wuku_label')}</label>
                                                         <select value={wuku} onChange={(e) => setWuku(e.target.value)} className="w-full sm:w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                            <option value="">Semua Wuku</option>
-                                                            {WUKU.map(d => <option key={d} value={d}>{d}</option>)}
+                                                            <option value="">{t('search_panel.wuku_all')}</option>
+                                                            {WUKU.map(w => <option key={w} value={w}>{w}</option>)}
                                                         </select>
                                                     </div>
                                                 </>
@@ -659,39 +661,29 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
                                             {searchType === 'ingkel' && (
                                                 <div className="sm:col-span-2">
-                                                    <label className="block text-xs text-stone-500 font-medium mb-1.5">Jenis Ingkel</label>
+                                                    <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.ingkel_label')}</label>
                                                     <select value={ingkel} onChange={(e) => setIngkel(e.target.value)} className="w-full sm:w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                        {INGKEL.map(d => <option key={d} value={d}>{d}</option>)}
+                                                        {INGKEL.map(i => <option key={i} value={i}>{i}</option>)}
                                                     </select>
                                                 </div>
                                             )}
 
                                             <div className="sm:col-span-2 border-t border-stone-200 pt-4 mt-2">
-                                                <label className="block text-xs text-stone-500 font-medium mb-2">Metode Pencarian</label>
-                                                <div className="flex flex-col sm:flex-row gap-4 mb-4">
-                                                    <label className="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
-                                                        <input
-                                                            type="radio"
-                                                            checked={searchMode === 'forward'}
-                                                            onChange={() => setSearchMode('forward')}
-                                                            className="text-brand-600 focus:ring-brand-600"
-                                                        />
-                                                        3 Terdekat Kedepan
+                                                <label className="block text-xs text-stone-500 font-medium mb-3">{t('search_panel.search_method_label')}</label>
+                                                <div className="flex flex-col sm:flex-row gap-3">
+                                                    <label className="flex items-center p-3 border border-stone-200 rounded-lg hover:bg-stone-50 cursor-pointer">
+                                                        <input type="radio" value="forward" checked={searchMode === 'forward'} onChange={() => setSearchMode('forward')} className="text-brand-600 focus:ring-brand-500" />
+                                                        <span className="ml-2 text-sm text-stone-700">{t('search_panel.method_forward')}</span>
                                                     </label>
-                                                    <label className="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
-                                                        <input
-                                                            type="radio"
-                                                            checked={searchMode === 'year'}
-                                                            onChange={() => setSearchMode('year')}
-                                                            className="text-brand-600 focus:ring-brand-600"
-                                                        />
-                                                        Dalam Tahun Tertentu
+                                                    <label className="flex items-center p-3 border border-stone-200 rounded-lg hover:bg-stone-50 cursor-pointer">
+                                                        <input type="radio" value="year" checked={searchMode === 'year'} onChange={() => setSearchMode('year')} className="text-brand-600 focus:ring-brand-500" />
+                                                        <span className="ml-2 text-sm text-stone-700">{t('search_panel.method_year')}</span>
                                                     </label>
                                                 </div>
 
                                                 {searchMode === 'year' && (
-                                                    <div className="animate-in fade-in slide-in-from-top-2 duration-200">
-                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">Tahun</label>
+                                                    <div className="animate-in fade-in slide-in-from-top-2 duration-200 mt-4">
+                                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.year_label')}</label>
                                                         <input
                                                             type="number"
                                                             value={featureYear}
@@ -703,19 +695,21 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             </div>
                                         </div>
 
-                                        <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-brand-600 to-brand-800 hover:from-brand-700 hover:to-brand-800 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70">
-                                            <SearchIcon className="w-4 h-4" /> {isSearching ? 'Mencari...' : (searchMode === 'year' ? 'Cari di Tahun Ini' : 'Cari Berikutnya')}
+                                        <button type="submit" disabled={isSearching} className="mt-6 flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+                                            <SearchIcon className="w-4 h-4" /> {isSearching ? t('search_panel.btn_searching') : (searchMode === 'year' ? t('search_panel.btn_search_year') : t('search_panel.btn_search_next'))}
                                         </button>
                                     </form>
 
-                                    {/* Search Results Display */}
+                                    {/* Feature Results */}
                                     {searchResults && (
-                                        <div className="mt-6 pt-6 border-t border-stone-200">
-                                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-3">
-                                                <h4 className="text-sm font-medium text-stone-500">Hasil Pencarian{searchMode === 'year' ? ` di Tahun ${featureYear}` : ' (3 Terdekat Kedepan)'}:</h4>
+                                        <div className="mt-8">
+                                            <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-t border-stone-200 pt-4">
+                                                <h3 className="text-sm font-bold text-stone-800">
+                                                    {t('search_panel.search_result_title')}{searchMode === 'year' ? t('search_panel.search_result_params_year', { year: featureYear }) : t('search_panel.search_result_params_next')}:
+                                                </h3>
                                                 {searchResults.length > 0 && (
-                                                    <button onClick={handleExportHariBaikPDF} className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-medium transition-colors whitespace-nowrap">
-                                                        <FileText className="w-3.5 h-3.5" /> PDF
+                                                    <button onClick={handleExportHariBaikPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors">
+                                                        <FileText className="w-4 h-4" /> {t('search_panel.btn_pdf')}
                                                     </button>
                                                 )}
                                             </div>
@@ -740,7 +734,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-stone-500 italic">Tidak ditemukan kecocokan dalam jangka waktu dekat.</p>
+                                                <p className="text-sm text-stone-500 italic">{t('search_panel.no_recent_match')}</p>
                                             )}
                                         </div>
                                     )}
@@ -751,28 +745,26 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                             {activeTab === 'hariBaik' && (
                                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <div className="max-w-xl">
-                                        <label className="block text-xs text-stone-500 font-medium mb-1.5">Kategori Kegiatan / Yadnya</label>
-                                        <select
-                                            value={selectedCategory}
-                                            onChange={(e) => setSelectedCategory(e.target.value)}
-                                            className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 mb-4"
-                                        >
-                                            {YADNYA_CATEGORIES.map(cat => (
-                                                <option key={cat} value={cat}>{cat}</option>
-                                            ))}
-                                        </select>
+                                        <h3 className="text-lg font-semibold text-emerald-800 mb-2">{t('search_panel.tab_hari_baik')}</h3>
+                                        <p className="text-sm text-stone-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('search_panel.hari_baik_desc') }} />
 
-                                        <p className="text-xs text-stone-500 mb-4 leading-relaxed">
-                                            Kalender akan menampilkan <strong className="text-emerald-600">persentase kecocokan hari (warna hijau)</strong> berdasarkan hari baik dan menghindari larangan untuk kategori yang dipilih.
-                                        </p>
+                                        <form onSubmit={handleHariBaikSearch} className="mb-6 pb-6 border-b border-stone-200">
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.category_label')}</label>
+                                            <select
+                                                value={selectedCategory}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 mb-4"
+                                            >
+                                                {YADNYA_CATEGORIES.map(cat => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                            </select>
 
-                                        {/* Date Range Search */}
-                                        <form onSubmit={handleHariBaikSearch} className="mb-4 pb-4 border-b border-stone-200">
-                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Cari Rekomendasi berdasarkan Rentang Tanggal</label>
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.search_range_label')}</label>
                                             <div className="flex flex-col sm:flex-row gap-3">
-                                                <div className="flex-1 flex flex-col sm:flex-row gap-2">
-                                                    <div className="flex-1">
-                                                        <label className="block text-[10px] text-stone-400 mb-1">Dari Tanggal</label>
+                                                <div className="flex-1 flex gap-2">
+                                                    <div className="w-1/2">
+                                                        <label className="block text-[10px] text-stone-400 mb-1">{t('search_panel.from_date')}</label>
                                                         <input
                                                             type="date"
                                                             value={hariBaikStartDate}
@@ -781,8 +773,8 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                             required
                                                         />
                                                     </div>
-                                                    <div className="flex-1">
-                                                        <label className="block text-[10px] text-stone-400 mb-1">Sampai Tanggal</label>
+                                                    <div className="w-1/2">
+                                                        <label className="block text-[10px] text-stone-400 mb-1">{t('search_panel.to_date')}</label>
                                                         <input
                                                             type="date"
                                                             value={hariBaikEndDate}
@@ -792,8 +784,9 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                         />
                                                     </div>
                                                 </div>
-                                                <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 mt-auto sm:mt-0 self-end sm:self-auto sm:min-w-[140px] whitespace-nowrap">
-                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? 'Mencari...' : 'Cari Hari Baik'}
+
+                                                <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 mt-auto sm:mt-0 sm:min-w-[140px] whitespace-nowrap">
+                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? t('search_panel.btn_searching') : t('search_panel.btn_search_haribaik')}
                                                 </button>
                                             </div>
                                         </form>
@@ -801,13 +794,13 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                         <div className="flex flex-col sm:flex-row gap-3 mb-4">
                                             <form onSubmit={handleHighlightCategory} className="flex-1">
                                                 <button type="submit" className="w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors">
-                                                    Tampilkan Heatmap Bulan Ini
+                                                    {t('search_panel.btn_show_heatmap')}
                                                 </button>
                                             </form>
 
                                             {currentHighlightCategory && (
                                                 <button type="button" onClick={handleResetHighlight} className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-white border border-stone-200 text-stone-600 hover:bg-stone-50 rounded-xl text-sm font-medium transition-colors">
-                                                    Reset
+                                                    {t('search_panel.btn_reset')}
                                                 </button>
                                             )}
                                         </div>
@@ -819,11 +812,11 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-t border-stone-200 pt-4">
                                                 <h3 className="text-sm font-bold text-stone-800">
                                                     <Star className="inline w-4 h-4 text-emerald-500 mr-1" />
-                                                    {hariBaikResults.length} Hari Baik ditemukan untuk "{selectedCategory}"
+                                                    {t('search_panel.hari_baik_found', { count: hariBaikResults.length, category: selectedCategory })}
                                                 </h3>
                                                 {hariBaikResults.length > 0 && (
                                                     <button onClick={handleExportHariBaikPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors">
-                                                        <FileText className="w-4 h-4" /> Download PDF
+                                                        <FileText className="w-4 h-4" /> {t('search_panel.btn_download_pdf')}
                                                     </button>
                                                 )}
                                             </div>
@@ -864,7 +857,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     })}
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-stone-500 italic">Tidak ditemukan hari baik dalam rentang waktu ini untuk kategori "{selectedCategory}".</p>
+                                                <p className="text-sm text-stone-500 italic">{t('search_panel.hari_baik_not_found', { category: selectedCategory })}</p>
                                             )}
                                         </div>
                                     )}
@@ -875,24 +868,24 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                             {activeTab === 'pawiwahan' && (
                                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <div className="max-w-xl">
-                                        <h3 className="text-lg font-semibold text-emerald-800 mb-2">Dewasa Pawiwahan</h3>
+                                        <h3 className="text-lg font-semibold text-emerald-800 mb-2">{t('search_panel.pawiwahan_title')}</h3>
                                         <p className="text-sm text-stone-600 mb-4 leading-relaxed">
-                                            Fitur khusus ini menghitung Dewasa Ayu untuk Pawiwahan (Pernikahan) dengan menggabungkan rumusan Lontar Wariga dan kearifan lokal (Pengamatan Lapangan sejak 1972).
+                                            {t('search_panel.pawiwahan_desc')}
                                         </p>
                                         <div className="bg-brand-50/80 border border-brand-100 rounded-lg p-3 sm:p-4 mb-4 text-xs sm:text-sm text-stone-700">
                                             <ul className="list-disc pl-4 space-y-1.5 opacity-90">
-                                                <li><strong>Hari Utama:</strong> Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha</li>
-                                                <li><strong>Larangan Mutlak:</strong> Pangelong (Bulan Susut/Mati)</li>
-                                                <li><strong>Wuku Pantangan:</strong> Rangda Tiga, Tanpa Guru, Was Panganten</li>
+                                                <li><strong>{t('search_panel.pawiwahan_rules_1')}</strong> {t('search_panel.pawiwahan_rules_1_val')}</li>
+                                                <li><strong>{t('search_panel.pawiwahan_rules_2')}</strong> {t('search_panel.pawiwahan_rules_2_val')}</li>
+                                                <li><strong>{t('search_panel.pawiwahan_rules_3')}</strong> {t('search_panel.pawiwahan_rules_3_val')}</li>
                                             </ul>
                                         </div>
 
                                         <form onSubmit={handlePawiwahanSearch} className="mb-6 pb-6 border-b border-stone-200">
-                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Cari Rekomendasi berdasarkan Rentang Tanggal</label>
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.search_range_label')}</label>
                                             <div className="flex flex-col sm:flex-row gap-3">
                                                 <div className="flex-1 flex flex-col sm:flex-row gap-2">
                                                     <div className="flex-1">
-                                                        <label className="block text-[10px] text-stone-400 mb-1">Dari Tanggal</label>
+                                                        <label className="block text-[10px] text-stone-400 mb-1">{t('search_panel.from_date')}</label>
                                                         <input
                                                             type="date"
                                                             value={pawiwahanStartDate}
@@ -902,7 +895,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                         />
                                                     </div>
                                                     <div className="flex-1">
-                                                        <label className="block text-[10px] text-stone-400 mb-1">Sampai Tanggal</label>
+                                                        <label className="block text-[10px] text-stone-400 mb-1">{t('search_panel.to_date')}</label>
                                                         <input
                                                             type="date"
                                                             value={pawiwahanEndDate}
@@ -914,7 +907,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                 </div>
 
                                                 <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 mt-auto sm:mt-0 self-end sm:self-auto sm:min-w-[140px] whitespace-nowrap">
-                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? 'Mencari...' : 'Cari'}
+                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? t('search_panel.btn_searching') : t('search_panel.btn_search')}
                                                 </button>
                                             </div>
                                         </form>
@@ -927,12 +920,12 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                 }}
                                                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors"
                                             >
-                                                Tampilkan Heatmap Bulan Ini
+                                                {t('search_panel.btn_show_heatmap')}
                                             </button>
 
                                             {currentHighlightCategory === 'dewasa_pawiwahan' && (
                                                 <button type="button" onClick={handleResetHighlight} className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-white border border-stone-200 text-stone-600 hover:bg-stone-50 rounded-xl text-sm font-medium transition-colors">
-                                                    Reset Kalender
+                                                    {t('search_panel.btn_reset_calendar')}
                                                 </button>
                                             )}
                                         </div>
@@ -944,7 +937,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                                                 <div>
                                                     <h4 className="text-sm font-medium text-emerald-800">
-                                                        Rekomendasi Terbaik
+                                                        {t('search_panel.best_recommendation')}
                                                     </h4>
                                                     <p className="text-xs text-stone-500 mt-0.5">
                                                         {formatIndonesianDate(parseLocalDate(pawiwahanStartDate))} - {formatIndonesianDate(parseLocalDate(pawiwahanEndDate))}
@@ -952,10 +945,10 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                 </div>
                                                 <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
                                                     <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1.5 rounded-full font-bold whitespace-nowrap">
-                                                        Ditemukan: {pawiwahanResults.length} Hari
+                                                        {t('search_panel.pawiwahan_found', { count: pawiwahanResults.length })}
                                                     </span>
                                                     <button onClick={handleExportPawiwahanPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
-                                                        <FileText className="w-4 h-4" /> Download PDF
+                                                        <FileText className="w-4 h-4" /> {t('search_panel.btn_download_pdf')}
                                                     </button>
                                                 </div>
                                             </div>
@@ -993,7 +986,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
 
                                                                 <div className="flex items-center justify-between mt-1">
                                                                     <div className="text-[10px] text-emerald-600 line-clamp-1 flex-1">
-                                                                        {res.scoreResult.isHariUtama ? 'Hari Utama Pawiwahan' : 'Tidak ada pantangan berat'}
+                                                                        {res.scoreResult.isHariUtama ? t('search_panel.hari_utama') : t('search_panel.no_pantangan')}
                                                                     </div>
                                                                     <div className="w-5 h-5 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-emerald-100 transition-colors ml-2">
                                                                         <ChevronRight className="w-3 h-3 text-stone-400 group-hover:text-emerald-600" />
@@ -1005,7 +998,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                 </div>
                                             ) : (
                                                 <div className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100">
-                                                    <p className="text-sm text-stone-600">Tidak ada hari dengan skor minimal 50% yang ditemukan dalam rentang waktu ini.</p>
+                                                    <p className="text-sm text-stone-600">{t('search_panel.pawiwahan_not_found')}</p>
                                                 </div>
                                             )}
                                         </div>
@@ -1015,41 +1008,39 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                             {activeTab === 'melahirkan' && (
                                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <div className="max-w-xl">
-                                        <h3 className="text-lg font-semibold text-rose-800 mb-2">Hari Baik Melahirkan Sesar</h3>
-                                        <p className="text-sm text-stone-600 mb-4 leading-relaxed">
-                                            Fitur ini membantu mencari hari baik untuk operasi sesar. Melibatkan perhitungan Dewasa Ayu (Manusa Yadnya), bonus <strong>Tanggal Cantik</strong>, dan harmoni <strong>Urip</strong> dengan Otonan Ayah/Ibu.
-                                        </p>
+                                        <h3 className="text-lg font-semibold text-rose-800 mb-2">{t('search_panel.melahirkan_title')}</h3>
+                                        <p className="text-sm text-stone-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('search_panel.melahirkan_desc') }} />
 
                                         <form onSubmit={handleMelahirkanSearch} className="mb-6 pb-6 border-b border-stone-200">
 
                                             {/* Otonan Ayah & Ibu */}
                                             <div className="mb-4">
-                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">Otonan Ayah (Opsional, untuk hitung Urip)</label>
+                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.father_otonan_label')}</label>
                                                 <div className="flex gap-2 mb-3">
                                                     <select value={ayahSaptawara} onChange={e => setAyahSaptawara(e.target.value)} className="w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                        <option value="">Pilih Saptawara</option>
+                                                        <option value="">{t('search_panel.select_saptawara')}</option>
                                                         {SAPTAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                     </select>
                                                     <select value={ayahPancawara} onChange={e => setAyahPancawara(e.target.value)} className="w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                        <option value="">Pilih Pancawara</option>
+                                                        <option value="">{t('search_panel.select_pancawara')}</option>
                                                         {PANCAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                     </select>
                                                 </div>
 
-                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">Otonan Ibu (Opsional, untuk hitung Urip)</label>
+                                                <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.mother_otonan_label')}</label>
                                                 <div className="flex gap-2">
                                                     <select value={ibuSaptawara} onChange={e => setIbuSaptawara(e.target.value)} className="w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                        <option value="">Pilih Saptawara</option>
+                                                        <option value="">{t('search_panel.select_saptawara')}</option>
                                                         {SAPTAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                     </select>
                                                     <select value={ibuPancawara} onChange={e => setIbuPancawara(e.target.value)} className="w-1/2 bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-700">
-                                                        <option value="">Pilih Pancawara</option>
+                                                        <option value="">{t('search_panel.select_pancawara')}</option>
                                                         {PANCAWARA.map(d => <option key={d} value={d}>{d}</option>)}
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">Rentang Tanggal (HPL)</label>
+                                            <label className="block text-xs text-stone-500 font-medium mb-1.5">{t('search_panel.hpl_label')}</label>
                                             <div className="flex flex-col sm:flex-row gap-3">
                                                 <div className="flex-1 flex gap-2">
                                                     <input
@@ -1068,7 +1059,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                     />
                                                 </div>
                                                 <button type="submit" disabled={isSearching} className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-70 mt-auto sm:mt-0 sm:min-w-[140px] whitespace-nowrap">
-                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? 'Mencari...' : 'Cari'}
+                                                    <SearchIcon className="w-4 h-4" /> {isSearching ? t('search_panel.btn_searching') : t('search_panel.btn_search')}
                                                 </button>
                                             </div>
                                         </form>
@@ -1079,11 +1070,11 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                         <div className="mt-4 pt-4 border-t border-rose-100">
                                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                                                 <h4 className="text-sm font-medium text-rose-800">
-                                                    Rekomendasi Hari Terbaik (Skor &gt; 50%)
+                                                    {t('search_panel.melahirkan_recommendation')}
                                                 </h4>
                                                 {melahirkanResults.length > 0 && (
                                                     <button onClick={handleExportMelahirkanPDF} className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
-                                                        <FileText className="w-4 h-4" /> Download PDF
+                                                        <FileText className="w-4 h-4" /> {t('search_panel.btn_download_pdf')}
                                                     </button>
                                                 )}
                                             </div>
@@ -1137,7 +1128,7 @@ export function SearchPanel({ onSelectResult, currentDate, onHighlightCategory, 
                                                 </div>
                                             ) : (
                                                 <div className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100">
-                                                    <p className="text-sm text-stone-600">Tidak ada hari dengan skor minimal 50% yang ditemukan dalam rentang waktu ini.</p>
+                                                    <p className="text-sm text-stone-600">{t('search_panel.melahirkan_not_found')}</p>
                                                 </div>
                                             )}
                                         </div>

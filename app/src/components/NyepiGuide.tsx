@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Moon, Map, Info, AlertTriangle, PhoneCall, ChevronDown, ChevronUp, Sun, Sparkles, VolumeX, Flame, Check } from 'lucide-react';
+import { X, Moon, Map, Info, AlertTriangle, PhoneCall, ChevronDown, ChevronUp, Sun, Sparkles, VolumeX, Flame, Check, Share2, Copy } from 'lucide-react';
 import { getBaliDate } from '@/utils/bali-calendar';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,43 @@ export function NyepiGuide({ isOpen, onClose }: NyepiGuideProps) {
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const [activeTab, setActiveTab] = useState<'guide' | 'timeline' | 'emergency'>('guide');
     const [openAccordion, setOpenAccordion] = useState<string | null>('catur-brata');
+    const [showShareMenu, setShowShareMenu] = useState(false);
+    const [copied, setCopied] = useState(false);
+
+    // Share Handler
+    const handleShare = async () => {
+        const shareUrl = `https://kalenderbali.id/?nyepi=true&lng=${i18n.language}`;
+        const shareData = {
+            title: t('nyepi.title') + ' - KalenderBali.id',
+            text: t('nyepi.subtitle'),
+            url: shareUrl
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.log('Error sharing:', err);
+            }
+        } else {
+            // Fallback: copy to clipboard
+            setShowShareMenu(!showShareMenu);
+        }
+    };
+
+    const handleCopyLink = async () => {
+        try {
+            const shareUrl = `https://kalenderbali.id/?nyepi=true&lng=${i18n.language}`;
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+                setShowShareMenu(false);
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
 
     // Find Nyepi date
     useEffect(() => {
@@ -131,9 +168,56 @@ export function NyepiGuide({ isOpen, onClose }: NyepiGuideProps) {
                         {/* Stars background pattern */}
                         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
 
-                        <button onClick={onClose} className="absolute top-4 right-4 p-2 text-indigo-200 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10">
-                            <X className="w-6 h-6" />
-                        </button>
+                        <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
+                            <div className="relative">
+                                <button onClick={handleShare} className="p-2 text-indigo-200 hover:text-white hover:bg-white/10 rounded-full transition-colors flex items-center gap-2">
+                                    <Share2 className="w-5 h-5" />
+                                </button>
+
+                                <AnimatePresence>
+                                    {showShareMenu && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-stone-100 py-1 overflow-hidden"
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    const shareUrl = `https://kalenderbali.id/?nyepi=true&lng=${i18n.language}`;
+                                                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(t('nyepi.title') + ' - ' + t('nyepi.subtitle') + '\n\n' + shareUrl)}`, '_blank');
+                                                    setShowShareMenu(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2.5 text-sm md:text-xs font-semibold text-stone-700 hover:bg-stone-50 flex items-center gap-2 transition-colors"
+                                            >
+                                                Bagikan ke WhatsApp
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    const shareUrl = `https://kalenderbali.id/?nyepi=true&lng=${i18n.language}`;
+                                                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t('nyepi.title') + ' - ' + t('nyepi.subtitle'))}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+                                                    setShowShareMenu(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2.5 text-sm md:text-xs font-semibold text-stone-700 hover:bg-stone-50 flex items-center gap-2 transition-colors"
+                                            >
+                                                Bagikan ke X/Twitter
+                                            </button>
+                                            <div className="h-px bg-stone-100 my-1"></div>
+                                            <button
+                                                onClick={handleCopyLink}
+                                                className="w-full text-left px-4 py-2.5 text-sm md:text-xs font-semibold text-stone-700 hover:bg-stone-50 flex items-center gap-2 transition-colors"
+                                            >
+                                                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                                                {copied ? <span className="text-emerald-600">Tersalin!</span> : 'Salin Link'}
+                                            </button>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                            <button onClick={onClose} className="p-2 text-indigo-200 hover:text-white hover:bg-white/10 rounded-full transition-colors">
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
 
                         <div className="relative z-10 text-center">
                             <div className="inline-flex items-center justify-center p-3 bg-indigo-500/20 text-indigo-300 rounded-full mb-4 ring-1 ring-indigo-500/30">

@@ -25,10 +25,10 @@ export function PrivacyPolicy() {
                             {t('privacy.sec1_title')}
                         </h2>
                         <p className="mb-4">
-                            Selamat datang di <strong>KalenderBali.id</strong> (bagian dari inisiatif NusaHeritage). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan mengamankan informasi saat Anda mengakses layanan kami, baik secara langsung maupun melalui <em>widget</em> pihak ketiga.
+                            {t('privacy.sec1_desc1')}
                         </p>
                         <p>
-                            Penggunaan layanan ini mengindikasikan bahwa Anda telah membaca, memahami, dan menyetujui praktik penanganan data yang dijelaskan di halaman ini, sesuai dengan ketentuan hukum yang berlaku di Indonesia, termasuk UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi (UU PDP).
+                            {t('privacy.sec1_desc2')}
                         </p>
                     </section>
 
@@ -38,13 +38,13 @@ export function PrivacyPolicy() {
                             {t('privacy.sec2_title')}
                         </h2>
                         <p className="mb-4">
-                            Untuk menjaga optimalitas layanan yang tidak mengharuskan pengguna mendaftar (login), kami **tidak** mengumpulkan identitas pribadi spesifik pengguna seperti nama lengkap, NIK, alamat email, atau nomor telepon.
+                            {t('privacy.sec2_desc1')}
                         </p>
-                        <p className="mb-2 font-semibold">Data teknis yang mungkin terekam dan bersifat anonim meliputi:</p>
+                        <p className="mb-2 font-semibold">{t('privacy.sec2_sub')}</p>
                         <ul className="list-disc pl-6 space-y-2 mb-4">
-                            <li><strong>Informasi Log (Telemetri):</strong> Alamat IP tersamar, tipe <em>browser</em>, waktu akses, serta riwayat halaman kalender/fitur yang dilihat untuk tujuan analitik internal.</li>
-                            <li><strong>Data Rujukan (Referrer):</strong> Jika Anda berinteraksi dengan layanan KalenderBali.id yang ditanamkan (<em>embedded widget</em>) pada website pihak ketiga, sistem kami menerima informasi domain rujukan tempat widget tersebut dimuat untuk keperluan agregasi trafik.</li>
-                            <li><strong>Parameter Pencarian:</strong> Tanggal Masehi atau fitur (seperti Pawiwahan, Hari Baik, dan Otonan) yang dieksekusi secara lokal pada sisi klien. Data input (seperti nama Otonan Ayah/Ibu di fitur PDF) hanya diproses dari sisi peramban pengguna (<em>client-side</em>) dan <strong>tidak pernah</strong> dikirim apalagi disimpan permanen di server NusaHeritage.</li>
+                            <li>{t('privacy.sec2_list1')}</li>
+                            <li>{t('privacy.sec2_list2')}</li>
+                            <li>{t('privacy.sec2_list3')}</li>
                         </ul>
                     </section>
 
@@ -54,10 +54,10 @@ export function PrivacyPolicy() {
                             {t('privacy.sec3_title')}
                         </h2>
                         <p className="mb-4">
-                            Sistem kami mungkin menggunakan teknologi <em>Local Storage</em> dan <em>Cookies</em> minimum demi mengoptimalkan *user experience* (misalnya: mengingat bulan atau tahun kalender terakhir yang Anda lihat agar pencarian terasa cepat).
+                            {t('privacy.sec3_desc1')}
                         </p>
                         <p>
-                            Anda memiliki hak penuh untuk menonaktifkan fitur <em>cookies</em> melalui peramban (browser) yang Anda gunakan, meski hal tersebut dapat berdampak pada kinerja responsif beberapa fitur aplikasi.
+                            {t('privacy.sec3_desc2')}
                         </p>
                     </section>
 
@@ -67,17 +67,17 @@ export function PrivacyPolicy() {
                             {t('privacy.sec4_title')}
                         </h2>
                         <p className="mb-4">
-                            Kami menerapkan pelindungan data dengan langkah rasional berdasarkan standar industri. Kami <strong>tidak pernah menjual, menyewakan, atau mendistribusikan data pengunjung</strong> kepada pihak ketiga mana pun untuk tujuan komersil.
+                            {t('privacy.sec4_desc1')}
                         </p>
                         <p>
-                            KalenderBali.id berisi tautan rujukan keluar menuju layanan utama NusaHeritage.id atau pihak terkait. Apabila Anda menekan tautan tersebut, pemrosesan data tunduk pada kebijakan privasi platform pihak ketiga.
+                            {t('privacy.sec4_desc2')}
                         </p>
                     </section>
 
                     <div className="border-t border-stone-200 pt-6 mt-8">
                         <p className="text-sm text-stone-500 text-center">
-                            <strong>Terakhir Diperbarui:</strong> Maret 2026<br />
-                            Untuk pertanyaan atau kekhawatiran terkait data, silakan hubungi kami di <a href="mailto:info@kalenderbali.id" className="text-[#c1121f] hover:underline">info@kalenderbali.id</a>
+                            <strong>{t('privacy.updated')}</strong><br />
+                            {t('privacy.contact')}
                         </p>
                     </div>
                 </div>

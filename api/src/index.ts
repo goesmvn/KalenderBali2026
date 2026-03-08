@@ -81,11 +81,26 @@ app.get(/^(.*)$/, (req, res, next) => {
         }
 
         const dateQuery = req.query.date;
+        const nyepiQuery = req.query.nyepi;
         let title = 'Kalender Bali Digital - Dewasa Ayu & Piodalan';
         let desc = 'Cari informasi Kalender Bali, Dewasa Ayu (Hari Baik), Piodalan, Wewaran, dan perayaan raya secara cepat, akurat, dan tanpa iklan.';
         let url = 'https://kalenderbali.id';
 
-        if (typeof dateQuery === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateQuery)) {
+        const lngQuery = (req.query.lng as string) || 'id';
+
+        if (nyepiQuery === 'true') {
+            const nyepiLocales: Record<string, { title: string, desc: string }> = {
+                'id': { title: 'Nyepi Survival Guide', desc: 'Panduan liburan & bertahan saat Bali hening' },
+                'en': { title: 'Nyepi Survival Guide', desc: "Vacation & survival guide during Bali's day of silence" },
+                'ja': { title: 'ニュピサバイバルガイド', desc: 'バリの沈黙の日の休暇とサバイバルガイド' },
+                'ru': { title: 'Nyepi Руководство', desc: 'Руководство по отдыху в день тишины на Бали' },
+                'zh': { title: '安息日 (Nyepi) 生存指南', desc: '巴厘岛寂静日假期和生存指南' }
+            };
+            const localeParams = nyepiLocales[lngQuery] || nyepiLocales['id'];
+            title = localeParams.title;
+            desc = localeParams.desc;
+            url = `https://kalenderbali.id/?nyepi=true&lng=${lngQuery}`;
+        } else if (typeof dateQuery === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateQuery)) {
             const parts = dateQuery.split('-');
             const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
             if (!isNaN(d.getTime())) {
@@ -103,9 +118,11 @@ app.get(/^(.*)$/, (req, res, next) => {
     <meta property="og:description" content="${desc}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="${url}">
+    <meta property="og:image" content="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${desc}">
+    <meta name="twitter:image" content="https://nusaheritage.id/niceadmin/assets/img/logo2.jpeg">
         `;
 
         // Inject the generated SEO tags into the placeholder.

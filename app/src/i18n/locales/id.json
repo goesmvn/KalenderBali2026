@@ -62,18 +62,24 @@
     },
     "otonan": {
         "title": "Kalkulator Otonan",
-        "subtitle": "Hitung Ulang Tahun Bali Anda",
-        "desc": "Otonan adalah ulang tahun menurut kalender Bali yang jatuh setiap 210 hari (1 siklus Pawukon).",
+        "subtitle": "Ulang Tahun Bali (Setiap 210 Hari)",
+        "desc": "Otonan adalah perayaan ulang tahun berdasarkan kalender wewaran (Saptawara & Pancawara) dan Wuku. Satu oton/wuku berumur 210 hari.",
         "input_label": "Tanggal Lahir (Masehi)",
         "btn_calculate": "Hitung",
-        "next_otonan": "Otonan Berikutnya",
+        "next_otonan": "5 Otonan Berikutnya",
         "days_left": "{{count}} hari lagi",
         "schedule": "Jadwal Otonan",
         "days_ago": "{{count}} hari lalu",
         "close": "Tutup",
         "wuku": "Wuku",
         "god": "Dewata",
-        "urip": "Urip"
+        "urip": "Urip",
+        "birth_date": "Tanggal Lahir (Masehi)",
+        "calculate": "Hitung Otonan",
+        "result": "Hasil Perhitungan",
+        "wuku_birth": "Wuku Kelahiran",
+        "urip_total": "Jumlah Urip",
+        "add_calendar": "Buka Kalender"
     },
     "export": {
         "title": "Export Kalender",
@@ -175,7 +181,31 @@
         "contact_fire": "Pemadam Kebakaran",
         "contact_sar": "SAR / Basarnas",
         "contact_callcenter": "Call Center Darurat Bali",
-        "emergency_warning": "Saat Nyepi, HANYA kendaraan darurat (Ambulans & Pemadam Kebakaran) yang diizinkan lewat. Jika terjadi keadaan darurat (sakit parah/melahirkan), Anda HARUS melapor ke pihak hotel atau Pecalang (petugas keamanan adat) setempat terlebih dahulu agar dikawal ke rumah sakit."
+        "emergency_warning": "Saat Nyepi, HANYA kendaraan darurat (Ambulans & Pemadam Kebakaran) yang diizinkan lewat. Jika terjadi keadaan darurat (sakit parah/melahirkan), Anda HARUS melapor ke pihak hotel atau Pecalang (petugas keamanan adat) setempat terlebih dahulu agar dikawal ke rumah sakit.",
+        "countdown": "Menuju Nyepi (Saka 1948)",
+        "what_is_nyepi": "Apa itu Nyepi?",
+        "nyepi_desc": "Nyepi adalah Tahun Baru umat Hindu Bali berdasarkan penanggalan Saka. Berbeda dengan perayaan tahun baru umumnya, Nyepi dirayakan dengan hening dan larangan beraktivitas selama 24 jam untuk merefleksikan diri, meditasi, dan memulihkan harmoni alam.",
+        "catur_brata": "Catur Brata Penyepian",
+        "catur_brata_desc": "Empat pantangan utama yang wajib ditaati mulai dari jam 6 pagi saat Nyepi hingga jam 6 pagi keesokan harinya.",
+        "amati_geni": "Amati Geni",
+        "amati_geni_desc": "Tidak boleh menyalakan api, lampu, atau listrik.",
+        "amati_karya": "Amati Karya",
+        "amati_karya_desc": "Tidak bekerja atau melakukan aktivitas fisik.",
+        "amati_lelungan": "Amati Lelungan",
+        "amati_lelungan_desc": "Tidak bepergian, tetap berada di dalam rumah/hotel.",
+        "amati_lelanguan": "Amati Lelanguan",
+        "amati_lelanguan_desc": "Tidak mendengarkan hiburan, musik keras, atau berpesta.",
+        "dos": "Do's (Yang Boleh & Dianjurkan)",
+        "do_1": "Tetap berada di area hotel/villa Anda.",
+        "do_2": "Menikmati ketenangan dan langit malam Bali yang penuh bintang.",
+        "do_3": "Melapor ke staf hotel jika ada situasi gawat darurat (sakit, hamil, dll).",
+        "donts": "Don'ts (Dilarang Keras)",
+        "dont_1": "Keluar dari properti penginapan/rumah (pecalang akan menindak tegas).",
+        "dont_2": "Menyalakan lampu terang di malam hari, pastikan tirai tertutup rapat.",
+        "dont_3": "Membuat keributan atau memutar musik dengan keras.",
+        "dont_4": "Mengoperasikan drone (dilarang terbang di atas ruang udara Bali).",
+        "emergency": "Layanan Darurat Utama",
+        "emergency_note": "Kendaraan yang diizinkan hanya ambulans dan pemadam kebakaran dengan pendampingan Pecalang desa."
     },
     "common": {
         "close": "Tutup",
@@ -201,7 +231,20 @@
         "sec1_title": "1. Pendahuluan",
         "sec2_title": "2. Data yang Kami Kumpulkan",
         "sec3_title": "3. Penggunaan dan Cookie",
-        "sec4_title": "4. Keamanan Informasi & Pihak Ketiga"
+        "sec4_title": "4. Keamanan Informasi & Pihak Ketiga",
+        "sec1_desc1": "Selamat datang di KalenderBali.id (bagian dari inisiatif NusaHeritage). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan mengamankan informasi saat Anda mengakses layanan kami, baik secara langsung maupun melalui widget pihak ketiga.",
+        "sec1_desc2": "Penggunaan layanan ini mengindikasikan bahwa Anda telah membaca, memahami, dan menyetujui praktik penanganan data yang dijelaskan di halaman ini, sesuai dengan ketentuan hukum yang berlaku di Indonesia, termasuk UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi (UU PDP).",
+        "sec2_desc1": "Untuk menjaga optimalitas layanan yang tidak mengharuskan pengguna mendaftar (login), kami tidak mengumpulkan identitas pribadi spesifik pengguna seperti nama lengkap, NIK, alamat email, atau nomor telepon.",
+        "sec2_sub": "Data teknis yang mungkin terekam dan bersifat anonim meliputi:",
+        "sec2_list1": "Informasi Log (Telemetri): Alamat IP tersamar, tipe browser, waktu akses, serta riwayat halaman kalender/fitur yang dilihat untuk tujuan analitik internal.",
+        "sec2_list2": "Data Rujukan (Referrer): Jika Anda berinteraksi dengan layanan KalenderBali.id yang ditanamkan (embedded widget) pada website pihak ketiga, sistem kami menerima informasi domain rujukan tempat widget tersebut dimuat untuk keperluan agregasi trafik.",
+        "sec2_list3": "Parameter Pencarian: Tanggal Masehi atau fitur (seperti Pawiwahan, Hari Baik, dan Otonan) yang dieksekusi secara lokal pada sisi klien. Data input (seperti nama Otonan Ayah/Ibu di fitur PDF) hanya diproses dari sisi peramban pengguna (client-side) dan tidak pernah dikirim apalagi disimpan permanen di server NusaHeritage.",
+        "sec3_desc1": "Sistem kami mungkin menggunakan teknologi Local Storage dan Cookies minimum demi mengoptimalkan user experience (misalnya: mengingat bulan atau tahun kalender terakhir yang Anda lihat agar pencarian terasa cepat).",
+        "sec3_desc2": "Anda memiliki hak penuh untuk menonaktifkan fitur cookies melalui peramban (browser) yang Anda gunakan, meski hal tersebut dapat berdampak pada kinerja responsif beberapa fitur aplikasi.",
+        "sec4_desc1": "Kami menerapkan pelindungan data dengan langkah rasional berdasarkan standar industri. Kami tidak pernah menjual, menyewakan, atau mendistribusikan data pengunjung kepada pihak ketiga mana pun untuk tujuan komersil.",
+        "sec4_desc2": "KalenderBali.id berisi tautan rujukan keluar menuju layanan utama NusaHeritage.id atau pihak terkait. Apabila Anda menekan tautan tersebut, pemrosesan data tunduk pada kebijakan privasi platform pihak ketiga.",
+        "updated": "Terakhir Diperbarui: Maret 2026",
+        "contact": "Untuk pertanyaan atau kekhawatiran terkait data, silakan hubungi kami di info@kalenderbali.id"
     },
     "terms": {
         "title": "Syarat & Ketentuan Layanan",
@@ -209,6 +252,239 @@
         "sec1_title": "1. Kesepakatan Latar",
         "sec2_title": "2. Disklaimer Akurasi Ramalan",
         "sec3_title": "3. Hak Kekayaan Intelektual (HAKI)",
-        "sec4_title": "4. Ketersediaan dan Pembaruan Sistem"
+        "sec4_title": "4. Ketersediaan dan Pembaruan Sistem",
+        "sec1_desc": "Pengaksesan, penelusuran, dan pengunduhan informasi dari situs web KalenderBali.id (serta Widget Embed di pihak ketiga) tunduk sepenuhnya pada Syarat dan Ketentuan berikut, yang diselaraskan dengan Undang-Undang Informasi dan Transaksi Elektronik (UU ITE). Apabila Anda secara fundamental tidak setuju dengan poin-poin yang tertera di bawah, harap hentikan penggunaan peranti lunak ini.",
+        "sec2_list1": "KalenderBali.id dikembangkan merujuk pada teks-teks Lontar Wariga (seperti Wariga Dewasa oleh Sri Rsi Ananda Kusuma, Pokok-pokok Wariga oleh I.B. Suparta Ardhana, dll.) menggunakan perhitungan astronomis Bali. Meski diusahakan dengan keilmuan presisi tingkat tinggi, hasil perhitungan Otonan, Hari Baik (Dewasa Ayu), Pawiwahan, maupun Skor Kecocokan (Urip) pada fitur Lahir Sesar bukan jaminan kepastian takdir mutlak.",
+        "sec2_list2": "Aplikasi ini hanya dapat berperan sebagai parameter saran pendukung untuk aktivitas budaya dan spritual, tidak dapat dijadikan substitusi mutlak atas petunjuk resmi/agama dari pemuka adat, pendeta/Sulinggih, atau dokter ahli kandungan.",
+        "sec2_list3": "Segala konsekuensi materiil, riil, fisik, mapun non-fisik akibat bertindak atas (atau mengabaikan) hasil PDF KalenderBali.id, tidak dapat digugat sebagai ganti rugi terhadap Yayasan NusaHeritage selaku pengembang peranti.",
+        "sec3_desc1": "Seluruh antarmuka (UI/UX), tata letak (layout), grafik, algoritma penghitungan tanggalan Saka yang bersifat proprietary, serta output Dokumen Cetak (File PDF Eksport) merupakan Hak Kekayaan Intelektual NusaHeritage, dilindungi oleh konstitusi kekayaan intelektual Indonesia.",
+        "sec3_desc2": "Pengguna diberikan lisensi non-eksklusif, bebas royalti untuk mengunduh PDF secara gratis bagi kepentingan perorangan atau edukasi masyarakat umum. Modifikasi kode injeksi pada platform (Reverse Engineering), memperjualbelikan dokumen ekstrak PDF (hasil perhitungan mesin KalenderBali), atau menutupi logo (watermark/atribusi Footer) pada penyematan Widget tanpa konsensus tertulis adalah bentuk penemuan pelanggaran Hak Cipta perangkat lunak.",
+        "sec4_desc": "Kami berusaha menjaga jam aktif uptime di kisaran ~99%. Namun, aksesibilitas pada layanan ini disediakan dalam frasa \"Apa Adanya\" (As Is). Akses sewaktu-waktu dapat dijedakan untuk proses maintenance server, perbaikan celah aplikasi, atau penyesuaian korektif rumus kalender dari hasil Pesamuan Agung. Aturan ketentuan ini berhak berubah setiap kuartal tanpa diseminasi surel individu apabila pembaruan teramat wajar.",
+        "updated": "Kami berhak menyunting Syarat Ketentuan ini berdasarkan interpretasi dinamika hukum. Terbitan: Maret 2026."
+    },
+    "pura_directory": {
+        "title": "Direktori Pura Bali",
+        "subtitle": "Temukan informasi pura, lokasi, dan jadwal piodalan terdekat.",
+        "search_placeholder": "Cari nama pura, alias, atau kabupaten...",
+        "all_categories": "Semua Kategori",
+        "nearest_piodalan": "Piodalan Terdekat",
+        "today": "Hari Ini!",
+        "no_results": "Tidak ada pura yang cocok dengan pencarian Anda.",
+        "location": "Lokasi Pura",
+        "schedule": "Jadwal Piodalan",
+        "type": "Tipe",
+        "next": "Next",
+        "description": "Deskripsi & Sejarah"
+    },
+    "info": {
+        "title": "Panduan Fitur & Pengetahuan KalenderBali",
+        "subtitle": "Sistem penanggalan Bali kaya akan filosofi dan perhitungan rumit yang memadukan siklus matahari, bulan, dan wewaran. Berikut adalah panduan membaca kalender serta penjelasan fitur-fitur di aplikasi ini.",
+        "items": [
+            {
+                "title": "1. Arti Warna & Angka pada Tanggal",
+                "content": "Angka besar di tengah adalah **tanggal Masehi**.\n\nDalam Kalender Bali cetak, warna angka memiliki arti penting (Merah = Hari Libur Nasional / Minggu, Hitam = Hari Biasa). Di aplikasi ini, kami memberikan indikator warna pada setiap rentetan acara:\n- **Lingkaran Merah:** Hari Libur Nasional\n- **Indikator Merah:** Rahinan besar (Purnama, Tilem, Galungan, Kuningan)\n- **Warna Emas/Kuning:** Piodalan Pura\n\nDi pojok kanan atas angka Masehi terdapat angka kecil (1-15), ini adalah **Penanggal/Pangelong** (tanggalan Candra/Bulan)."
+            },
+            {
+                "title": "2. Purnama & Tilem (Fase Bulan)",
+                "content": "Kalender Bali (Saka) menggunakan sistem lunar (bulan). Dua hari paling penting setiap bulannya adalah:\n- **Purnama (Bulan Purnama):** Hari baik untuk pemujaan ke hadapan Sang Hyang Candra. Jatuh pada *Penanggal 15*.\n- **Tilem (Bulan Mati/Gelap):** Hari pembersihan diri (pemeralina) ke hadapan Sang Hyang Surya. Jatuh pada *Pangelong 15*.\n\nDi aplikasi, hari Purnama dan Tilem ditandai dengan ikon 🌝 (Purnama) dan 🌚 (Tilem)."
+            },
+            {
+                "title": "3. Wuku & Wewaran",
+                "content": "Kalender Bali dipenuhi nama-nama unik setiap harinya. Ini disebut kombinasi Wuku dan Wewaran.\n\n- **Wuku:** Siklus 7 harian yang berjalan 30 minggu (total 210 hari). Nama wuku dimulai dari Sinta hingga Watugunung. Setiap pergantian minggu (dari hari Minggu/Redite) akan memasuki Wuku baru.\n- **Wewaran:** Siklus hari, yang paling sering dipakai adalah **Pancawara** (Umanis, Paing, Pon, Wage, Kliwon) dan **Saptawara** (Redite, Soma, Anggara, Buda, Wraspati, Sukra, Saniscara).\n\nKombinasi Pancawara dan Saptawara dengan Wuku menentukan hari-hari suci (seperti *Buda Kliwon*, *Anggara Kasih*, atau *Tumpek*)."
+            },
+            {
+                "title": "4. Hari Baik (Dewasa Ayu)",
+                "content": "Dewasa Ayu adalah perhitungan hari baik untuk melakukan suatu kegiatan. Di KalenderBali.id, kami menampilkan 3 kategori aktivitas utama:\n\n- **Pawiwahan (Pernikahan):** Hari baik untuk melangsungkan upacara perkawinan.\n- **Membangun/Pindah Rumah:** Hari baik terkait pekarangan dan bangunan.\n- **Melahirkan (Sesar) & Otonan:** Hari yang diyakini membawa sifat baik bagi anak yang lahir di hari tersebut, serta waktu peringatan ulang tahun Bali (Otonan).\n\nSkor kebaikan hari ditampilkan dalam persentase (%). Semakin tinggi, semakin direkomendasikan."
+            },
+            {
+                "title": "5. Piodalan Pura",
+                "content": "Piodalan adalah hari ulang tahun (anniversary) sebuah Pura atau Merajan. Ada 2 sistem perhitungan Piodalan:\n1. **Berdasarkan Pawukon (Siklus 210 hari):** Contohnya Pura yang odalannya jatuh setiap *Buda Kliwon Ugu* atau *Saniscara Kliwon (Tumpek) Landep*.\n2. **Berdasarkan Sasih (Siklus bulan/Candra):** Contohnya Pura yang odalannya jatuh pada *Purnama Kedasa* (setahun sekali).\n\nAnda dapat melihat jadwal Piodalan di Bali di bagian bawah detail tanggal atau menggunakan menu **Direktori Pura**."
+            },
+            {
+                "title": "6. Fitur: Widget Homepage",
+                "content": "Di halaman depan (Homepage), terdapat **Widget Hari Ini** yang selalu menampilkan informasi rahinan, piodalan, dan status hari ini secara *real-time*.\n\nDi bawahnya terdapat **Daftar Hari Raya Mendatang** yang mengingatkan Anda akan rahinan atau libur nasional dalam beberapa hari ke depan (misal: H-3 Galungan)."
+            },
+            {
+                "title": "7. Fitur: Kalkulator Otonan",
+                "content": "Otonan adalah ulang tahun versi Bali yang diperingati setiap 210 hari (bukan setahun sekali). Otonan sangat penting dalam siklus hidup manusia Hindu Bali.\n\nCukup masukkan tanggal lahir Anda (kalender Masehi) ke dalam **Kalkulator Otonan** di menu, kami akan menghitung Saptawara, Pancawara, dan Wuku kelahiran Anda, serta memprediksi tanggal Otonan Anda hingga beberapa tahun ke depan."
+            },
+            {
+                "title": "8. Fitur: Export Kalender (.ics)",
+                "content": "Ingin agar hari raya Bali dan hari libur nasional muncul di kalender HP/Laptop Anda secara otomatis?\n\nGunakan fitur **Export Kalender (.ics)** di menu navigasi atas. Anda bisa memilih tahun dan jenis kalender (Hari Raya Bali, Liburan, Purnama/Tilem). File `.ics` yang diunduh kompatibel sempurna dengan **Google Calendar, Apple Calendar, dan Microsoft Outlook**."
+            },
+            {
+                "title": "9. Fitur: Smart Trip & Leave Planner",
+                "content": "Bagi Anda yang berencana liburan atau mengambil cuti, fitur **Smart Trip & Leave Planner** akan membantu mencari rentetan libur panjang (long weekend).\n\nSistem kami menganalisa Libur Nasional dan Cuti Bersama, lalu memberikan rekomendasi kapan Anda harus mengambil cuti 1 atau 2 hari agar mendapatkan total liburan hingga 4-5 hari secara berturut-turut. Sangat cocok untuk merencanakan liburan jauh hari!"
+            }
+        ]
+    },
+    "info_section": {
+        "title": "Panduan Fitur & Pengetahuan Kalender Bali",
+        "subtitle": "Panduan & Informasi Umum",
+        "intro_1": "Sistem penanggalan Bali kaya akan filosofi dan spiritualitas. Pelajari elemen-elemen penting yang membentuk kalender ini.",
+        "intro_2": "KalenderBali.id dikembangkan sebagai bagian dari inisiatif pelestarian ",
+        "quote": "\"Pemahaman mengenai wewaran, urip, dewata, uku, dan sasih bukan hanya menjadi bagian dari warisan leluhur, tetapi juga digunakan dalam berbagai aspek kehidupan masyarakat Bali.\"",
+        "reference_title": "Referensi & Sumber",
+        "expert_title": "Ahli Padewasan",
+        "expert_desc": "Algoritma perhitungan dan validasi ala ayuning dewasa pada kalender ini disempurnakan serta merujuk pada pemahaman ahli padewasan Ida Bagus Ngurah Semara, Griya Kawan Manuaba Apuan Bangli.",
+        "standard_title": "Standar Penanggalan",
+        "standard_desc": "Sistem kalender secara umum mengacu pada sistem Kalender Saka Bali standar yang dipelopori oleh Alm. I Ketut Bangbang Gde Rawi dan para praktisi penyusun kalender Bali konvensional lainnya.",
+        "biblio_title": "Daftar Pustaka",
+        "items": {
+            "guide-melahirkan": {
+                "title": "Panduan: Cari Hari Baik Melahirkan Sesar",
+                "content": "Fitur unggulan ini secara khusus membantu Anda mencari hari paling harmonis untuk operasi sesar.\n\n<strong>Cara Kerja & Penilaian (Skor):</strong>\n• <strong>Manusa Yadnya (Dewasa Ayu):</strong> Pemeriksaan otomatis terhadap hari yang baik dan buruk berdasarkan pedoman Manusa Yadnya.\n• <strong>Tanggal Cantik:</strong> Memberikan bonus skor jika tanggal Masehi memiliki pola cantik (seperti angka kembar atau hari/bulan sama).\n• <strong>Harmoni Urip (Otonan Ayah & Ibu):</strong> (Opsional) Jika Anda memasukkan Otonan (Saptawara & Pancawara) dari Ayah dan Ibu, kalender ini otomatis menghitung jumlah Urip dan mencocokkan harmoni numerologi dengan calon anak.\n\n<strong>Cara Menggunakan:</strong>\n1. Buka formulir \"Cari Tanggal & Fitur Kalender\" di halaman depan, lalu pilih tab \"Lahir Sesar\".\n2. <em>(Sangat Disarankan)</em> Masukkan Otonan Ayah dan Ibu pada form yang disediakan.\n3. Tentukan Rentang Tanggal HPL (Hari Perkiraan Lahir).\n4. Klik tombol Cari. Hasil akan diurutkan dari skor terbaik (persentase kecocokan minimal 50%)."
+            },
+            "guide-pawiwahan": {
+                "title": "Panduan: Cari Dewasa Pawiwahan (Pernikahan)",
+                "content": "Fitur ini memberikan rekomendasi hari baik (Dewasa Ayu) khusus upacara Pawiwahan/Pernikahan.\n\n<strong>Aturan Utama yang Digunakan:</strong>\n• <strong>Hari Utama:</strong> Mengutamakan Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha.\n• <strong>Larangan Mutlak:</strong> Menghindari Pangelong (Bulan Susut/Mati).\n• <strong>Wuku Pantangan:</strong> Memastikan hari bersih dari Rangda Tiga, Tanpa Guru, dan Was Panganten.\n\n<strong>Cara Menggunakan:</strong>\n1. Pada menu pencarian di halaman utama, klik tab \"Pawiwahan\".\n2. Masukkan jangkauan bulan atau rentang tanggal yang ingin Anda cari.\n3. Sistem akan menghasilkan daftar tanggal dengan persentase kecocokan. Hari Utama akan ditandai secara khusus.\n4. Anda dapat mengunduh hasil ini ke format PDF atau Excel."
+            },
+            "guide-search": {
+                "title": "Panduan: Pencarian Tanggal & Filter Kalender",
+                "content": "Kalender Bali ini menyediakan fitur pencarian lengkap untuk mempermudah Anda menemukan berbagai hari penting:\n\n• <strong>Tab Tanggal (Masehi):</strong> Navigasi cepat ke bulan dan tahun Masehi tertentu.\n• <strong>Tab Fitur:</strong> Temukan hari Raya (Nyepi, Galungan, Kuningan), siklus Purnama/Tilem, atau cari hari pertemuan Otonan tertentu, maupun Ingkel. Anda bisa mencari 3 kemunculan berikutnya atau melist seluruh kemunculannya dalam tahun tertentu.\n• <strong>Tab Hari Baik:</strong> Soroti (highlight) semua hari dalam bulan yang tampil dalam warna hijau/merah berdasarkan kategori kegiatan Upacara (Dewa Yadnya, Pitra Yadnya) maupun umum (Pertanian, Bangunan)."
+            },
+            "purnama-tilem": {
+                "title": "Info: Purnama & Tilem",
+                "content": "Purnama (bulan purna) dan Tilem (bulan mati) adalah dua fase penting dalam siklus bulan kalender Bali.\n\n• <strong>Purnama</strong>: Bulan penuh, saat bulan berada pada posisi paling terang. Waktu yang dianggap sangat baik untuk upacara keagamaan dan meditasi.\n\n• <strong>Tilem</strong>: Bulan gelap, saat bulan tidak terlihat. Masa untuk introspeksi, membersihkan diri, dan mempersiapkan diri untuk siklus baru.\n\nKedua fase ini menandai perubahan energi alam dan sering digunakan sebagai patokan untuk berbagai upacara adat dan keagamaan di Bali."
+            },
+            "wuku": {
+                "title": "Wuku (30 Siklus Minggu)",
+                "content": "Wuku adalah siklus minggu dalam kalender Bali yang terdiri dari 30 nama, masing-masing memiliki karakteristik dan dewata penguasa.\n\nSetiap wuku memiliki:\n• <strong>Nama unik</strong>: Dari Sinta sampai Watugunung\n• <strong>Urip (angka hidup)</strong>: Energi numerik 1-9\n• <strong>Dewata penguasa</strong>: Dewa yang melindungi wuku tersebut\n• <strong>Arah letak</strong>: Arah mata angin yang berpengaruh\n\nWuku digunakan untuk menentukan hari baik (dewasa ayu), membaca karakter kelahiran, dan penentuan upacara."
+            },
+            "sasih": {
+                "title": "Sasih (12 Bulan)",
+                "content": "Sasih adalah sistem bulan dalam kalender Saka Bali yang terdiri dari 12 bulan, dimulai dari Sasih Kasa (Juli).\n\nDaftar Sasih:\n• <strong>Sasih Kasa</strong> (Juli) - Dewi Sri\n• <strong>Sasih Karo</strong> (Agustus) - Dewa Ganga\n• <strong>Sasih Katiga</strong> (September) - Dewa Wisnu\n• <strong>Sasih Kapat</strong> (Oktober) - Dewa Brahma\n• <strong>Sasih Kalima</strong> (November) - Dewa Iswara\n• <strong>Sasih Kanem</strong> (Desember) - Dewa Durgha\n• <strong>Sasih Kapitu</strong> (Januari) - Bhatara Guru/Siwa\n• <strong>Sasih Kawolu</strong> (Februari) - Dewa Parameswara\n• <strong>Sasih Kasanga</strong> (Maret) - Dewi Uma\n• <strong>Sasih Kadasa</strong> (April) - Dewa Sangkara\n• <strong>Sasih Desta</strong> (Mei) - Dewa Sambu\n• <strong>Sasih Sada</strong> (Juni) - Dewa Anantaboga"
+            },
+            "wewaran": {
+                "title": "Wewaran (Siklus Hari)",
+                "content": "Wewaran adalah sistem siklus hari dalam kalender Bali yang terdiri dari beberapa tingkatan:\n\n• <strong>Ekawara</strong> (1 hari): Luang - kehampaan\n• <strong>Dwiwara</strong> (2 hari): Menga & Pepet - terbuka/tertutup\n• <strong>Triwara</strong> (3 hari): Pasah, Beteng, Kajeng - dinamika energi\n• <strong>Caturwara</strong> (4 hari): Sri, Laba, Jaya, Menala - hasil dan kesejahteraan\n• <strong>Pancawara</strong> (5 hari): Umanis, Paing, Pon, Wage, Kliwon - siklus harian\n• <strong>Sadwara</strong> (6 hari): Tungleh, Aryang, Urukung, Paniron, Was, Maulu - kondisi batin\n• <strong>Saptawara</strong> (7 hari): Redite sampai Saniscara - hari dalam seminggu\n• <strong>Astawara</strong> (8 hari): Sri, Indra, Guru, Yama, Ludra, Brahma, Kala, Uma - prinsip kehidupan\n• <strong>Sangawara</strong> (9 hari): Dangu sampai Dadi - sifat alam dan manusia\n• <strong>Dasawara</strong> (10 hari): Pandita sampai Raksasa - kekuatan hidup"
+            },
+            "urip": {
+                "title": "Urip (Angka Hidup)",
+                "content": "Urip adalah nilai numerik (1-10) yang melekat pada setiap wewaran, wuku, dan elemen kalender lainnya.\n\nFungsi Urip:\n• Menentukan <strong>dewasa ayu</strong> (hari baik/buruk)\n• Membaca <strong>karakter kelahiran</strong>\n• Menghitung <strong>kecocokan</strong> dalam pernikahan\n• Penentuan <strong>upacara adat</strong>\n\nCara perhitungan:\nUrip dari berbagai elemen (Saptawara + Pancawara + Wuku) dijumlahkan dan dimodulus untuk mendapatkan hasil akhir yang menentukan kualitas hari tersebut."
+            },
+            "dewata": {
+                "title": "Dewata & Arah",
+                "content": "Setiap elemen kalender Bali memiliki dewata penguasa dan arah letak (paling) yang memberikan karakter spiritual.\n\n<strong>Arah Letak:</strong>\n• <strong>Tengah</strong>: Pusat kekuatan spiritual\n• <strong>Timur</strong>: Matahari terbit, awal, kehidupan\n• <strong>Selatan</strong>: Kekuatan, kematian, transformasi\n• <strong>Barat</strong>: Matahari terbenam, akhir, pembaruan\n• <strong>Utara</strong>: Keberuntungan, kemakmuran\n• <strong>Timur Laut</strong>: Kesucian, kebajikan\n• <strong>Tenggara</strong>: Kekuatan, perlindungan\n• <strong>Barat Daya</strong>: Ketenangan, stabilitas\n• <strong>Barat Laut</strong>: Kebijaksanaan, pengetahuan\n\nDewata-dewata ini dipuja dalam berbagai upacara untuk memohon berkah dan perlindungan."
+            }
+        }
+    },
+    "trip_planner": {
+        "title": "Smart Trip & Leave Planner",
+        "desc": "Maksimalkan liburan Anda dengan mengambil cuti strategis di sekitar hari libur nasional dan sakral Bali.",
+        "filter_ceremony": "Ada Hari Raya Bali",
+        "holiday": "Libur",
+        "days": "Hari",
+        "need_leave": "Butuh {{count}} hari cuti",
+        "no_leave": "Tanpa Cuti",
+        "leave_on": "Cuti di tanggal:",
+        "sacred_moment": "Momen Sakral Bali",
+        "no_results": "Tidak ada rekomendasi perjalanan untuk kriteria ini."
+    },
+    "search_panel": {
+        "title": "Cari Tanggal & Fitur Kalender",
+        "tab_tanggal": "Tanggal",
+        "tab_fitur": "Fitur",
+        "tab_hari_baik": "Hari Baik",
+        "tab_pawiwahan": "Pawiwahan",
+        "tab_melahirkan": "Lahir Sesar",
+        "month_label": "Bulan",
+        "year_label": "Tahun",
+        "go_to_date": "Go ke Tanggal",
+        "search_type_label": "Tipe Pencarian",
+        "search_oto": "Otonan / Hari Lahir Bali",
+        "search_purnama": "Purnama (Bulan Penuh)",
+        "search_tilem": "Tilem (Bulan Mati)",
+        "search_kajengkliwon": "Kajeng Kliwon",
+        "search_galungan": "Hari Raya Galungan",
+        "search_kuningan": "Hari Raya Kuningan",
+        "search_nyepi": "Hari Raya Nyepi",
+        "search_tumpek": "Tumpek",
+        "search_ingkel": "Ingkel",
+        "saptawara_label": "Saptawara (7 Hari)",
+        "saptawara_all": "Semua Hari",
+        "pancawara_label": "Pancawara (5 Hari)",
+        "pancawara_all": "Semua",
+        "wuku_label": "Wuku",
+        "wuku_all": "Semua Wuku",
+        "ingkel_label": "Jenis Ingkel",
+        "search_method_label": "Metode Pencarian",
+        "method_forward": "3 Terdekat Kedepan",
+        "method_year": "Dalam Tahun Tertentu",
+        "btn_searching": "Mencari...",
+        "btn_search_year": "Cari di Tahun Ini",
+        "btn_search_next": "Cari Berikutnya",
+        "search_result_title": "Hasil Pencarian",
+        "search_result_params_year": " di Tahun {{year}}",
+        "search_result_params_next": " (3 Terdekat Kedepan)",
+        "btn_pdf": "PDF",
+        "no_recent_match": "Tidak ditemukan kecocokan dalam jangka waktu dekat.",
+        "category_label": "Kategori Kegiatan / Yadnya",
+        "hari_baik_desc": "Kalender akan menampilkan <strong className=\"text-emerald-600\">persentase kecocokan hari (warna hijau)</strong> berdasarkan hari baik dan menghindari larangan untuk kategori yang dipilih.",
+        "search_range_label": "Cari Rekomendasi berdasarkan Rentang Tanggal",
+        "from_date": "Dari Tanggal",
+        "to_date": "Sampai Tanggal",
+        "btn_search_haribaik": "Cari Hari Baik",
+        "btn_show_heatmap": "Tampilkan Heatmap Bulan Ini",
+        "btn_reset": "Reset",
+        "hari_baik_found": "{{count}} Hari Baik ditemukan untuk \"{{category}}\"",
+        "hari_baik_not_found": "Tidak ditemukan hari baik dalam rentang waktu ini untuk kategori \"{{category}}\".",
+        "btn_download_pdf": "Download PDF",
+        "pawiwahan_title": "Dewasa Pawiwahan",
+        "pawiwahan_desc": "Fitur khusus ini menghitung Dewasa Ayu untuk Pawiwahan (Pernikahan) dengan menggabungkan rumusan Lontar Wariga dan kearifan lokal (Pengamatan Lapangan sejak 1972).",
+        "pawiwahan_rules_1": "Hari Utama:",
+        "pawiwahan_rules_1_val": "Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha",
+        "pawiwahan_rules_2": "Larangan Mutlak:",
+        "pawiwahan_rules_2_val": "Pangelong (Bulan Susut/Mati)",
+        "pawiwahan_rules_3": "Wuku Pantangan:",
+        "pawiwahan_rules_3_val": "Rangda Tiga, Tanpa Guru, Was Panganten",
+        "btn_search": "Cari",
+        "btn_reset_calendar": "Reset Kalender",
+        "pawiwahan_found": "Ditemukan: {{count}} Hari",
+        "best_recommendation": "Rekomendasi Terbaik",
+        "hari_utama": "Hari Utama Pawiwahan",
+        "no_pantangan": "Tidak ada pantangan berat",
+        "pawiwahan_not_found": "Tidak ada hari dengan skor minimal 50% yang ditemukan dalam rentang waktu ini.",
+        "melahirkan_title": "Hari Baik Melahirkan Sesar",
+        "melahirkan_desc": "Fitur ini membantu mencari hari baik untuk operasi sesar. Melibatkan perhitungan Dewasa Ayu (Manusa Yadnya), bonus <strong>Tanggal Cantik</strong>, dan harmoni <strong>Urip</strong> dengan Otonan Ayah/Ibu.",
+        "father_otonan_label": "Otonan Ayah (Opsional, untuk hitung Urip)",
+        "mother_otonan_label": "Otonan Ibu (Opsional, untuk hitung Urip)",
+        "select_saptawara": "Pilih Saptawara",
+        "select_pancawara": "Pilih Pancawara",
+        "hpl_label": "Rentang Tanggal (HPL)",
+        "melahirkan_recommendation": "Rekomendasi Hari Terbaik (Skor > 50%)",
+        "hari_utama_flag": "(Hari Utama)"
+    },
+    "export_calendar": {
+        "title": "Export Kalender",
+        "subtitle": "Download file .ics untuk Google/Apple Calendar",
+        "select_year": "Pilih Tahun",
+        "select_event_type": "Pilih Jenis Event",
+        "hari_raya": "Hari Raya Bali",
+        "purnama_tilem": "Purnama & Tilem",
+        "national": "Libur Nasional",
+        "preview": "Preview Event",
+        "total_event": "event total",
+        "min_one": "Pilih minimal satu jenis event",
+        "more_events": "+{{count}} event lainnya",
+        "footer_info": "File .ics kompatibel dengan Google, Apple & Outlook Calendar",
+        "downloading": "Generating...",
+        "downloaded": "Terunduh!",
+        "download_btn": "Download .ics"
+    },
+    "widget_embed": {
+        "title": "Pasang Widget Kalender",
+        "subtitle": "Sematkan KalenderBali.id di website Anda secara gratis.",
+        "step1_title": "1. Pilih Jenis Widget",
+        "full_cal": "Kalender Penuh",
+        "full_cal_desc": "Menampilkan sebulan penuh dengan hari raya",
+        "today_only": "Hari Ini Saja",
+        "today_only_desc": "Tampilan ringkas untuk hari ini",
+        "step2_title": "2. Pilih Tema",
+        "theme_light": "Terang",
+        "theme_dark": "Gelap",
+        "step3_title": "3. Salin Kode Embed",
+        "copy_btn": "Copy Code",
+        "copied": "Tersalin!"
     }
 }

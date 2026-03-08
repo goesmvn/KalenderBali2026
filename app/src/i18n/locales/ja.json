@@ -61,19 +61,25 @@
         "click_for_detail": "日付をクリックして詳細を表示"
     },
     "otonan": {
-        "title": "オトナン計算機",
-        "subtitle": "バリの誕生日を計算",
-        "desc": "オトナンは210日（1パウコン周期）ごとに来るバリの誕生日です。",
+        "title": "Otonan カリキュレーター",
+        "subtitle": "バリの誕生日（210日ごと）",
+        "desc": "Otonanは、wewaran（Saptawara＆Pancawara）とWukuカレンダーに基づく誕生日のお祝いです。1 oton/wukuは210日です。",
         "input_label": "生年月日（グレゴリオ暦）",
         "btn_calculate": "計算する",
-        "next_otonan": "次のオトナン",
+        "next_otonan": "次の5つのOtonan",
         "days_left": "残り{{count}}日",
         "schedule": "オトナンスケジュール",
         "days_ago": "{{count}}日前",
         "close": "閉じる",
         "wuku": "ウク",
         "god": "神様",
-        "urip": "ウリップ"
+        "urip": "ウリップ",
+        "birth_date": "生年月日（グレゴリオ暦）",
+        "calculate": "Otonanを計算する",
+        "result": "計算結果",
+        "wuku_birth": "誕生のWuku",
+        "urip_total": "Uripの合計",
+        "add_calendar": "カレンダー"
     },
     "export": {
         "title": "カレンダーエクスポート",
@@ -127,8 +133,8 @@
         "days_left": "{{days}}日前"
     },
     "nyepi": {
-        "title": "ニュピ・サバイバルガイド",
-        "subtitle": "バリの「静寂の日」の過ごし方",
+        "title": "ニュピサバイバルガイド",
+        "subtitle": "バリの沈黙の日の休暇とサバイバルガイド",
         "countdown_title": "ニュピ{{year}}へのカウントダウン",
         "days": "日",
         "hours": "時間",
@@ -175,7 +181,31 @@
         "contact_fire": "消防署",
         "contact_sar": "水難救助・山岳救助隊",
         "contact_callcenter": "緊急コールセンター",
-        "emergency_warning": "ニュピ期間中は、緊急車両（救急車と消防車）のみが道路を通行できます。緊急事態（重病/出産）が発生した場合は、病院へ護送してもらうため、必ず先にホテルのスタッフまたは地元のペチャラン（伝統的警備員）に報告してください。"
+        "emergency_warning": "ニュピ期間中は、緊急車両（救急車と消防車）のみが道路を通行できます。緊急事態（重病/出産）が発生した場合は、病院へ護送してもらうため、必ず先にホテルのスタッフまたは地元のペチャラン（伝統的警備員）に報告してください。",
+        "countdown": "ニュピへのカウントダウン (Saka 1948)",
+        "what_is_nyepi": "ニュピとは何ですか？",
+        "nyepi_desc": "ニュピはサカ暦に基づくバリのヒンドゥー教の新年です。通常の新年のお祝いとは異なり、ニュピは自己内省、瞑想、自然の調和の回復のために24時間の活動制限を伴う沈黙の中で祝われます。",
+        "catur_brata": "カトゥール・ブラタ・プニェピアン",
+        "catur_brata_desc": "ニュピの日の午前6時から翌日の午前6時まで従わなければならない4つの主な禁止事項。",
+        "amati_geni": "アマティ・ゲニ",
+        "amati_geni_desc": "火、光、電気を使用しない。",
+        "amati_karya": "アマティ・カルヤ",
+        "amati_karya_desc": "仕事や身体活動をしない。",
+        "amati_lelungan": "アマティ・ルルンガン",
+        "amati_lelungan_desc": "旅行しない、家/ホテルにとどまる。",
+        "amati_lelanguan": "アマティ・ルラングアン",
+        "amati_lelanguan_desc": "娯楽、大音量の音楽、パーティーをしない。",
+        "dos": "すべきこと（推奨）",
+        "do_1": "ホテル/ヴィラのエリア内にとどまる。",
+        "do_2": "静けさと星空のバリの夜空を楽しむ。",
+        "do_3": "緊急事態（病気、妊娠など）の場合はホテルのスタッフに報告する。",
+        "donts": "してはいけないこと（厳格に禁止）",
+        "dont_1": "宿泊施設から出る（伝統的な警備員/プチャランが厳格な措置を取ります）。",
+        "dont_2": "夜間に明るい電気をつける（カーテンがしっかり閉まっていることを確認してください）。",
+        "dont_3": "騒音を出したり、大音量の音楽を流す。",
+        "dont_4": "ドローンを操作する（バリの空域上の飛行は禁止されています）。",
+        "emergency": "主な緊急サービス",
+        "emergency_note": "村のPecalangを伴う救急車と消防車のみが通りを許可されています。"
     },
     "common": {
         "close": "閉じる",
@@ -201,7 +231,20 @@
         "sec1_title": "1. はじめに",
         "sec2_title": "2. 収集するデータ",
         "sec3_title": "3. 使用法とクッキー",
-        "sec4_title": "4. 情報セキュリティと第三者提供"
+        "sec4_title": "4. 情報セキュリティと第三者提供",
+        "sec1_desc1": "KalenderBali.id (NusaHeritageイニシアチブの一部)へようこそ。このプライバシーポリシーは、直接またはサードパーティのウィジェットを通じて当社のサービスにアクセスする際の情報の収集、使用、開示、および保護方法について説明します。",
+        "sec1_desc2": "本サービスの使用は、インドネシアの個人情報保護法(2022年法律第27号)を含む適用法に従い、このページに記載されているデータ取り扱いの慣行を読み、理解し、同意したことを示します。",
+        "sec2_desc1": "ユーザー登録(ログイン)を必要としない最適なサービスを維持するため、氏名、ID番号、メールアドレス、電話番号などのユーザーの特定の個人情報などは収集しません。",
+        "sec2_sub": "記録される可能性があり、匿名である技術データには以下のものがあります：",
+        "sec2_list1": "ログ情報(テレメトリ)：マスクされたIPアドレス、ブラウザの種類、アクセス時間、および内部の分析目的のために表示されたカレンダーページ/機能の履歴。",
+        "sec2_list2": "紹介データ(リファラー)：サードパーティのWebサイトに埋め込まれた(埋め込みウィジェット)KalenderBali.idサービスとやり取りする場合、当社のシステムはトラフィックの集約を目的として、ウィジェットがロードされた紹介元ドメインの情報を受け取ります。",
+        "sec2_list3": "検索パラメータ：クライアント側でローカルに実行されたグレゴリオ暦の日付または機能(結婚、吉日、オトナンなど)。入力データ(PDF機能の父/母のオトナン名など)は、ユーザーのブラウザ側(クライアント側)でのみ処理され、NusaHeritageのサーバーに送信されたり永久に保存されたりすることはありません。",
+        "sec3_desc1": "当社のシステムは、ユーザーエクスペリエンスを最適化するため(例：検索を高速に感じさせるために表示した最後のカレンダーの月または年を記憶するなど)に、最小限のローカルストレージとCookieの技術を使用する場合があります。",
+        "sec3_desc2": "使用するブラウザでCookieの機能を無効にする権利は完全にありますが、一部のアプリケーション機能のレスポンシブなパフォーマンスに影響する可能性があります。",
+        "sec4_desc1": "業界標準に基づいた合理的な措置でデータ保護を実施しています。当社が訪問者のデータを商業目的でいかなる第三者にも販売、貸与、または配布することはありません。",
+        "sec4_desc2": "KalenderBali.idには、NusaHeritage.idのメインサービスまたは関連会社へのアウトバウンドな紹介リンクが含まれています。それらのリンクをクリックすると、データ処理はサードパーティのプラットフォームのプライバシーポリシーに従うものとします。",
+        "updated": "最終更新日：2026年3月",
+        "contact": "データに関する質問や懸念については、info@kalenderbali.id にお問い合わせください"
     },
     "terms": {
         "title": "利用規約",
@@ -209,6 +252,239 @@
         "sec1_title": "1. 基本的な合意",
         "sec2_title": "2. 占いの正確性に関する免責事項",
         "sec3_title": "3. 知的財産権 (IPR)",
-        "sec4_title": "4. システムの可用性と更新"
+        "sec4_title": "4. システムの可用性と更新",
+        "sec1_desc": "KalenderBali.idウェブサイト(およびサードパーティの埋め込みウィジェット)へのアクセス、閲覧、および情報のダウンロードは、電子情報取引法(ITE法)に合わせた以下の利用規約に完全に準拠します。以下のポイントに基本的に同意しない場合は、本ソフトウェアのご利用を中止してください。",
+        "sec2_list1": "KalenderBali.idは、バリ暦の天文計算を用いたロンタル・ワリガ(Lontar Wariga)のテキスト(スリ・ルシ・アナンダ・クスマによるワリガ・デワサ(Wariga Dewasa)、I.B. スパルタ・アルダナによるポコッポコッ・ワリガ(Pokok-pokok Wariga)など)を参照して開発されました。高精度の科学をもって試みられてはいますが、Otonan、吉日(Dewasa Ayu)、パウィワハン(Pawiwahan)、または帝王切開機能の適合性スコア(Urip)の計算結果は、絶対に確実な運命を保証するものではありません。",
+        "sec2_list2": "このアプリは、文化的・精神的な活動に対する支持的な提案パラメータとしてのみ機能し、伝統的指導者、司祭/スリンギ(Sulinggih)、または産婦人科医からの公式/宗教的なガイダンスの絶対的な代替として使用することはできません。",
+        "sec2_list3": "KalenderBali.idからのPDFの結果に基づいて行動した（または無視した）結果として生じる、物質的、現実的、物理的、または非物理的な結果については、ソフトウェア開発者としてのNusaHeritage財団に対する補償として訴えることはできません。",
+        "sec3_desc1": "UI/UXのすべてのインターフェイス、レイアウト、グラフィック、独自のサカ暦計算アルゴリズム、および印刷用ドキュメント出力(エクスポートPDFファイル)は、NusaHeritageの知的財産権であり、インドネシアの知的財産憲法によって保護されています。",
+        "sec3_desc2": "ユーザーには、個人利用や一般市民向け教育目的でPDFを無料でダウンロードできる無排他的およびロイヤリティフリーのライセンスが与えられます。書面による同意なしでプラットフォーム上のインジェクションコードの変更(リバースエンジニアリング)、抽出されたPDFドキュメントの売買(KalenderBaliエンジンの計算結果)、または埋め込みウィジェットのロゴ(透かし/フッターの属性)の隠蔽を行うことは、ソフトウェア著作権侵害に該当します。",
+        "sec4_desc": "当社は、稼働時間を約99%の範囲で維持するよう努めています。しかしながら、本サービスでのアクセシビリティは「現状有姿(As Is)」で提供されます。サーバーのメンテナンス処理、アプリアクシデントの修正、またはPesamuan Agungの結果によるカレンダーの計算式の訂正的調整などのために、アクセスは一時的に中断される場合があります。非常に合理的な更新であると見なされた場合、これらの利用規約は個別の電子メールの配布なしで四半期ごとに変更されることがあります。",
+        "updated": "法的力学の解釈に基づき、本規約を編集する権利を留保します。公開：2026年3月。"
+    },
+    "pura_directory": {
+        "title": "バリ島の寺院ディレクトリ",
+        "subtitle": "寺院の情報、場所、今後の儀式を検索します。",
+        "search_placeholder": "寺院名、別名、または県を検索...",
+        "all_categories": "すべてのカテゴリー",
+        "nearest_piodalan": "次の儀式",
+        "today": "今日！",
+        "no_results": "検索に一致する寺院はありません。",
+        "location": "寺院の場所",
+        "schedule": "儀式のスケジュール",
+        "type": "タイプ",
+        "next": "次",
+        "description": "説明と歴史"
+    },
+    "info": {
+        "title": "KalenderBaliの機能と知識ガイド",
+        "subtitle": "バリの暦システムは哲学に富んでおり、太陽、月、そしてwewaranのサイクルを組み合わせた複雑な計算が特徴です。ここではカレンダーの読み方と、このアプリの機能について説明します。",
+        "items": [
+            {
+                "title": "1. 日付の色と数字の意味",
+                "content": "中央の大きな数字は**グレゴリオ暦**を表します。\n\n印刷されたバリのカレンダーでは、数字の色が重要です（赤 = 祝日/日曜日、黒 = 平日）。このアプリでは、各イベントシーケンスにカラーインジケーターを提供しています：\n- **赤い円：** 国民の祝日\n- **赤いインジケーター：** 主要な催し（満月、新月、ガルンガン、クニンガン）\n- **金/黄色：** 寺院の儀式（ピオダラン）\n\nグレゴリオ暦の右上に小さな数字（1〜15）があります。これは**Penanggal/Pangelong**（太陰暦の日付）です。"
+            },
+            {
+                "title": "2. プルナマ＆ティレム（月の満ち欠け）",
+                "content": "バリ（サカ）暦は太陰システムを使用しています。毎月最も重要な2つの日は：\n- **プルナマ（満月）：** Sang Hyang Candraを崇拝する吉日。*Penanggal 15*に当たります。\n- **ティレム（新月）：** Sang Hyang Suryaを称える自己浄化の日。*Pangelong 15*に当たります。\n\nアプリケーションでは、満月と新月はそれぞれ 🌝（プルナマ）と 🌚（ティレム）のアイコンでマークされています。"
+            },
+            {
+                "title": "3. ウクとウェワラン",
+                "content": "バリのカレンダーには毎日ユニークな名前があります。これはウクとウェワランの組み合わせです。\n\n- **ウク：** 30週間（合計210日）続く7日間のサイクル。SintaからWatugunungまでの名前があります。\n- **ウェワラン：** 毎日のサイクル。最も頻繁に使用されるのは**Pancawara**（5日周期）と**Saptawara**（7日周期）です。\n\nこれらが組み合わさり、聖なる日を決定します。"
+            },
+            {
+                "title": "4. 吉日（デワサ・アユ）",
+                "content": "デワサ・アユは活動を行うための吉日の計算です。\n\n- **結婚：** 結婚式を挙げる吉日。\n- **建築/引っ越し：** 土地や建物に関連する吉日。\n- **出産とオトナン：** その日に生まれた子供に良い特徴をもたらすと信じられている日。\n\n日の良さスコアはパーセンテージ（%）で表示されます。"
+            },
+            {
+                "title": "5. 寺院の儀式（ピオダラン）",
+                "content": "ピオダランは寺院の記念日です。\n1. **Pawukon（210日周期）に基づく：** 例：毎年Buda Kliwon Uguなどに当たる。\n2. **Sasih（太陰暦）に基づく：** 例：年に一度、満月の日に当たる。\n\n寺院のスケジュールを確認できます。"
+            },
+            {
+                "title": "6. 機能：ホームページウィジェット",
+                "content": "ホームページには、今日のお祭りや寺院の儀式の情報を**リアルタイム**で表示する**今日のウィジェット**があります。"
+            },
+            {
+                "title": "7. 機能：オトナン計算機",
+                "content": "オトナンはバリ版の誕生日で、1年に1回ではなく210日ごとに祝われます。生年月日を入力して次のオトナンを確認してください。"
+            },
+            {
+                "title": "8. 機能：カレンダーのエクスポート (.ics)",
+                "content": "バリの祝日をデバイスカレンダーに同期するには、**エクスポート (.ics)** を使用してください。"
+            },
+            {
+                "title": "9. 機能：スマート旅行＆休暇プランナー",
+                "content": "休暇の計画のために、連休を作るためにいつ休暇を取るべきかをお勧めします。"
+            }
+        ]
+    },
+    "info_section": {
+        "title": "KalenderBaliの機能と知識ガイド",
+        "subtitle": "一般的な情報とガイド",
+        "intro_1": "バリの暦システムは哲学と精神性に富んでいます。このカレンダーを構成する主要な要素を学びましょう。",
+        "intro_2": "KalenderBali.idは保存イニシアチブの一環として開発されました：",
+        "quote": "「wewaran、urip、dewata、uku、sasihを理解することは、先祖の遺産の一部であるだけでなく、バリのコミュニティ生活のさまざまな側面で使用されています。」",
+        "reference_title": "参照とソース",
+        "expert_title": "占いの専門家",
+        "expert_desc": "このカレンダーの吉日の計算アルゴリズムと検証は、占いの専門家であるIda Bagus Ngurah Semara, Griya Kawan Manuaba Apuan Bangliの理解に基づいて洗練されています。",
+        "standard_title": "カレンダー標準",
+        "standard_desc": "カレンダーシステムは一般に、故I Ketut Bangbang Gde Rawiやその他の従来のバリのカレンダー作成者によって開拓された標準的なバリのサカ暦システムを参照しています。",
+        "biblio_title": "参考文献",
+        "items": {
+            "guide-melahirkan": {
+                "title": "ガイド：帝王切開のための吉日を見つける",
+                "content": "この機能は、帝王切開に最も調和のとれた日を見つけるのに役立ちます。\n\n<strong>仕組みとスコアリング：</strong>\n• <strong>Manusa Yadnya (Dewasa Ayu):</strong> Manusa Yadnyaのガイドラインに基づいた吉凶の日の自動チェック。\n• <strong>美しい日付：</strong> グレゴリオ暦の日付が美しいパターン（同じ数字や月日の繰り返しなど）を持つ場合にボーナススコアを与えます。\n• <strong>Uripの調和（両親のOtonan）:</strong> （オプション）両親のOtonanを入力すると、カレンダーは自動的にUripの合計を計算し、未来の子供との数秘術的な調和を照合します。\n\n<strong>使用法：</strong>\n1. フロントページの「日付の検索と機能」フォームを開き、「帝王切開（Lahir Sesar）」タブを選択します。\n2. <em>（強く推奨）</em> 提供されたフォームに両親のOtonanを入力します。\n3. 出産予定日（HPL）の範囲を決定します。\n4. 検索をクリックします。結果は最高スコアから並べ替えられます。"
+            },
+            "guide-pawiwahan": {
+                "title": "ガイド：結婚（Pawiwahan）のための吉日を見つける",
+                "content": "この機能は、結婚式のための吉日（Dewasa Ayu）の推奨事項を提供します。\n\n<strong>使用される主なルール：</strong>\n• <strong>主要な日：</strong> Panca Merta、Sada Merta、Merta Sedana、Dasa Amerthaを優先します。\n• <strong>絶対的な禁止事項：</strong> Pangelong（下弦の月/新月）を避けます。\n• <strong>Wukuの禁止事項：</strong> 日がRangda Tiga、Tanpa Guru、Was Pangantenから解放されていることを確認します。\n\n<strong>使用法：</strong>\n1. メインページの検索メニューで、「Pawiwahan」タブをクリックします。\n2. 検索したい月の範囲または日付の範囲を入力します。\n3. システムは一致率で日付のリストを生成します。主要な日は特別にマークされます。\n4. これらの結果をPDFまたはExcel形式でダウンロードできます。"
+            },
+            "guide-search": {
+                "title": "ガイド：日付検索とカレンダーフィルター",
+                "content": "さまざまな重要な日を簡単に見つけるための包括的な検索機能:\n\n• <strong>日付タブ（グレゴリオ暦）:</strong> 特定の月と年へのクイックナビゲーション。\n• <strong>機能タブ：</strong> 休日や満月/新月のサイクルを見つけたり、OtonanやIngkelの特定の集会日を検索したりできます。\n• <strong>吉日（Hari Baik）タブ：</strong> 式典活動や一般的なカテゴリーに基づいて、緑/赤で表示される月内のすべての日を強調表示します。"
+            },
+            "purnama-tilem": {
+                "title": "情報：Purnama & Tilem",
+                "content": "Purnama（満月）とTilem（新月）は、バリのカレンダーの月のサイクルにおける2つの重要なフェーズです。\n\n• <strong>Purnama</strong>: 満月。宗教的な儀式や瞑想に最適と考えられています。\n\n• <strong>Tilem</strong>: 新月。自己内省と浄化のための期間です。"
+            },
+            "wuku": {
+                "title": "Wuku（30週のサイクル）",
+                "content": "Wukuはバリのカレンダーの週のサイクルで、30の名前で構成されています。\n\n各wukuには以下があります：\n• <strong>ユニークな名前</strong>：SintaからWatugunungまで\n• <strong>Urip（ライフナンバー）</strong>：1〜9の数秘術のエネルギー\n• <strong>守護神</strong>：そのwukuを保護する神\n• <strong>方向</strong>：影響力のある風向"
+            },
+            "sasih": {
+                "title": "Sasih（12ヶ月）",
+                "content": "Sasihはバリのサカ暦の12ヶ月の月のシステムです。\n\n• Sasih Kasa (7月)..."
+            },
+            "wewaran": {
+                "title": "Wewaran（日のサイクル）",
+                "content": "Wewaranはバリの日のサイクルシステムです。\n\n• <strong>Ekawara</strong> (1日)\n• <strong>Pancawara</strong> (5日)\n• <strong>Saptawara</strong> (7日)"
+            },
+            "urip": {
+                "title": "Urip（ライフナンバー）",
+                "content": "Uripは暦の要素に付けられた(1-10)の数値です。\n\n機能：\n• <strong>吉日</strong>を決定する\n• <strong>誕生の性格</strong>を読む\n• 結婚の相性を計算する"
+            },
+            "dewata": {
+                "title": "神と方向",
+                "content": "バリの暦の要素には守護神と精神的な方向があります。\n\n<strong>方向：</strong>\n• 東：日の出、始まり\n• 南：力、死、変容\n• 西：日没、終わり\n• 北：幸運、繁栄"
+            }
+        }
+    },
+    "trip_planner": {
+        "title": "旅行＆休暇プランナー",
+        "desc": "祝日やバリの神聖な休日の周辺で戦略的に休暇を取ることで、休日を最大限に活用しましょう。",
+        "filter_ceremony": "バリの儀式あり",
+        "holiday": "休日",
+        "days": "日",
+        "need_leave": "休暇が{{count}}日必要です",
+        "no_leave": "休暇なし",
+        "leave_on": "休暇日:",
+        "sacred_moment": "バリの神聖な瞬間",
+        "no_results": "この条件の旅行の推奨事項はありません。"
+    },
+    "search_panel": {
+        "title": "日付とカレンダー機能を検索",
+        "tab_tanggal": "日付",
+        "tab_fitur": "機能",
+        "tab_hari_baik": "吉日",
+        "tab_pawiwahan": "結婚",
+        "tab_melahirkan": "帝王切開",
+        "month_label": "月",
+        "year_label": "年",
+        "go_to_date": "日付に移動",
+        "search_type_label": "検索タイプ",
+        "search_oto": "オトナン / バリの誕生日",
+        "search_purnama": "満月 (Purnama)",
+        "search_tilem": "新月 (Tilem)",
+        "search_kajengkliwon": "カジェン・クリウォン",
+        "search_galungan": "ガルンガン",
+        "search_kuningan": "クニンガン",
+        "search_nyepi": "ニュピ",
+        "search_tumpek": "トゥンペッ",
+        "search_ingkel": "インケル",
+        "saptawara_label": "サプタワラ (7日間)",
+        "saptawara_all": "すべて",
+        "pancawara_label": "パンチャワラ (5日間)",
+        "pancawara_all": "すべて",
+        "wuku_label": "ウク",
+        "wuku_all": "すべてのウク",
+        "ingkel_label": "インケルの種類",
+        "search_method_label": "検索方法",
+        "method_forward": "次の3回",
+        "method_year": "特定の年内",
+        "btn_searching": "検索中...",
+        "btn_search_year": "年を検索",
+        "btn_search_next": "次を検索",
+        "search_result_title": "検索結果",
+        "search_result_params_year": "{{year}}年",
+        "search_result_params_next": "（次の3回）",
+        "btn_pdf": "PDF",
+        "no_recent_match": "近い将来に一致するものはありません。",
+        "category_label": "アクティビティ / ヤドニャのカテゴリー",
+        "hari_baik_desc": "カレンダーには、選択したカテゴリーの吉日と禁止事項を回避したことに基づいて、<strong className=\"text-emerald-600\">日の適合率（緑色）</strong>が表示されます。",
+        "search_range_label": "日付範囲で推奨検索",
+        "from_date": "開始日",
+        "to_date": "終了日",
+        "btn_search_haribaik": "吉日を検索",
+        "btn_show_heatmap": "今月のヒートマップを表示",
+        "btn_reset": "リセット",
+        "hari_baik_found": "「{{category}}」の吉日が{{count}}日見つかりました",
+        "hari_baik_not_found": "この日付範囲内に「{{category}}」の吉日は見つかりませんでした。",
+        "btn_download_pdf": "PDFをダウンロード",
+        "pawiwahan_title": "結婚の吉日",
+        "pawiwahan_desc": "この特別な機能は、ロントラ・ワリガの公式と地元の知恵（1972年以来の実地観察）を組み合わせて結婚のための Dewasa Ayu を計算します。",
+        "pawiwahan_rules_1": "最良の日:",
+        "pawiwahan_rules_1_val": "Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha",
+        "pawiwahan_rules_2": "絶対禁止事項:",
+        "pawiwahan_rules_2_val": "Pangelong（欠けていく月）",
+        "pawiwahan_rules_3": "禁止されたウク:",
+        "pawiwahan_rules_3_val": "Rangda Tiga, Tanpa Guru, Was Panganten",
+        "btn_search": "検索",
+        "btn_reset_calendar": "カレンダーをリセット",
+        "pawiwahan_found": "見つかった日数: {{count}} 日",
+        "best_recommendation": "最適なおすすめ",
+        "hari_utama": "結婚の最良日",
+        "no_pantangan": "大きな禁止事項なし",
+        "pawiwahan_not_found": "この期間にスコアが50%以上の日付が見つかりませんでした。",
+        "melahirkan_title": "帝王切開の吉日",
+        "melahirkan_desc": "この機能は、帝王切開のための吉日を見つけるのに役立ちます。Dewasa Ayu（マヌサ・ヤドニャ）の計算、<strong>美しい日付</strong>のボーナス、および両親のオトナンとの<strong>ウリップ</strong>の調和を含みます。",
+        "father_otonan_label": "父親のオトナン（オプション、ウリップ計算用）",
+        "mother_otonan_label": "母親のオトナン（オプション、ウリップ計算用）",
+        "select_saptawara": "サプタワラを選択",
+        "select_pancawara": "パンチャワラを選択",
+        "hpl_label": "日付範囲（出産予定日）",
+        "melahirkan_recommendation": "最適日のおすすめ（スコア > 50%）",
+        "hari_utama_flag": "（最良日）"
+    },
+    "export_calendar": {
+        "title": "カレンダーをエクスポート",
+        "subtitle": "Google/Apple Calendar用の.icsファイルをダウンロード",
+        "select_year": "年を選択",
+        "select_event_type": "イベントタイプを選択",
+        "hari_raya": "バリの祝日",
+        "purnama_tilem": "満月と新月",
+        "national": "国民の祝日",
+        "preview": "イベントのプレビュー",
+        "total_event": "合計イベント",
+        "min_one": "少なくとも1つのイベントタイプを選択してください",
+        "more_events": "他 {{count}} 件のイベント",
+        "footer_info": ".icsファイルはGoogle、Apple、Outlook Calendarと互換性があります",
+        "downloading": "生成中...",
+        "downloaded": "ダウンロード完了！",
+        "download_btn": ".icsをダウンロード"
+    },
+    "widget_embed": {
+        "title": "カレンダーウィジェットを埋め込む",
+        "subtitle": "KalenderBali.idをあなたのウェブサイトに無料で埋め込みます。",
+        "step1_title": "1. ウィジェットの種類を選択",
+        "full_cal": "フルカレンダー",
+        "full_cal_desc": "祝日を含む1ヶ月全体を表示",
+        "today_only": "今日のみ",
+        "today_only_desc": "今日の日付のコンパクトな表示",
+        "step2_title": "2. テーマを選択",
+        "theme_light": "ライト",
+        "theme_dark": "ダーク",
+        "step3_title": "3. 埋め込みコードをコピー",
+        "copy_btn": "コードをコピー",
+        "copied": "コピーしました！"
     }
 }

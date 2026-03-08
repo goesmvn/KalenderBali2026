@@ -6,7 +6,7 @@ import { findNextPiodalan, type PuraBase } from '@/utils/next-piodalan';
 
 
 export function PuraDirectory() {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [puras, setPuras] = useState<PuraBase[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -69,8 +69,8 @@ export function PuraDirectory() {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 min-h-screen">
             <div className="text-center mb-10">
-                <h1 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">Direktori Pura Bali</h1>
-                <p className="text-stone-500 max-w-2xl mx-auto text-lg">Temukan informasi pura, lokasi, dan jadwal piodalan terdekat.</p>
+                <h1 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">{t('pura_directory.title')}</h1>
+                <p className="text-stone-500 max-w-2xl mx-auto text-lg">{t('pura_directory.subtitle')}</p>
             </div>
 
             {/* Search & Filter */}
@@ -80,7 +80,7 @@ export function PuraDirectory() {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
                         <input
                             type="text"
-                            placeholder="Cari nama pura, alias, atau kabupaten..."
+                            placeholder={t('pura_directory.search_placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-stone-800"
@@ -99,7 +99,7 @@ export function PuraDirectory() {
                                 : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                                 }`}
                         >
-                            {cat === 'all' ? 'Semua Kategori' : formatCategory(cat)}
+                            {cat === 'all' ? t('pura_directory.all_categories') : formatCategory(cat)}
                         </button>
                     ))}
                 </div>
@@ -151,7 +151,7 @@ export function PuraDirectory() {
                                     {nextDate && (
                                         <div className="bg-brand-50 rounded-xl p-3 border border-brand-100 mt-auto">
                                             <p className="text-xs font-semibold text-brand-600 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                                <CalendarDays className="w-3.5 h-3.5" /> Piodalan Terdekat
+                                                <CalendarDays className="w-3.5 h-3.5" /> {t('pura_directory.nearest_piodalan')}
                                             </p>
                                             <div className="flex justify-between items-end">
                                                 <div>
@@ -171,7 +171,7 @@ export function PuraDirectory() {
                                                         </span>
                                                     ) : daysLeft === 0 ? (
                                                         <span className="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/20">
-                                                            Hari Ini!
+                                                            {t('pura_directory.today')}
                                                         </span>
                                                     ) : null}
                                                 </div>
@@ -187,7 +187,7 @@ export function PuraDirectory() {
 
             {filteredPuras.length === 0 && !loading && (
                 <div className="text-center py-20 bg-stone-50 rounded-2xl border border-stone-200 border-dashed">
-                    <p className="text-stone-500 text-lg">Tidak ada pura yang cocok dengan pencarian Anda.</p>
+                    <p className="text-stone-500 text-lg">{t('pura_directory.no_results')}</p>
                 </div>
             )}
 
@@ -232,7 +232,7 @@ export function PuraDirectory() {
                             <div className="p-6 overflow-y-auto flex-1 bg-stone-50">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                                     <div className="bg-white p-4 rounded-xl border border-stone-200">
-                                        <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Lokasi Pura</p>
+                                        <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">{t('pura_directory.location')}</p>
                                         <p className="text-stone-800 font-medium">
                                             {selectedPura.alamat && `${selectedPura.alamat}, `}
                                             {selectedPura.desa && `Desa ${selectedPura.desa}, `}
@@ -241,9 +241,9 @@ export function PuraDirectory() {
                                         </p>
                                     </div>
                                     <div className="bg-white p-4 rounded-xl border border-stone-200">
-                                        <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Jadwal Piodalan</p>
+                                        <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">{t('pura_directory.schedule')}</p>
                                         <p className="text-stone-800 font-medium capitalize">
-                                            Tipe {selectedPura.piodalanTipe}
+                                            {t('pura_directory.type')} {selectedPura.piodalanTipe}
                                         </p>
                                         <p className="text-stone-500 text-sm mt-0.5">
                                             {selectedPura.piodalanTipe === 'pawukon'
@@ -252,7 +252,7 @@ export function PuraDirectory() {
                                         </p>
                                         {selectedPura.id && nextPiodalanCache[selectedPura.id] && (
                                             <p className="mt-2 text-brand-600 font-bold text-sm bg-brand-50 px-2 py-1 rounded inline-block border border-brand-100">
-                                                Next: {nextPiodalanCache[selectedPura.id]?.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                {t('pura_directory.next')}: {nextPiodalanCache[selectedPura.id]?.toLocaleDateString(i18n.language === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
                                             </p>
                                         )}
                                     </div>
@@ -260,7 +260,7 @@ export function PuraDirectory() {
 
                                 {selectedPura.deskripsi && (
                                     <div className="mb-8">
-                                        <h4 className="text-lg font-bold text-stone-900 mb-3 border-b pb-2">Deskripsi & Sejarah</h4>
+                                        <h4 className="text-lg font-bold text-stone-900 mb-3 border-b pb-2">{t('pura_directory.description')}</h4>
                                         <p className="text-stone-600 leading-relaxed whitespace-pre-wrap">{selectedPura.deskripsi}</p>
                                     </div>
                                 )}

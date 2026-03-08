@@ -119,10 +119,16 @@ function App() {
     window.history.pushState({ path: newUrl.href }, '', newUrl.href);
   };
 
-  // Read URL init state (e.g ?date=2026-03-05)
+  // Read URL init state (e.g ?date=2026-03-05 or ?nyepi=true)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const dateQuery = urlParams.get('date');
+    const nyepiQuery = urlParams.get('nyepi');
+
+    if (nyepiQuery === 'true') {
+      setNyepiGuideOpen(true);
+    }
+
     if (dateQuery) {
       const parts = dateQuery.split('-');
       if (parts.length === 3) {
@@ -686,7 +692,7 @@ function App() {
                 <div className="sticky top-0 z-10 flex justify-between items-center p-4 border-b border-stone-100 bg-white shadow-sm">
                   <h2 className="text-xl font-bold text-stone-900 flex items-center gap-2">
                     <Search className="w-6 h-6 text-[#c1121f]" />
-                    Cari & Download PDF
+                    {t('search_panel.title')}
                   </h2>
                   <button
                     onClick={() => setDownloadModalOpen(false)}

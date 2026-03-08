@@ -62,18 +62,24 @@
     },
     "otonan": {
         "title": "Otonan Calculator",
-        "subtitle": "Calculate your Balinese Birthday",
-        "desc": "Otonan is a Balinese birthday that occurs every 210 days (1 Pawukon cycle).",
+        "subtitle": "Balinese Birthday (Every 210 Days)",
+        "desc": "Otonan is a birthday celebration based on the wewaran (Saptawara & Pancawara) and Wuku calendar. One oton/wuku is 210 days old.",
         "input_label": "Birth Date (Gregorian)",
         "btn_calculate": "Calculate",
-        "next_otonan": "Next Otonan",
+        "next_otonan": "Next 5 Otonans",
         "days_left": "{{count}} days left",
         "schedule": "Otonan Schedule",
         "days_ago": "{{count}} days ago",
         "close": "Close",
         "wuku": "Wuku",
         "god": "Deity",
-        "urip": "Urip"
+        "urip": "Urip",
+        "birth_date": "Birth Date (Gregorian)",
+        "calculate": "Calculate Otonan",
+        "result": "Calculation Results",
+        "wuku_birth": "Birth Wuku",
+        "urip_total": "Total Urip",
+        "add_calendar": "Open Calendar"
     },
     "export": {
         "title": "Export Calendar",
@@ -128,11 +134,11 @@
     },
     "nyepi": {
         "title": "Nyepi Survival Guide",
-        "subtitle": "Holiday survival guide during Bali's Day of Silence",
+        "subtitle": "Vacation & survival guide during Bali's day of silence",
         "countdown_title": "Countdown to Nyepi {{year}}",
         "days": "Days",
         "hours": "Hours",
-        "minutes": "Mins",
+        "minutes": "Minutes",
         "seconds": "Secs",
         "tab_guide": "Guide",
         "tab_timeline": "Timeline",
@@ -175,7 +181,31 @@
         "contact_fire": "Fire Brigade",
         "contact_sar": "Search & Rescue",
         "contact_callcenter": "Bali Emergency Center",
-        "emergency_warning": "During Nyepi, ONLY emergency vehicles (Ambulance & Firetruck) are allowed on the streets. If an emergency occurs (severe illness/childbirth), you MUST report to your hotel staff or local Pecalang (traditional security) first so they can escort you to the hospital."
+        "emergency_warning": "During Nyepi, ONLY emergency vehicles (Ambulance & Firetruck) are allowed on the streets. If an emergency occurs (severe illness/childbirth), you MUST report to your hotel staff or local Pecalang (traditional security) first so they can escort you to the hospital.",
+        "countdown": "Countdown to Nyepi (Saka 1948)",
+        "what_is_nyepi": "What is Nyepi?",
+        "nyepi_desc": "Nyepi is the Balinese Hindu New Year based on the Saka calendar. Unlike usual New Year celebrations, Nyepi is celebrated in silence with a 24-hour restriction on activities for self-reflection, meditation, and restoring nature's harmony.",
+        "catur_brata": "Catur Brata Penyepian",
+        "catur_brata_desc": "Four main prohibitions that must be obeyed from 6 AM on Nyepi day until 6 AM the next day.",
+        "amati_geni": "Amati Geni",
+        "amati_geni_desc": "No fire, lights, or electricity.",
+        "amati_karya": "Amati Karya",
+        "amati_karya_desc": "No work or physical activity.",
+        "amati_lelungan": "Amati Lelungan",
+        "amati_lelungan_desc": "No traveling, stay inside your home/hotel.",
+        "amati_lelanguan": "Amati Lelanguan",
+        "amati_lelanguan_desc": "No entertainment, loud music, or partying.",
+        "dos": "Do's (Recommended)",
+        "do_1": "Stay within your hotel/villa area.",
+        "do_2": "Enjoy the tranquility and the star-filled Bali night sky.",
+        "do_3": "Report to hotel staff if there is an emergency (illness, pregnancy, etc).",
+        "donts": "Don'ts (Strictly Prohibited)",
+        "dont_1": "Leave the accommodation property (traditional security/pecalang will take strict action).",
+        "dont_2": "Turn on bright lights at night, make sure curtains are drawn tight.",
+        "dont_3": "Make noise or play loud music.",
+        "dont_4": "Operate a drone (prohibited from flying over Bali's airspace).",
+        "emergency": "Main Emergency Services",
+        "emergency_note": "Only ambulances and firetrucks accompanied by village Pecalang are allowed on the streets."
     },
     "common": {
         "close": "Close",
@@ -201,7 +231,20 @@
         "sec1_title": "1. Introduction",
         "sec2_title": "2. Data We Collect",
         "sec3_title": "3. Usage & Cookies",
-        "sec4_title": "4. Information Security & Third Parties"
+        "sec4_title": "4. Information Security & Third Parties",
+        "sec1_desc1": "Welcome to KalenderBali.id (part of the NusaHeritage initiative). This Privacy Policy explains how we collect, use, disclose, and secure information when you access our services, whether directly or through third-party widgets.",
+        "sec1_desc2": "Use of this service indicates that you have read, understood, and agreed to the data handling practices described on this page, in accordance with applicable laws in Indonesia, including Law No. 27 of 2022 on Personal Data Protection.",
+        "sec2_desc1": "To maintain optimal services that do not require user registration (login), we do not collect specific personal identities of users such as full names, ID numbers, email addresses, or phone numbers.",
+        "sec2_sub": "Technical data that may be recorded and is anonymous includes:",
+        "sec2_list1": "Log Information (Telemetry): Masked IP addresses, browser types, access times, and a history of calendar pages/features viewed for internal analytical purposes.",
+        "sec2_list2": "Referral Data (Referrer): If you interact with KalenderBali.id services embedded (embedded widget) on a third-party website, our system receives the referring domain information where the widget is loaded for traffic aggregation purposes.",
+        "sec2_list3": "Search Parameters: Gregorian dates or features (such as Pawiwahan, Auspicious Days, and Otonan) executed locally on the client-side. Input data (such as Father/Mother's Otonan names in the PDF feature) is only processed on the user's browser side (client-side) and is never sent or permanently stored on NusaHeritage servers.",
+        "sec3_desc1": "Our system may use minimal Local Storage and Cookies technology to optimize the user experience (for example: remembering the last calendar month or year you viewed to make searches feel faster).",
+        "sec3_desc2": "You have the full right to disable the cookies feature through the browser you use, although this may affect the responsive performance of several application features.",
+        "sec4_desc1": "We implement data protection with rational measures based on industry standards. We never sell, rent, or distribute visitor data to any third party for commercial purposes.",
+        "sec4_desc2": "KalenderBali.id contains outbound referral links to NusaHeritage.id main services or related parties. If you click on those links, the data processing is subject to the privacy policy of the third-party platforms.",
+        "updated": "Last Updated: March 2026",
+        "contact": "For questions or concerns related to data, please contact us at info@kalenderbali.id"
     },
     "terms": {
         "title": "Terms of Service",
@@ -209,6 +252,239 @@
         "sec1_title": "1. Background Agreement",
         "sec2_title": "2. Divination Accuracy Disclaimer",
         "sec3_title": "3. Intellectual Property Rights (IPR)",
-        "sec4_title": "4. System Availability and Updates"
+        "sec4_title": "4. System Availability and Updates",
+        "sec1_desc": "Accessing, browsing, and downloading information from the KalenderBali.id website (and the Embed Widget on third parties) is completely subject to the following Terms and Conditions, which are aligned with the Electronic Information and Transactions Law (ITE Law). If you fundamentally disagree with the points listed below, please stop using this software.",
+        "sec2_list1": "KalenderBali.id was developed referring to Lontar Wariga texts (such as Wariga Dewasa by Sri Rsi Ananda Kusuma, Pokok-pokok Wariga by I.B. Suparta Ardhana, etc.) using Balinese astronomical calculations. Although attempted with high precision science, the calculation results of Otonan, Auspicious Days (Dewasa Ayu), Pawiwahan, or Compatibility Score (Urip) on the Cesarean Delivery feature are not a guarantee of absolute certainty of fate.",
+        "sec2_list2": "This application can only act as a supportive suggestion parameter for cultural and spiritual activities, and cannot be used as an absolute substitute for official/religious guidance from traditional leaders, priests/Sulinggih, or obstetricians.",
+        "sec2_list3": "Any material, real, physical, or non-physical consequences resulting from acting upon (or ignoring) the PDF results from KalenderBali.id cannot be sued as compensation against the NusaHeritage Foundation as the software developer.",
+        "sec3_desc1": "The entire interface (UI/UX), layout, graphics, proprietary Saka calendar calculation algorithm, and the Printed Document output (Export PDF File) are Intellectual Property Rights of NusaHeritage, protected by Indonesian intellectual property constitution.",
+        "sec3_desc2": "Users are granted a non-exclusive, royalty-free license to download PDFs for free for personal use or general public education. Modification of the injection code on the platform (Reverse Engineering), selling extracted PDF documents (the calculation results of the KalenderBali engine), or obscuring the logo (watermark/Footer attribution) on Widget embeds without written consensus is a form of software Copyright infringement.",
+        "sec4_desc": "We try to keep the active uptime in the range of ~99%. However, accessibility on this service is provided \"As Is\". Access may be temporarily paused at any time for server maintenance processes, application vulnerability fixes, or corrective adjustments of the calendar formula from the outcome of the Pesamuan Agung. These terms and rules are subject to change every quarter without individual email dissemination if the updates are deemed highly reasonable.",
+        "updated": "We reserve the right to edit these Terms and Conditions based on the interpretation of legal dynamics. Published: March 2026."
+    },
+    "pura_directory": {
+        "title": "Bali Temple Directory",
+        "subtitle": "Find temple information, locations, and upcoming ceremonies.",
+        "search_placeholder": "Search temple name, alias, or regency...",
+        "all_categories": "All Categories",
+        "nearest_piodalan": "Next Ceremony",
+        "today": "Today!",
+        "no_results": "No temples match your search.",
+        "location": "Temple Location",
+        "schedule": "Ceremony Schedule",
+        "type": "Type",
+        "next": "Next",
+        "description": "Description & History"
+    },
+    "info": {
+        "title": "KalenderBali Features & Knowledge Guide",
+        "subtitle": "The Balinese calendar system is rich in philosophy and complex calculations combining solar, lunar, and wewaran cycles. Here is a guide to reading the calendar and an explanation of the features in this application.",
+        "items": [
+            {
+                "title": "1. Meaning of Colors & Numbers",
+                "content": "The large numbers in the center represent the **Gregorian date**.\n\nIn the printed Balinese Calendar, number colors are significant (Red = National Holidays / Sundays, Black = Regular Days). In this app, we provide color indicators for each event sequence:\n- **Red Circle:** National Holidays\n- **Red Indicator:** Major Rahinan (Purnama, Tilem, Galungan, Kuningan)\n- **Gold/Yellow Color:** Temple Ceremonies (Piodalan)\n\nIn the top right corner of the Gregorian date, there are small numbers (1-15), these are **Penanggal/Pangelong** (Lunar dates)."
+            },
+            {
+                "title": "2. Purnama & Tilem (Moon Phases)",
+                "content": "The Balinese (Saka) calendar uses a lunar system. The two most important days each month are:\n- **Purnama (Full Moon):** Auspicious day for worshiping Sang Hyang Candra. Falls on *Penanggal 15*.\n- **Tilem (Dark/New Moon):** Day of self-purification honoring Sang Hyang Surya. Falls on *Pangelong 15*.\n\nIn the application, Full Moon and Dark Moon days are marked with 🌝 (Purnama) and 🌚 (Tilem) icons."
+            },
+            {
+                "title": "3. Wuku & Wewaran",
+                "content": "The Balinese calendar has unique names for every day. This is a combination of Wuku and Wewaran.\n\n- **Wuku:** A 7-day cycle running for 30 weeks (total 210 days). Wuku names start from Sinta to Watugunung. Every week change (from Sunday/Redite) enters a new Wuku.\n- **Wewaran:** Daily cycles, the most frequently used are **Pancawara** (Umanis, Paing, Pon, Wage, Kliwon) and **Saptawara** (Redite, Soma, Anggara, Buda, Wraspati, Sukra, Saniscara).\n\nThe combination of Pancawara and Saptawara with Wuku determines sacred days (like *Buda Kliwon*, *Anggara Kasih*, or *Tumpek*)."
+            },
+            {
+                "title": "4. Auspicious Days (Dewasa Ayu)",
+                "content": "Dewasa Ayu is the calculation of auspicious days for performing activities. At KalenderBali.id, we display 3 main activity categories:\n\n- **Pawiwahan (Wedding):** Auspicious days for holding wedding ceremonies.\n- **Building/Moving House:** Auspicious days related to land and buildings.\n- **Childbirth (Cesarean) & Otonan:** Days believed to bring good traits to a child born on that day, as well as the Balinese birthday calculation (Otonan).\n\nThe goodness score of a day is displayed in percentages (%). The higher, the more recommended."
+            },
+            {
+                "title": "5. Temple Ceremonies (Piodalan)",
+                "content": "Piodalan is the anniversary of a Temple or Family Shrine (Merajan). There are 2 calculation systems for Piodalan:\n1. **Based on Pawukon (210-day cycle):** For example, a temple whose anniversary falls every *Buda Kliwon Ugu* or *Saniscara Kliwon (Tumpek) Landep*.\n2. **Based on Sasih (Lunar/Candra cycle):** For example, a temple whose anniversary falls on *Purnama Kedasa* (once a year).\n\nYou can see the Piodalan schedule in Bali at the bottom of the date details or use the **Temple Directory** menu."
+            },
+            {
+                "title": "6. Feature: Homepage Widget",
+                "content": "On the Homepage, there is a **Today's Widget** that always displays information on rahinan, temple ceremonies, and today's status in *real-time*.\n\nBelow it is the **Upcoming Holiday List** reminding you of upcoming rahinan or national holidays in the next few days (e.g., T-3 Galungan)."
+            },
+            {
+                "title": "7. Feature: Otonan Calculator",
+                "content": "Otonan is the Balinese version of a birthday, commemorated every 210 days (not once a year). Otonan is crucial in the lifecycle of Balinese Hindus.\n\nJust input your birth date (Gregorian calendar) into the **Otonan Calculator** in the menu, and we will calculate your birth Saptawara, Pancawara, and Wuku, as well as predict your Otonan dates for years to come."
+            },
+            {
+                "title": "8. Feature: Export Calendar (.ics)",
+                "content": "Want Balinese holidays and national holidays to appear on your phone/laptop calendar automatically?\n\nUse the **Export Calendar (.ics)** feature in the top navigation menu. You can choose the year and type of calendar (Balinese Holidays, National Holidays, Lunar Phases). The downloaded `.ics` file is perfectly compatible with **Google Calendar, Apple Calendar, and Microsoft Outlook**."
+            },
+            {
+                "title": "9. Feature: Smart Trip & Leave Planner",
+                "content": "For those planning a vacation or taking leave, the **Smart Trip & Leave Planner** feature helps find long weekend holiday sequences.\n\nOur system analyzes National Holidays and Joint Leaves, providing recommendations on when you should take 1 or 2 days of leave to get a total vacation of 4-5 consecutive days. Perfect for planning a vacation well in advance!"
+            }
+        ]
+    },
+    "info_section": {
+        "title": "KalenderBali Features & Knowledge Guide",
+        "subtitle": "General Information & Guide",
+        "intro_1": "The Balinese calendar system is rich in philosophy and spirituality. Learn the key elements that make up this calendar.",
+        "intro_2": "KalenderBali.id was developed as part of the preservation initiative ",
+        "quote": "\"Understanding wewaran, urip, dewata, uku, and sasih is not only part of ancestral heritage but is also used in various aspects of Balinese community life.\"",
+        "reference_title": "References & Sources",
+        "expert_title": "Divination Expert",
+        "expert_desc": "The calculation algorithms and validation of auspicious days in this calendar have been refined based on the understanding of the divination expert Ida Bagus Ngurah Semara, Griya Kawan Manuaba Apuan Bangli.",
+        "standard_title": "Calendar Standard",
+        "standard_desc": "The calendar system generally refers to the standard Balinese Saka Calendar system pioneered by the late I Ketut Bangbang Gde Rawi and other conventional Balinese calendar authors.",
+        "biblio_title": "Bibliography",
+        "items": {
+            "guide-melahirkan": {
+                "title": "Guide: Find Auspicious Day for Cesarean Birth",
+                "content": "This flagship feature specifically helps you find the most harmonious day for a cesarean operation.\n\n<strong>How it Works & Scoring:</strong>\n• <strong>Manusa Yadnya (Dewasa Ayu):</strong> Automatic checking for good and bad days based on Manusa Yadnya guidelines.\n• <strong>Beautiful Date:</strong> Gives a bonus score if the Gregorian date has a beautiful pattern (like twin numbers or same day/month).\n• <strong>Urip Harmony (Parents' Otonan):</strong> (Optional) If you enter the Otonan (Saptawara & Pancawara) of the Father and Mother, this calendar automatically calculates the Urip sum and matches the numerological harmony with the future child.\n\n<strong>How to Use:</strong>\n1. Open the \"Search Date & Calendar Features\" form on the front page, then select the \"Cesarean Birth\" tab.\n2. <em>(Highly Recommended)</em> Enter the Parents' Otonan in the form provided.\n3. Determine the Expected Date of Delivery (EDD) date range.\n4. Click Search. Results will be sorted from the best score (minimum 50% match percentage)."
+            },
+            "guide-pawiwahan": {
+                "title": "Guide: Find Auspicious Day for Pawiwahan (Wedding)",
+                "content": "This feature provides recommendations for auspicious days (Dewasa Ayu) specifically for Pawiwahan/Wedding ceremonies.\n\n<strong>Main Rules Used:</strong>\n• <strong>Main Days:</strong> Prioritizing Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha.\n• <strong>Absolute Prohibitions:</strong> Avoiding Pangelong (Waning/Dark Moon).\n• <strong>Wuku Prohibitions:</strong> Ensuring the day is free from Rangda Tiga, Tanpa Guru, and Was Panganten.\n\n<strong>How to Use:</strong>\n1. On the search menu on the main page, click the \"Pawiwahan\" tab.\n2. Enter the month range or date range you want to search.\n3. The system will generate a list of dates with match percentages. Main Days will be specially marked.\n4. You can download these results in PDF or Excel format."
+            },
+            "guide-search": {
+                "title": "Guide: Date Search & Calendar Filters",
+                "content": "This Balinese calendar provides comprehensive search features to make it easier for you to find various important days:\n\n• <strong>Date Tab (Gregorian):</strong> Quick navigation to a specific Gregorian month and year.\n• <strong>Features Tab:</strong> Find holidays (Nyepi, Galungan, Kuningan), Purnama/Tilem cycles, or search for specific meeting days for Otonan, or Ingkel. You can search for the next 3 occurrences or list all occurrences in a specific year.\n• <strong>Auspicious Days Tab:</strong> Highlight all days in the month that appear in green/red based on the category of Ceremony activities (Dewa Yadnya, Pitra Yadnya) as well as general (Agriculture, Building)."
+            },
+            "purnama-tilem": {
+                "title": "Info: Purnama & Tilem",
+                "content": "Purnama (full moon) and Tilem (dark/new moon) are two important phases in the Balinese calendar lunar cycle.\n\n• <strong>Purnama</strong>: Full moon, when the moon is at its brightest position. A time considered excellent for religious ceremonies and meditation.\n\n• <strong>Tilem</strong>: Dark moon, when the moon is not visible. A period for introspection, self-purification, and preparing for a new cycle.\n\nThese two phases mark changes in natural energy and are often used as benchmarks for various traditional and religious ceremonies in Bali."
+            },
+            "wuku": {
+                "title": "Wuku (30-Week Cycle)",
+                "content": "Wuku is a week cycle in the Balinese calendar consisting of 30 names, each having characteristics and guarding deities.\n\nEach wuku has:\n• <strong>Unique Name</strong>: From Sinta to Watugunung\n• <strong>Urip (Life Number)</strong>: Numerical energy 1-9\n• <strong>Guarding Deity</strong>: The god protecting that wuku\n• <strong>Direction</strong>: The influential wind direction\n\nWuku is used to determine auspicious days (dewasa ayu), read birth characters, and determine ceremonies."
+            },
+            "sasih": {
+                "title": "Sasih (12 Months)",
+                "content": "Sasih is the lunar month system in the Balinese Saka calendar consisting of 12 months, starting from Sasih Kasa (July).\n\nList of Sasih:\n• <strong>Sasih Kasa</strong> (July) - Goddess Sri\n• <strong>Sasih Karo</strong> (August) - God Ganga\n• <strong>Sasih Katiga</strong> (September) - God Vishnu\n• <strong>Sasih Kapat</strong> (October) - God Brahma\n• <strong>Sasih Kalima</strong> (November) - God Iswara\n• <strong>Sasih Kanem</strong> (December) - Goddess Durgha\n• <strong>Sasih Kapitu</strong> (January) - God Guru/Shiva\n• <strong>Sasih Kawolu</strong> (February) - God Parameswara\n• <strong>Sasih Kasanga</strong> (March) - Goddess Uma\n• <strong>Sasih Kadasa</strong> (April) - God Sangkara\n• <strong>Sasih Desta</strong> (May) - God Sambu\n• <strong>Sasih Sada</strong> (June) - God Anantaboga"
+            },
+            "wewaran": {
+                "title": "Wewaran (Day Cycle)",
+                "content": "Wewaran is a day cycle system in the Balinese calendar consisting of several levels:\n\n• <strong>Ekawara</strong> (1 day): Luang - emptiness\n• <strong>Dwiwara</strong> (2 days): Menga & Pepet - open/closed\n• <strong>Triwara</strong> (3 days): Pasah, Beteng, Kajeng - energy dynamics\n• <strong>Caturwara</strong> (4 days): Sri, Laba, Jaya, Menala - yield and prosperity\n• <strong>Pancawara</strong> (5 days): Umanis, Paing, Pon, Wage, Kliwon - daily cycle\n• <strong>Sadwara</strong> (6 days): Tungleh, Aryang, Urukung, Paniron, Was, Maulu - inner condition\n• <strong>Saptawara</strong> (7 days): Redite to Saniscara - days of the week\n• <strong>Astawara</strong> (8 days): Sri, Indra, Guru, Yama, Ludra, Brahma, Kala, Uma - life principles\n• <strong>Sangawara</strong> (9 days): Dangu to Dadi - nature and human characteristics\n• <strong>Dasawara</strong> (10 days): Pandita to Raksasa - life forces"
+            },
+            "urip": {
+                "title": "Urip (Life Number)",
+                "content": "Urip is a numerical value (1-10) attached to every wewaran, wuku, and other calendar elements.\n\nUrip Functions:\n• Determine <strong>dewasa ayu</strong> (auspicious/inauspicious days)\n• Read <strong>birth characters</strong>\n• Calculate <strong>matchmaking</strong> in marriage\n• Determine <strong>traditional ceremonies</strong>\n\nCalculation method:\nThe Urip from various elements (Saptawara + Pancawara + Wuku) are added and modulo-ed to obtain the final result determining the quality of the day."
+            },
+            "dewata": {
+                "title": "Dewata & Directions",
+                "content": "Every Balinese calendar element has a guarding deity and a direction point that provides spiritual character.\n\n<strong>Directions:</strong>\n• <strong>Center</strong>: Center of spiritual power\n• <strong>East</strong>: Sunrise, beginning, life\n• <strong>South</strong>: Power, death, transformation\n• <strong>West</strong>: Sunset, end, renewal\n• <strong>North</strong>: Luck, prosperity\n• <strong>Northeast</strong>: Purity, virtue\n• <strong>Southeast</strong>: Strength, protection\n• <strong>Southwest</strong>: Calmness, stability\n• <strong>Northwest</strong>: Wisdom, knowledge\n\nThese deities are worshiped in various ceremonies to petition for blessings and protection."
+            }
+        }
+    },
+    "trip_planner": {
+        "title": "Smart Trip & Leave Planner",
+        "desc": "Maximize your holidays by taking strategic leaves around national and Balinese sacred holidays.",
+        "filter_ceremony": "Has Bali Ceremony",
+        "holiday": "Holiday",
+        "days": "Days",
+        "need_leave": "Needs {{count}} leave days",
+        "no_leave": "No Leave",
+        "leave_on": "Leave on:",
+        "sacred_moment": "Balinese Sacred Moment",
+        "no_results": "No trip recommendations for this criteria."
+    },
+    "search_panel": {
+        "title": "Search Date & Calendar Features",
+        "tab_tanggal": "Date",
+        "tab_fitur": "Features",
+        "tab_hari_baik": "Auspicious Days",
+        "tab_pawiwahan": "Wedding",
+        "tab_melahirkan": "Cesarean Birth",
+        "month_label": "Month",
+        "year_label": "Year",
+        "go_to_date": "Go to Date",
+        "search_type_label": "Search Type",
+        "search_oto": "Otonan / Balinese Birthday",
+        "search_purnama": "Purnama (Full Moon)",
+        "search_tilem": "Tilem (New/Dark Moon)",
+        "search_kajengkliwon": "Kajeng Kliwon",
+        "search_galungan": "Galungan",
+        "search_kuningan": "Kuningan",
+        "search_nyepi": "Nyepi",
+        "search_tumpek": "Tumpek",
+        "search_ingkel": "Ingkel",
+        "saptawara_label": "Saptawara (7 Days)",
+        "saptawara_all": "All Days",
+        "pancawara_label": "Pancawara (5 Days)",
+        "pancawara_all": "All",
+        "wuku_label": "Wuku",
+        "wuku_all": "All Wuku",
+        "ingkel_label": "Ingkel Type",
+        "search_method_label": "Search Method",
+        "method_forward": "Next 3 Occurrences",
+        "method_year": "In Specific Year",
+        "btn_searching": "Searching...",
+        "btn_search_year": "Search in Year",
+        "btn_search_next": "Search Next",
+        "search_result_title": "Search Results",
+        "search_result_params_year": " in Year {{year}}",
+        "search_result_params_next": " (Next 3 Occurrences)",
+        "btn_pdf": "PDF",
+        "no_recent_match": "No matches found in the near future.",
+        "category_label": "Activity / Yadnya Category",
+        "hari_baik_desc": "The calendar will show the <strong className=\"text-emerald-600\">day match percentage (green color)</strong> based on auspicious days and avoiding prohibitions for the selected category.",
+        "search_range_label": "Search Recommendations by Date Range",
+        "from_date": "From Date",
+        "to_date": "To Date",
+        "btn_search_haribaik": "Search Auspicious Days",
+        "btn_show_heatmap": "Show This Month's Heatmap",
+        "btn_reset": "Reset",
+        "hari_baik_found": "Found {{count}} Auspicious Days for \"{{category}}\"",
+        "hari_baik_not_found": "No auspicious days found in this date range for category \"{{category}}\".",
+        "btn_download_pdf": "Download PDF",
+        "pawiwahan_title": "Dewasa Pawiwahan (Wedding Days)",
+        "pawiwahan_desc": "This special feature calculates Dewasa Ayu for Weddings by combining Lontar Wariga formulas and local wisdom (Field Observations since 1972).",
+        "pawiwahan_rules_1": "Prime Days:",
+        "pawiwahan_rules_1_val": "Panca Merta, Sada Merta, Merta Sedana, Dasa Amertha",
+        "pawiwahan_rules_2": "Absolute Prohibitions:",
+        "pawiwahan_rules_2_val": "Pangelong (Waning Moon)",
+        "pawiwahan_rules_3": "Prohibited Wuku:",
+        "pawiwahan_rules_3_val": "Rangda Tiga, Tanpa Guru, Was Panganten",
+        "btn_search": "Search",
+        "btn_reset_calendar": "Reset Calendar",
+        "pawiwahan_found": "Found: {{count}} Days",
+        "best_recommendation": "Best Recommendations",
+        "hari_utama": "Prime Wedding Day",
+        "no_pantangan": "No major prohibitions",
+        "pawiwahan_not_found": "No days with a minimum score of 50% found in this time range.",
+        "melahirkan_title": "Auspicious Days for Cesarean Birth",
+        "melahirkan_desc": "This feature helps find auspicious days for cesarean operations. It involves Dewasa Ayu (Manusa Yadnya) calculations, <strong>Beautiful Date</strong> bonus, and <strong>Urip</strong> harmony with parents' Otonan.",
+        "father_otonan_label": "Father's Otonan (Optional, for Urip calculation)",
+        "mother_otonan_label": "Mother's Otonan (Optional, for Urip calculation)",
+        "select_saptawara": "Select Saptawara",
+        "select_pancawara": "Select Pancawara",
+        "hpl_label": "Date Range (EDD)",
+        "melahirkan_recommendation": "Best Day Recommendations (Score > 50%)",
+        "hari_utama_flag": "(Prime Day)"
+    },
+    "export_calendar": {
+        "title": "Export Calendar",
+        "subtitle": "Download .ics file for Google/Apple Calendar",
+        "select_year": "Select Year",
+        "select_event_type": "Select Event Type",
+        "hari_raya": "Balinese Holidays",
+        "purnama_tilem": "Purnama & Tilem",
+        "national": "National Holidays",
+        "preview": "Event Preview",
+        "total_event": "total events",
+        "min_one": "Select at least one event type",
+        "more_events": "+{{count}} more events",
+        "footer_info": ".ics file is compatible with Google, Apple & Outlook Calendar",
+        "downloading": "Generating...",
+        "downloaded": "Downloaded!",
+        "download_btn": "Download .ics"
+    },
+    "widget_embed": {
+        "title": "Embed Calendar Widget",
+        "subtitle": "Embed KalenderBali.id on your website for free.",
+        "step1_title": "1. Select Widget Type",
+        "full_cal": "Full Calendar",
+        "full_cal_desc": "Displays a full month with holidays",
+        "today_only": "Today Only",
+        "today_only_desc": "Compact view for today",
+        "step2_title": "2. Select Theme",
+        "theme_light": "Light",
+        "theme_dark": "Dark",
+        "step3_title": "3. Copy Embed Code",
+        "copy_btn": "Copy Code",
+        "copied": "Copied!"
     }
 }

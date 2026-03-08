@@ -84,7 +84,7 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                     {/* Desktop Navigation */}
                     <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
                         {navItems.map((item, index) => {
-                            const isActive = item.label === 'Tentang' && currentPage === 'about';
+                            const isActive = item.label === t('nav.about') && currentPage === 'about';
 
                             return (
                                 <div key={index} className="relative group">
@@ -95,19 +95,19 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                     ) : (
                                         <button
                                             onClick={() => {
-                                                if (item.label === 'Tentang') {
+                                                if (item.label === t('nav.about')) {
                                                     onNavigate('about');
-                                                } else if (item.label === 'Cari Tanggal & Fitur' && onOpenSearch) {
+                                                } else if (item.label === t('search.button') && onOpenSearch) {
                                                     onOpenSearch();
-                                                } else if (item.label === 'Pasang Widget' && onOpenWidget) {
+                                                } else if (item.label === t('nav.widget') && onOpenWidget) {
                                                     onOpenWidget();
-                                                } else if (item.label === 'Kalkulator Otonan' && onOpenOtonan) {
+                                                } else if (item.label === t('nav.otonan') && onOpenOtonan) {
                                                     onOpenOtonan();
-                                                } else if (item.label === 'Nyepi Guide' && onOpenNyepiGuide) {
+                                                } else if (item.label === t('nav.nyepi') && onOpenNyepiGuide) {
                                                     onOpenNyepiGuide();
                                                 }
                                             }}
-                                            className={`flex items-center gap-1.5 text-[15px] transition-colors py-2 ${item.label === 'Nyepi Guide'
+                                            className={`flex items-center gap-1.5 text-[15px] transition-colors py-2 ${item.label === t('nav.nyepi')
                                                 ? 'font-bold text-indigo-600 hover:text-indigo-800'
                                                 : isActive ? 'font-medium text-[#c1121f]' : 'font-medium text-stone-600 hover:text-red-700'
                                                 }`}
@@ -183,7 +183,7 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                     >
                         <div className="px-4 pt-2 pb-6 space-y-1">
                             {navItems.map((item, index) => {
-                                const isActive = item.label === 'Tentang' && currentPage === 'about';
+                                const isActive = item.label === t('nav.about') && currentPage === 'about';
 
                                 return (
                                     <div key={index}>

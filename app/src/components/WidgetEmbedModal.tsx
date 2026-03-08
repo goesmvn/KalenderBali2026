@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Copy, Check, Code, CalendarDays, Info } from 'lucide-react';
 import { WidgetView } from './WidgetView';
 import { TodayWidget } from './TodayWidget';
+import { useTranslation } from 'react-i18next';
 
 interface WidgetEmbedModalProps {
     isOpen: boolean;
@@ -12,6 +13,7 @@ interface WidgetEmbedModalProps {
 type WidgetType = 'calendar' | 'today';
 
 export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
+    const { t } = useTranslation();
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const [widgetType, setWidgetType] = useState<WidgetType>('calendar');
     const [copied, setCopied] = useState(false);
@@ -77,8 +79,8 @@ export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
                                 <Code className="w-5 h-5" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-bold tracking-tight text-stone-800">Pasang Widget Kalender</h2>
-                                <p className="text-sm text-stone-500 mt-0.5">Sematkan KalenderBali.id di website Anda secara gratis.</p>
+                                <h2 className="text-xl font-bold tracking-tight text-stone-800">{t('widget_embed.title')}</h2>
+                                <p className="text-sm text-stone-500 mt-0.5">{t('widget_embed.subtitle')}</p>
                             </div>
                         </div>
                         <button
@@ -95,66 +97,72 @@ export function WidgetEmbedModal({ isOpen, onClose }: WidgetEmbedModalProps) {
 
                             {/* Widget Type Selector */}
                             <div>
-                                <h3 className="text-sm font-semibold text-stone-700 mb-3">1. Pilih Jenis Widget</h3>
+                                <h3 className="text-sm font-semibold text-stone-700 mb-3">{t('widget_embed.step1_title')}</h3>
                                 <div className="grid grid-cols-2 gap-3">
                                     <button
                                         onClick={() => setWidgetType('calendar')}
-                                        className={`py-3 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 text-center
-                                            ${widgetType === 'calendar' ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-stone-200 hover:border-brand-200 text-stone-600'}`}
+                                        className={`p-4 rounded-xl border-2 text-left transition-all ${widgetType === 'calendar'
+                                            ? 'border-brand-500 bg-brand-50'
+                                            : 'border-stone-200 hover:border-brand-200 bg-white'
+                                            }`}
                                     >
-                                        <CalendarDays className={`w-6 h-6 ${widgetType === 'calendar' ? 'text-brand-600' : 'text-stone-400'}`} />
-                                        <div>
-                                            <span className="text-sm font-medium block">Kalender Lengkap</span>
-                                            <span className="text-[10px] text-stone-400 mt-0.5 block">Kalender bulanan interaktif</span>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <CalendarDays className={`w-4 h-4 ${widgetType === 'calendar' ? 'text-brand-600' : 'text-stone-400'}`} />
+                                            <span className="font-semibold text-stone-800">{t('widget_embed.full_cal')}</span>
                                         </div>
+                                        <p className="text-xs text-stone-500">{t('widget_embed.full_cal_desc')}</p>
                                     </button>
                                     <button
                                         onClick={() => setWidgetType('today')}
-                                        className={`py-3 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 text-center
-                                            ${widgetType === 'today' ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-stone-200 hover:border-brand-200 text-stone-600'}`}
+                                        className={`p-4 rounded-xl border-2 text-left transition-all ${widgetType === 'today'
+                                            ? 'border-brand-500 bg-brand-50'
+                                            : 'border-stone-200 hover:border-brand-200 bg-white'
+                                            }`}
                                     >
-                                        <Info className={`w-6 h-6 ${widgetType === 'today' ? 'text-brand-600' : 'text-stone-400'}`} />
-                                        <div>
-                                            <span className="text-sm font-medium block">Info Hari Ini</span>
-                                            <span className="text-[10px] text-stone-400 mt-0.5 block">Detail hari ini & hari raya</span>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <Info className={`w-4 h-4 ${widgetType === 'today' ? 'text-brand-600' : 'text-stone-400'}`} />
+                                            <span className="font-semibold text-stone-800">{t('widget_embed.today_only')}</span>
                                         </div>
+                                        <p className="text-xs text-stone-500">{t('widget_embed.today_only_desc')}</p>
                                     </button>
                                 </div>
                             </div>
 
                             {/* Theme Selector */}
                             <div>
-                                <h3 className="text-sm font-semibold text-stone-700 mb-3">2. Pilih Tema Widget</h3>
+                                <h3 className="text-sm font-semibold text-stone-700 mb-3">{t('widget_embed.step2_title')}</h3>
                                 <div className="flex gap-3">
                                     <button
                                         onClick={() => setTheme('light')}
-                                        className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all flex items-center justify-center gap-2 font-medium text-sm
-                                            ${theme === 'light' ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-stone-200 hover:border-brand-200 text-stone-600'}`}
+                                        className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${theme === 'light'
+                                            ? 'border-brand-500 bg-brand-50 text-brand-700'
+                                            : 'border-stone-200 hover:border-brand-200 bg-white text-stone-600'
+                                            }`}
                                     >
-                                        <div className="w-4 h-4 rounded-full bg-stone-100 border border-stone-300"></div>
-                                        Terang (Light)
+                                        {t('widget_embed.theme_light')}
                                     </button>
                                     <button
                                         onClick={() => setTheme('dark')}
-                                        className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all flex items-center justify-center gap-2 font-medium text-sm
-                                            ${theme === 'dark' ? 'border-stone-800 bg-stone-800 text-white' : 'border-stone-200 hover:border-stone-300 text-stone-600'}`}
+                                        className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${theme === 'dark'
+                                            ? 'border-brand-500 bg-stone-900 text-white'
+                                            : 'border-stone-200 hover:border-brand-200 bg-stone-800 text-white/70'
+                                            }`}
                                     >
-                                        <div className="w-4 h-4 rounded-full bg-stone-900 border border-stone-700"></div>
-                                        Gelap (Dark)
+                                        {t('widget_embed.theme_dark')}
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Embed Code Section */}
+                            {/* Code Snippet */}
                             <div>
                                 <div className="flex items-center justify-between mb-2">
-                                    <h3 className="text-sm font-semibold text-stone-700">3. Salin Kode Embed (HTML)</h3>
+                                    <h3 className="text-sm font-semibold text-stone-700">{t('widget_embed.step3_title')}</h3>
                                     <button
                                         onClick={handleCopy}
                                         className="flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors"
                                     >
                                         {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-                                        {copied ? <span className="text-emerald-600">Tersalin!</span> : 'Salin Kode'}
+                                        {copied ? <span className="text-emerald-600">{t('widget_embed.copied')}</span> : t('widget_embed.copy_btn')}
                                     </button>
                                 </div>
                                 <div className="relative group">

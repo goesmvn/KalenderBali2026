@@ -57,8 +57,8 @@ export function TripPlanner() {
                 <div className="inline-flex items-center justify-center p-3 bg-brand-50 rounded-full mb-4 text-brand-600">
                     <PlaneTakeoff className="w-8 h-8" />
                 </div>
-                <h1 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">{t('nav.trip_planner', 'Smart Trip & Leave Planner')}</h1>
-                <p className="text-stone-500 max-w-2xl mx-auto text-lg">Maksimalkan liburan Anda dengan mengambil cuti strategis di sekitar hari libur nasional dan sakral Bali.</p>
+                <h1 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">{t('trip_planner.title')}</h1>
+                <p className="text-stone-500 max-w-2xl mx-auto text-lg">{t('trip_planner.desc')}</p>
             </div>
 
             {/* Controls */}
@@ -84,7 +84,7 @@ export function TripPlanner() {
                         className="w-5 h-5 rounded text-brand-600 focus:ring-brand-500 border-stone-300"
                     />
                     <Filter className="w-4 h-4 text-stone-500" />
-                    <span className="text-stone-700 font-medium text-sm">Ada Hari Raya Bali</span>
+                    <span className="text-stone-700 font-medium text-sm">{t('trip_planner.filter_ceremony')}</span>
                 </label>
             </div>
 
@@ -108,15 +108,15 @@ export function TripPlanner() {
                                 <div key={idx} className="bg-white border text-left border-stone-200 rounded-2xl p-5 hover:shadow-xl hover:border-brand-200 transition-all group flex flex-col h-full">
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="bg-brand-50 text-brand-700 px-3 py-1 rounded-lg font-bold text-sm">
-                                            Libur {trip.totalDays} Hari
+                                            {t('trip_planner.holiday')} {trip.totalDays} {t('trip_planner.days')}
                                         </div>
                                         {trip.requiredLeaveDays > 0 ? (
                                             <div className="text-xs font-semibold px-2 py-1 bg-amber-100 text-amber-800 rounded">
-                                                Butuh {trip.requiredLeaveDays} hari cuti
+                                                {t('trip_planner.need_leave', { count: trip.requiredLeaveDays })}
                                             </div>
                                         ) : (
                                             <div className="text-xs font-semibold px-2 py-1 bg-emerald-100 text-emerald-800 rounded">
-                                                Tanpa Cuti
+                                                {t('trip_planner.no_leave')}
                                             </div>
                                         )}
                                     </div>
@@ -127,7 +127,7 @@ export function TripPlanner() {
 
                                     <div className="flex-1 mt-4 space-y-3">
                                         <div>
-                                            <p className="text-xs uppercase tracking-wider font-bold text-stone-400 mb-1">Cuti di tanggal:</p>
+                                            <p className="text-xs uppercase tracking-wider font-bold text-stone-400 mb-1">{t('trip_planner.leave_on')}</p>
                                             {trip.leaveDates.length > 0 ? (
                                                 <div className="flex flex-wrap gap-1">
                                                     {trip.leaveDates.map(ld => (
@@ -142,7 +142,7 @@ export function TripPlanner() {
                                         {trip.ceremonies.length > 0 && (
                                             <div className="pt-3 border-t border-stone-100">
                                                 <p className="text-xs uppercase tracking-wider font-bold text-brand-400 mb-2 flex items-center gap-1">
-                                                    <Sun className="w-3.5 h-3.5" /> Momen Sakral Bali
+                                                    <Sun className="w-3.5 h-3.5" /> {t('trip_planner.sacred_moment')}
                                                 </p>
                                                 <ul className="space-y-1">
                                                     {trip.ceremonies.map((c, i) => (
@@ -161,7 +161,7 @@ export function TripPlanner() {
 
                 {recommendations.length === 0 && (
                     <div className="text-center py-20 bg-stone-50 rounded-2xl border border-stone-200 border-dashed">
-                        <p className="text-stone-500 text-lg">Tidak ada rekomendasi perjalanan untuk kriteria ini.</p>
+                        <p className="text-stone-500 text-lg">{t('trip_planner.no_results')}</p>
                     </div>
                 )}
             </div>

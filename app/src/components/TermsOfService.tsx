@@ -25,7 +25,7 @@ export function TermsOfService() {
                             {t('terms.sec1_title')}
                         </h2>
                         <p className="mb-4">
-                            Pengaksesan, penelusuran, dan pengunduhan informasi dari situs web <strong>KalenderBali.id</strong> (serta *Widget Embed* di pihak ketiga) tunduk sepenuhnya pada Syarat dan Ketentuan berikut, yang diselaraskan dengan Undang-Undang Informasi dan Transaksi Elektronik (UU ITE). Apabila Anda secara fundamental tidak setuju dengan poin-poin yang tertera di bawah, harap hentikan penggunaan peranti lunak ini.
+                            <span dangerouslySetInnerHTML={{ __html: t('terms.sec1_desc') }} />
                         </p>
                     </section>
 
@@ -35,9 +35,9 @@ export function TermsOfService() {
                             {t('terms.sec2_title')}
                         </h2>
                         <ul className="list-disc pl-6 space-y-2 mb-4">
-                            <li><strong>KalenderBali.id</strong> dikembangkan merujuk pada teks-teks Lontar Wariga (seperti <em>Wariga Dewasa</em> oleh Sri Rsi Ananda Kusuma, <em>Pokok-pokok Wariga</em> oleh I.B. Suparta Ardhana, dll.) menggunakan perhitungan astronomis Bali. Meski diusahakan dengan keilmuan presisi tingkat tinggi, hasil perhitungan <em>Otonan</em>, <em>Hari Baik (Dewasa Ayu)</em>, <em>Pawiwahan</em>, maupun <em>Skor Kecocokan (Urip)</em> pada fitur Lahir Sesar <strong>bukan jaminan kepastian takdir mutlak.</strong></li>
-                            <li>Aplikasi ini hanya dapat berperan sebagai parameter <strong>saran pendukung</strong> untuk aktivitas budaya dan spritual, tidak dapat dijadikan substitusi mutlak atas petunjuk resmi/agama dari pemuka adat, pendeta/Sulinggih, atau dokter ahli kandungan.</li>
-                            <li>Segala konsekuensi materiil, riil, fisik, mapun non-fisik akibat bertindak atas (atau mengabaikan) hasil PDF KalenderBali.id, tidak dapat digugat sebagai ganti rugi terhadap Yayasan NusaHeritage selaku pengembang peranti.</li>
+                            <li><span dangerouslySetInnerHTML={{ __html: t('terms.sec2_list1') }} /></li>
+                            <li><span dangerouslySetInnerHTML={{ __html: t('terms.sec2_list2') }} /></li>
+                            <li><span dangerouslySetInnerHTML={{ __html: t('terms.sec2_list3') }} /></li>
                         </ul>
                     </section>
 
@@ -47,10 +47,10 @@ export function TermsOfService() {
                             {t('terms.sec3_title')}
                         </h2>
                         <p className="mb-4">
-                            Seluruh antarmuka (UI/UX), tata letak (layout), grafik, algoritma penghitungan tanggalan Saka yang bersifat proprietary, serta output Dokumen Cetak (File PDF Eksport) merupakan Hak Kekayaan Intelektual NusaHeritage, dilindungi oleh konstitusi kekayaan intelektual Indonesia.
+                            {t('terms.sec3_desc1')}
                         </p>
                         <p className="mb-4">
-                            Pengguna diberikan **lisensi non-eksklusif, bebas royalti** untuk mengunduh PDF secara gratis bagi kepentingan perorangan atau edukasi masyarakat umum. Modifikasi kode injeksi pada platform (*Reverse Engineering*), memperjualbelikan dokumen ekstrak PDF (hasil perhitungan mesin KalenderBali), atau menutupi logo (watermark/atribusi *Footer*) pada penyematan Widget tanpa konsensus tertulis adalah bentuk penemuan pelanggaran Hak Cipta perangkat lunak.
+                            {t('terms.sec3_desc2')}
                         </p>
                     </section>
 
@@ -60,14 +60,13 @@ export function TermsOfService() {
                             {t('terms.sec4_title')}
                         </h2>
                         <p className="mb-4">
-                            Kami berusaha menjaga jam aktif <em>uptime</em> di kisaran ~99%. Namun, aksesibilitas pada layanan ini disediakan dalam frasa "Apa Adanya" (<em>As Is</em>). Akses sewaktu-waktu dapat dijedakan untuk proses <em>maintenance</em> server, perbaikan celah aplikasi, atau penyesuaian korektif rumus kalender dari hasil *Pesamuan Agung*. Aturan ketentuan ini berhak berubah setiap kuartal tanpa diseminasi surel individu apabila pembaruan teramat wajar.
+                            {t('terms.sec4_desc')}
                         </p>
                     </section>
 
                     <div className="border-t border-stone-200 pt-6 mt-8">
                         <p className="text-sm text-stone-500 text-center">
-                            Kami berhak menyunting Syarat Ketentuan ini berdasarkan interpretasi dinamika hukum. <br />
-                            Terbitan: Maret 2026.
+                            {t('terms.updated')}
                         </p>
                     </div>
                 </div>
