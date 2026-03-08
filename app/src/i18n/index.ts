@@ -6,6 +6,7 @@ import id from './locales/id.json';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
 import ru from './locales/ru.json';
+import zh from './locales/zh.json';
 
 i18n
     .use(LanguageDetector)
@@ -16,9 +17,10 @@ i18n
             en: { translation: en },
             ja: { translation: ja },
             ru: { translation: ru },
+            zh: { translation: zh },
         },
         fallbackLng: 'en',
-        supportedLngs: ['id', 'en', 'ja', 'ru'],
+        supportedLngs: ['id', 'en', 'ja', 'ru', 'zh'],
         interpolation: {
             escapeValue: false,
         },

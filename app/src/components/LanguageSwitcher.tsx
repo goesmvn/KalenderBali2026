@@ -7,6 +7,7 @@ const LANGUAGES = [
     { code: 'id', label: 'Indonesian', flag: '🇮🇩' },
     { code: 'en', label: 'English', flag: '🇬🇧' },
     { code: 'ja', label: '日本語', flag: '🇯🇵' },
+    { code: 'zh', label: '中文', flag: '🇨🇳' },
     { code: 'ru', label: 'Русский', flag: '🇷🇺' },
 ];
 
@@ -58,8 +59,8 @@ export function LanguageSwitcher() {
                                 key={lang.code}
                                 onClick={() => handleLanguageChange(lang.code)}
                                 className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-left transition-colors ${currentLang.code === lang.code
-                                        ? 'bg-red-50 text-red-700 font-semibold'
-                                        : 'text-stone-600 hover:bg-stone-50 hover:text-stone-900'
+                                    ? 'bg-red-50 text-red-700 font-semibold'
+                                    : 'text-stone-600 hover:bg-stone-50 hover:text-stone-900'
                                     }`}
                             >
                                 <span>{lang.flag}</span>
