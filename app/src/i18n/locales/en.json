@@ -181,5 +181,34 @@
         "close": "Close",
         "loading": "Loading...",
         "error": "An error occurred"
+    },
+    "footer": {
+        "description": "Preserving Balinese cultural heritage and ancestral spirituality through a digital calendar platform.",
+        "initiative": "is part of the initiative",
+        "quick_links": "Quick Links",
+        "about": "About Us",
+        "tangible": "Tangible Heritage",
+        "intangible": "Intangible Heritage",
+        "matchmaking": "Divination & Matchmaking",
+        "contact": "Contact",
+        "copyright": "Made with ❤️ for cultural preservation.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions"
+    },
+    "privacy": {
+        "title": "Privacy Policy",
+        "subtitle": "Our commitment to protecting your personal data in accordance with Indonesian Data Protection Laws.",
+        "sec1_title": "1. Introduction",
+        "sec2_title": "2. Data We Collect",
+        "sec3_title": "3. Usage & Cookies",
+        "sec4_title": "4. Information Security & Third Parties"
+    },
+    "terms": {
+        "title": "Terms of Service",
+        "subtitle": "User agreement, material copyright, and site functional liability limitations.",
+        "sec1_title": "1. Background Agreement",
+        "sec2_title": "2. Divination Accuracy Disclaimer",
+        "sec3_title": "3. Intellectual Property Rights (IPR)",
+        "sec4_title": "4. System Availability and Updates"
     }
 }

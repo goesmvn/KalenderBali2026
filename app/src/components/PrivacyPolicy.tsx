@@ -1,6 +1,9 @@
 import { Shield, FileText, Lock, Globe, Server, UserCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function PrivacyPolicy() {
+    const { t } = useTranslation();
+
     return (
         <div className="w-full bg-stone-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
@@ -8,10 +11,10 @@ export function PrivacyPolicy() {
                     <Shield className="absolute -right-6 -bottom-6 w-48 h-48 opacity-10" />
                     <h1 className="text-3xl font-bold tracking-tight relative z-10 flex items-center justify-center sm:justify-start gap-3">
                         <Lock className="w-8 h-8" />
-                        Kebijakan Privasi
+                        {t('privacy.title')}
                     </h1>
                     <p className="mt-2 text-red-100 relative z-10 max-w-2xl text-sm sm:text-base">
-                        Komitmen kami dalam melindungi data pribadi Anda sesuai dengan Undang-Undang Perlindungan Data Pribadi (UU PDP) Republik Indonesia.
+                        {t('privacy.subtitle')}
                     </p>
                 </div>
 
@@ -19,7 +22,7 @@ export function PrivacyPolicy() {
                     <section>
                         <h2 className="text-xl font-bold text-stone-900 mb-4 flex items-center gap-2">
                             <FileText className="w-5 h-5 text-[#c1121f]" />
-                            1. Pendahuluan
+                            {t('privacy.sec1_title')}
                         </h2>
                         <p className="mb-4">
                             Selamat datang di <strong>KalenderBali.id</strong> (bagian dari inisiatif NusaHeritage). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan mengamankan informasi saat Anda mengakses layanan kami, baik secara langsung maupun melalui <em>widget</em> pihak ketiga.
@@ -32,7 +35,7 @@ export function PrivacyPolicy() {
                     <section>
                         <h2 className="text-xl font-bold text-stone-900 mb-4 flex items-center gap-2">
                             <Server className="w-5 h-5 text-[#c1121f]" />
-                            2. Data yang Kami Kumpulkan
+                            {t('privacy.sec2_title')}
                         </h2>
                         <p className="mb-4">
                             Untuk menjaga optimalitas layanan yang tidak mengharuskan pengguna mendaftar (login), kami **tidak** mengumpulkan identitas pribadi spesifik pengguna seperti nama lengkap, NIK, alamat email, atau nomor telepon.
@@ -48,7 +51,7 @@ export function PrivacyPolicy() {
                     <section>
                         <h2 className="text-xl font-bold text-stone-900 mb-4 flex items-center gap-2">
                             <Globe className="w-5 h-5 text-[#c1121f]" />
-                            3. Penggunaan dan Cookie
+                            {t('privacy.sec3_title')}
                         </h2>
                         <p className="mb-4">
                             Sistem kami mungkin menggunakan teknologi <em>Local Storage</em> dan <em>Cookies</em> minimum demi mengoptimalkan *user experience* (misalnya: mengingat bulan atau tahun kalender terakhir yang Anda lihat agar pencarian terasa cepat).
@@ -61,7 +64,7 @@ export function PrivacyPolicy() {
                     <section>
                         <h2 className="text-xl font-bold text-stone-900 mb-4 flex items-center gap-2">
                             <UserCheck className="w-5 h-5 text-[#c1121f]" />
-                            4. Keamanan Informasi & Pihak Ketiga
+                            {t('privacy.sec4_title')}
                         </h2>
                         <p className="mb-4">
                             Kami menerapkan pelindungan data dengan langkah rasional berdasarkan standar industri. Kami <strong>tidak pernah menjual, menyewakan, atau mendistribusikan data pengunjung</strong> kepada pihak ketiga mana pun untuk tujuan komersil.

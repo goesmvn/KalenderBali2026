@@ -181,5 +181,34 @@
         "close": "关闭",
         "loading": "加载中...",
         "error": "发生错误"
+    },
+    "footer": {
+        "description": "通过数字日历平台保护巴厘岛文化遗产和祖先精神。",
+        "initiative": "是以下倡议的一部分",
+        "quick_links": "快速链接",
+        "about": "关于我们",
+        "tangible": "有形文化遗产",
+        "intangible": "非物质文化遗产",
+        "matchmaking": "占卜与相亲",
+        "contact": "联系我们",
+        "copyright": "为文化保护而用 ❤️ 制作。",
+        "privacy": "隐私政策",
+        "terms": "服务条款"
+    },
+    "privacy": {
+        "title": "隐私政策",
+        "subtitle": "我们承诺根据印度尼西亚个人数据保护法保护您的个人数据。",
+        "sec1_title": "1. 简介",
+        "sec2_title": "2. 我们收集的数据",
+        "sec3_title": "3. 使用与 Cookie",
+        "sec4_title": "4. 信息安全与第三方"
+    },
+    "terms": {
+        "title": "服务条款",
+        "subtitle": "用户协议、材料版权和网站功能责任限制。",
+        "sec1_title": "1. 背景协议",
+        "sec2_title": "2. 占卜准确性免责声明",
+        "sec3_title": "3. 知识产权 (IPR)",
+        "sec4_title": "4. 系统可用性与更新"
     }
 }

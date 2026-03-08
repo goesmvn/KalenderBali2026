@@ -181,5 +181,34 @@
         "close": "Tutup",
         "loading": "Memuat...",
         "error": "Terjadi kesalahan"
+    },
+    "footer": {
+        "description": "Mempertahankan warisan budaya dan spiritualitas leluhur Bali melalui platform penanggalan digital.",
+        "initiative": "merupakan bagian dari inisiatif",
+        "quick_links": "Akses Cepat",
+        "about": "Tentang Kami",
+        "tangible": "Warisan Budaya Benda",
+        "intangible": "Warisan Tak Benda",
+        "matchmaking": "Ramalan & Perjodohan",
+        "contact": "Kontak",
+        "copyright": "Dibuat dengan ❤️ untuk pelestarian budaya.",
+        "privacy": "Kebijakan Privasi",
+        "terms": "Syarat & Ketentuan"
+    },
+    "privacy": {
+        "title": "Kebijakan Privasi",
+        "subtitle": "Komitmen kami dalam melindungi data pribadi Anda sesuai dengan Undang-Undang Perlindungan Data Pribadi (UU PDP) Republik Indonesia.",
+        "sec1_title": "1. Pendahuluan",
+        "sec2_title": "2. Data yang Kami Kumpulkan",
+        "sec3_title": "3. Penggunaan dan Cookie",
+        "sec4_title": "4. Keamanan Informasi & Pihak Ketiga"
+    },
+    "terms": {
+        "title": "Syarat & Ketentuan Layanan",
+        "subtitle": "Sebuah ikatan pengguna layanan, hak cipta materi, serta batasan tanggung jawab fungsional situs.",
+        "sec1_title": "1. Kesepakatan Latar",
+        "sec2_title": "2. Disklaimer Akurasi Ramalan",
+        "sec3_title": "3. Hak Kekayaan Intelektual (HAKI)",
+        "sec4_title": "4. Ketersediaan dan Pembaruan Sistem"
     }
 }
