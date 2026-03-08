@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './LanguageSwitcher';
+
+const MOBILE_LANGUAGES = [
+    { code: 'id', label: 'ID', flag: '🇮🇩' },
+    { code: 'en', label: 'EN', flag: '🇬🇧' },
+    { code: 'ja', label: 'JA', flag: '🇯🇵' },
+    { code: 'zh', label: 'ZH', flag: '🇨🇳' },
+    { code: 'ru', label: 'RU', flag: '🇷🇺' },
+];
 
 interface SubItem {
     label: string;
@@ -30,7 +38,7 @@ interface HeaderProps {
 
 export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, onOpenWidget, onOpenOtonan, onOpenExportCalendar, onOpenNyepiGuide }: HeaderProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const navItems: NavItem[] = [
         { label: t('nav.about'), hasDropdown: false },
@@ -256,8 +264,22 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                             })}
 
                             <div className="mt-6 pt-6 border-t border-stone-100 flex flex-col gap-4">
-                                <div className="flex justify-center mb-2">
-                                    <LanguageSwitcher />
+                                <div className="flex items-center justify-center gap-2 flex-wrap mb-2">
+                                    <Globe className="w-4 h-4 text-stone-400" />
+                                    {MOBILE_LANGUAGES.map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            onClick={() => {
+                                                i18n.changeLanguage(lang.code);
+                                            }}
+                                            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${i18n.resolvedLanguage === lang.code
+                                                ? 'bg-red-100 text-red-700 ring-1 ring-red-200'
+                                                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                                                }`}
+                                        >
+                                            {lang.flag} {lang.label}
+                                        </button>
+                                    ))}
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <a href="https://nusaheritage.id/register" target="_blank" rel="noopener noreferrer" className="w-full py-2.5 text-center text-stone-600 font-medium border border-stone-200 rounded-lg hover:bg-stone-50 transition-colors block">
@@ -275,3 +297,4 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
         </header>
     );
 }
+

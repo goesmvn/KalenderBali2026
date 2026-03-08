@@ -13,6 +13,7 @@
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "better-sqlite3": "^11.7.0",
+        "compression": "^1.8.1",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
         "drizzle-orm": "^0.38.4",
@@ -24,6 +25,7 @@
     "devDependencies": {
         "@types/bcryptjs": "^2.4.6",
         "@types/better-sqlite3": "^7.6.12",
+        "@types/compression": "^1.8.1",
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.2",
         "@types/jsonwebtoken": "^9.0.9",

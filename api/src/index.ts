@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
 import fs from 'fs';
@@ -25,6 +26,9 @@ app.use(helmet({
     contentSecurityPolicy: false, // Disabled for React SPA dynamic inline scripts/images
     crossOriginEmbedderPolicy: false, // Allow external resources if any
 }));
+
+// Gzip/Brotli Compression for faster loading
+app.use(compression());
 
 // Rate Limiter for API endpoints
 const apiLimiter = rateLimit({
@@ -64,8 +68,21 @@ app.listen(PORT, () => {
 // Serve frontend SPA properly with Social Media SEO Tag Injector
 const distPath = path.resolve(__dirname, '../../app/dist');
 
-// Serve static assets without index.html
-app.use(express.static(distPath, { index: false }));
+// Serve static assets with aggressive caching for hashed files
+app.use(express.static(distPath, {
+    index: false,
+    maxAge: '1y',
+    immutable: true,
+    setHeaders: (res, filePath) => {
+        // Only cache hashed assets (files with hash in name like index-abc123.js)
+        if (filePath.includes('/assets/')) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            // Don't cache index.html or other root files
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        }
+    }
+}));
 
 // Wildcard handler to inject open-graph tags
 app.get(/^(.*)$/, (req, res, next) => {
