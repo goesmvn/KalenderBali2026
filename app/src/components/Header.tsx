@@ -38,6 +38,7 @@ interface HeaderProps {
 
 export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, onOpenWidget, onOpenOtonan, onOpenExportCalendar, onOpenNyepiGuide }: HeaderProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [openMobileSubmenu, setOpenMobileSubmenu] = useState<number | null>(null);
     const { t, i18n } = useTranslation();
 
     const navItems: NavItem[] = [
@@ -189,9 +190,10 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                         exit={{ opacity: 0, height: 0 }}
                         className="lg:hidden border-t border-stone-100 bg-white overflow-hidden"
                     >
-                        <div className="px-4 pt-2 pb-6 space-y-1">
+                        <div className="px-4 pt-2 pb-6 space-y-1 max-h-[70vh] overflow-y-auto">
                             {navItems.map((item, index) => {
                                 const isActive = item.label === t('nav.about') && currentPage === 'about';
+                                const isSubmenuOpen = openMobileSubmenu === index;
 
                                 return (
                                     <div key={index}>
@@ -202,17 +204,11 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                         ) : (
                                             <button
                                                 onClick={() => {
-                                                    if (item.label === t('nav.about')) {
+                                                    if (item.hasDropdown) {
+                                                        // Toggle submenu
+                                                        setOpenMobileSubmenu(isSubmenuOpen ? null : index);
+                                                    } else if (item.label === t('nav.about')) {
                                                         onNavigate('about');
-                                                        setIsMobileMenuOpen(false);
-                                                    } else if (item.label === t('search.button') && onOpenSearch) {
-                                                        onOpenSearch();
-                                                        setIsMobileMenuOpen(false);
-                                                    } else if (item.label === t('nav.widget') && onOpenWidget) {
-                                                        onOpenWidget();
-                                                        setIsMobileMenuOpen(false);
-                                                    } else if (item.label === t('nav.otonan') && onOpenOtonan) {
-                                                        onOpenOtonan();
                                                         setIsMobileMenuOpen(false);
                                                     } else if (item.label === t('nav.nyepi') && onOpenNyepiGuide) {
                                                         onOpenNyepiGuide();
@@ -227,38 +223,48 @@ export function Header({ currentPage, onNavigate, onOpenSearch, onOpenDownload, 
                                                     }`}
                                             >
                                                 {item.label}
-                                                {item.hasDropdown && <ChevronDown className={`w-4 h-4 ${isActive ? 'text-[#c1121f]' : 'text-stone-400'}`} />}
+                                                {item.hasDropdown && <ChevronDown className={`w-4 h-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''} ${isActive ? 'text-[#c1121f]' : 'text-stone-400'}`} />}
                                             </button>
                                         )}
 
-                                        {item.hasDropdown && item.items && (
-                                            <div className="pl-4 border-l-2 border-stone-100 ml-2 mt-1 mb-2 space-y-1">
-                                                {item.items.map((subItem, subIdx) => (
-                                                    subItem.href ? (
-                                                        <a
-                                                            key={subIdx}
-                                                            href={subItem.href}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="block w-full py-2 px-3 text-sm font-medium text-stone-500 hover:text-[#c1121f] hover:bg-red-50 rounded-lg transition-colors"
-                                                        >
-                                                            {subItem.label}
-                                                        </a>
-                                                    ) : (
-                                                        <button
-                                                            key={subIdx}
-                                                            onClick={() => {
-                                                                if (subItem.action) subItem.action();
-                                                                setIsMobileMenuOpen(false);
-                                                            }}
-                                                            className="block w-full text-left py-2 px-3 text-sm font-medium text-stone-500 hover:text-[#c1121f] hover:bg-red-50 rounded-lg transition-colors"
-                                                        >
-                                                            {subItem.label}
-                                                        </button>
-                                                    )
-                                                ))}
-                                            </div>
-                                        )}
+                                        <AnimatePresence>
+                                            {item.hasDropdown && item.items && isSubmenuOpen && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    transition={{ duration: 0.2 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="pl-4 border-l-2 border-stone-100 ml-2 mt-1 mb-2 space-y-1">
+                                                        {item.items.map((subItem, subIdx) => (
+                                                            subItem.href ? (
+                                                                <a
+                                                                    key={subIdx}
+                                                                    href={subItem.href}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="block w-full py-2 px-3 text-sm font-medium text-stone-500 hover:text-[#c1121f] hover:bg-red-50 rounded-lg transition-colors"
+                                                                >
+                                                                    {subItem.label}
+                                                                </a>
+                                                            ) : (
+                                                                <button
+                                                                    key={subIdx}
+                                                                    onClick={() => {
+                                                                        if (subItem.action) subItem.action();
+                                                                        setIsMobileMenuOpen(false);
+                                                                    }}
+                                                                    className="block w-full text-left py-2 px-3 text-sm font-medium text-stone-500 hover:text-[#c1121f] hover:bg-red-50 rounded-lg transition-colors"
+                                                                >
+                                                                    {subItem.label}
+                                                                </button>
+                                                            )
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
                                 );
                             })}
