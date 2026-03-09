@@ -53,11 +53,11 @@ export function Footer({ onNavigate }: FooterProps) {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-4 h-4 text-stone-400 mt-0.5 shrink-0" />
-                                <span className="text-sm text-stone-500">Denpasar, Bali, Indonesia 80111</span>
+                                <span className="text-sm text-stone-500">Bangli, Bali, Indonesia 80613</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-4 h-4 text-stone-400 shrink-0" />
-                                <span className="text-sm text-stone-500">+62 812 3456 7890</span>
+                                <span className="text-sm text-stone-500">+6281805468408</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-4 h-4 text-stone-400 shrink-0" />
